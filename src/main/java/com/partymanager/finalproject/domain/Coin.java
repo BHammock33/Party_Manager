@@ -2,11 +2,12 @@ package com.partymanager.finalproject.domain;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,13 +15,19 @@ import javax.persistence.Table;
 public class Coin {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "character_id")
 	private Long coinId;
+	//maps coinId to specific characters
 	private String type;
 	private Integer quantity;
 	
-	@OneToMany(mappedBy = "coins")
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "character_id")
 	private List<PlayerCharacter> playerCharacters;
+	//should maybe be one to one? 
+	// one character can have one list of coins, one list of coins belongs to one character
+	//if characters are allowed in multiple parties theyd need multiple lists  
 
 	
 

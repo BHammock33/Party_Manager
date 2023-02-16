@@ -23,8 +23,10 @@ public class User {
 	private String name;
 	@OneToMany(mappedBy = "user")
 	private List<PlayerCharacter> characters;
+	//one user to many characters
 	@ManyToMany(mappedBy = "users", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
 	private List<Party> parties;
+	//many users to many parties
 	
 	
 	

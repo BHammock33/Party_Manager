@@ -2,12 +2,16 @@ package com.partymanager.finalproject.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -16,17 +20,27 @@ public class PlayerCharacter {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long characterId;
+	//will set to character_id
 	private String name;
 	private Integer xp;
 	private String allignment;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	@ManyToOne(targetEntity = com.partymanager.finalproject.domain.Coin.class)
-	@JoinColumn(name = "coin_id")
+	//joins many characters under one user_id
+
+	@OneToOne(mappedBy = "character", cascade = { CascadeType.MERGE, CascadeType.REMOVE })
+	@PrimaryKeyJoinColumn
 	private List<Coin> coins;
+	//one list of coins mapped to one character
+
+	@ManyToOne
+	@JoinColumn(name = "party_id")
+	private Party party;
+	//one character can only be in one party, parties can have many characters
 
 	public PlayerCharacter(Long characterId, String name, Integer xp, String allignment, User user, List<Coin> coins) {
 		super();
@@ -42,7 +56,6 @@ public class PlayerCharacter {
 		super();
 	}
 
-	
 	public Long getCharacterId() {
 		return characterId;
 	}
@@ -75,7 +88,6 @@ public class PlayerCharacter {
 		this.allignment = allignment;
 	}
 
-	
 	public User getUser() {
 		return user;
 	}
@@ -87,7 +99,7 @@ public class PlayerCharacter {
 	public List<Coin> getCoins() {
 		return coins;
 	}
-	
+
 	public void setCoins(List<Coin> coins) {
 		this.coins = coins;
 	}
