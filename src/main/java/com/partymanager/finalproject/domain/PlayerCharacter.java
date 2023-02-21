@@ -32,10 +32,12 @@ public class PlayerCharacter {
 	private User user;
 	//joins many characters under one user_id
 
-	@OneToOne(mappedBy = "character", cascade = { CascadeType.MERGE, CascadeType.REMOVE })
+	@OneToOne(mappedBy = "playerCharacter", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@PrimaryKeyJoinColumn
 	private List<Coin> coins;
 	//one list of coins mapped to one character
+	//need to change because a collection on one side
+	//one character to many coins 
 
 	@ManyToOne
 	@JoinColumn(name = "party_id")

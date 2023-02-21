@@ -1,7 +1,5 @@
 package com.partymanager.finalproject.domain;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,19 +22,19 @@ public class Coin {
 	@OneToOne
 	@MapsId
 	@JoinColumn(name = "character_id")
-	private List<PlayerCharacter> playerCharacters;
+	private PlayerCharacter playerCharacter;
 	//should maybe be one to one? 
 	// one character can have one list of coins, one list of coins belongs to one character
 	//if characters are allowed in multiple parties theyd need multiple lists  
 
 	
 
-	public Coin(Long coinId, String type, Integer quantity, List<PlayerCharacter> playerCharacter) {
+	public Coin(Long coinId, String type, Integer quantity, PlayerCharacter playerCharacter) {
 		super();
 		this.coinId = coinId;
 		this.type = type;
 		this.quantity = quantity;
-		this.playerCharacters = playerCharacter;
+		this.playerCharacter = playerCharacter;
 	}
 
 	public Coin() {
@@ -68,12 +66,12 @@ public class Coin {
 		this.quantity = quantity;
 	}
 	
-	public List<PlayerCharacter> getPlayerCharacter() {
-		return playerCharacters;
+	public PlayerCharacter getPlayerCharacter() {
+		return playerCharacter;
 	}
 
-	public void setPlayerCharacter(List<PlayerCharacter> playerCharacter) {
-		this.playerCharacters = playerCharacter;
+	public void setPlayerCharacter(PlayerCharacter playerCharacter) {
+		this.playerCharacter = playerCharacter;
 	}
 	
 

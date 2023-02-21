@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,7 +26,8 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<PlayerCharacter> characters;
 	//one user to many characters
-	@ManyToMany(mappedBy = "users", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinTable(name = "user_parties", joinColumns = {@JoinColumn(referencedColumnName = "userId")}, inverseJoinColumns = {@JoinColumn(referencedColumnName = "partyID")})
 	private List<Party> parties;
 	//many users to many parties
 	
