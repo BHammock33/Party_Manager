@@ -23,9 +23,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td></td>
-				<td></td>
+			<tr th:each="player : ${players}">
+				<td th:text = "${player.name}"></td>
+				<td th:text = "${player.PlayerCharacter.name}"></td>
+				<td th:text = "${player.PlayerCharacter.xp}"></td>
+				<td th:text = "${player.PlayerCharacter.alighment}"></td>
+				<td th:text = "${player.PlayerCharacter.coins}"></td>
 			</tr>
 		</tbody>			
 		</table>
