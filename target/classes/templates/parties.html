@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://thymeleaf.org">
+	<head>
+		<title>Parties</title>
+	</head>
+	<body>
+		<div class = "parties">
+			<div class = "one-party" th:each = "party : ${parties}">
+				<table>
+					<thead>
+						<tr>
+							<th>Party Name<th>
+						</tr>
+					</thead>
+					<thead>
+						<tr>
+							<th>Players<th>
+							<th>Characters<th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						<td th:text = "${party.players}">
+						<td th:text = "$party.players.PlayerCharacter">
+					</tbody>				
+				</table>
+			</div>
+		
+		</div>
+	
+	</body>
+	
+</html>
