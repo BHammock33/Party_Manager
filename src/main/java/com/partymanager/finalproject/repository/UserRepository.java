@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	@Query("select u from User u where username = :username")
 	List<User> findExactlyOneUserByUsername(String username);
-	
+
 	
 
 }

@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.partymanager.finalproject.domain.PlayerCharacter;
+import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.repository.PartyRepository;
 import com.partymanager.finalproject.repository.PlayerCharacterRepository;
@@ -47,6 +47,16 @@ public class UserService {
 //	}
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
+	}
+	public User createUser(String name) {
+		User user = new User();
+		user.setName(name);
+		return userRepo.save(user);
+	}
+	public List<User> findUsersByPartyId(long partyId){
+		Optional<Party> party = partyRepo.findById(partyId);
+		List<User> users = party.get().getUsers();
+		return users;
 	}
 	
 }
