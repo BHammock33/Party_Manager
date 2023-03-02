@@ -8,4 +8,5 @@ import com.partymanager.finalproject.domain.Party;
 @Repository
 public interface PartyRepository extends JpaRepository<Party, Long>{
 
+	
 }
