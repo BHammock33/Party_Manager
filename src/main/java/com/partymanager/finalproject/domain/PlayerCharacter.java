@@ -38,6 +38,7 @@ public class PlayerCharacter {
 	//one list of coins mapped to one character
 	//need to change because a collection on one side
 	//one character to many coins 
+	// Issue Still here, referenced property unknown Java.util.List.playerCharacter 
 
 	@ManyToOne
 	@JoinColumn(name = "party_id")
