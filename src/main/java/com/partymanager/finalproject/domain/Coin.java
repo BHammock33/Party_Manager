@@ -2,10 +2,11 @@ package com.partymanager.finalproject.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,14 +14,14 @@ import javax.persistence.Table;
 public class Coin {
 
 	@Id
-	@Column(name = "character_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long coinId;
 	//maps coinId to specific characters
 	private String type;
 	private Integer quantity;
 	
-	@OneToOne
-	@MapsId
+	@ManyToOne
 	@JoinColumn(name = "character_id")
 	private PlayerCharacter playerCharacter;
 	//should maybe be one to one? 

@@ -2,7 +2,6 @@ package com.partymanager.finalproject.domain;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,8 +30,7 @@ public class PlayerCharacter {
 	private User user;
 	//joins many characters under one user_id
 
-	@OneToOne(mappedBy = "playerCharacter", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@PrimaryKeyJoinColumn
+	@OneToMany(mappedBy="playerCharacter")
 	private List<Coin> coins;
 	//one list of coins mapped to one character
 	//need to change because a collection on one side
