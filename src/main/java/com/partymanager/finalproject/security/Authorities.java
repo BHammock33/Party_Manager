@@ -1,20 +1,21 @@
 package com.partymanager.finalproject.security;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import org.springframework.security.core.GrantedAuthority;
 
 import com.partymanager.finalproject.domain.User;
 
+/**
+ * @author benne
+ *
+ */
 @Entity
-public class Authorities implements GrantedAuthority{
+public class Authorities implements GrantedAuthority {
 
 	/**
 	 * 
@@ -24,24 +25,20 @@ public class Authorities implements GrantedAuthority{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private String authority;
-	
-	@ManyToMany(mappedBy="authorities")
-	private Set<User> users = new HashSet<>();
-	
-	public Authorities() {}
-	
-	
 
-	public Authorities(Long id, String authority, Set<User> users) {
-		super();
-		this.id = id;
-		this.authority = authority;
-		this.users = users;
+	private String authority;
+
+	@ManyToOne
+	private User user;
+
+	public Authorities() {
 	}
 
-
+	public Authorities(String authority, User user) {
+		super();
+		this.authority = authority;
+		this.user = user;
+	}
 
 	public Long getId() {
 		return id;
@@ -60,17 +57,17 @@ public class Authorities implements GrantedAuthority{
 		this.authority = authority;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	
-	
 
-	
-	
-	
+//	@Override
+//	public String toString() {
+//		return "Authorities [id=" + id + ", authority=" + authority + ", user=" + user + "]";
+//	}
+
 }

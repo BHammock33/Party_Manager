@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+	<title>Registration</title>
+	<link rel="stylesheet" th:href="@{/css/register.css}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<div class="container-form">
+			<form action="" method="post">
+				<h1>Register Below</h1>
+				<label class="input-tags">First Name</label><input th:field="${user.firstName}" type= "text" class= "form-holder" placeholder="First Name">
+				<label class="input-tags">Last Name</label><input th:field="${user.lastName}" type= "text" class= "form-holder" placeholder="Last Name">
+				<label class="input-tags">Username</label><input th:field="${user.username}" type= "text" class= "form-holder" placeholder="Username">
+				<label class="input-tags">Password</label><input th:field="${user.password}" type= "password" class= "form-holder" placeholder="Passoword" required>
+				<button type="submit">Register</button>
+				<div>
+					<p style="color:white; margin-top: 5px">Login Below<a href="/login" style="color: blue">Login</a></p>
+				</div>
+			</form>
+				
+		</div>
+	</div>
+
+</body>
+
+</html>

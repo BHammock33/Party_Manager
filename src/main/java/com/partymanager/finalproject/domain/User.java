@@ -50,11 +50,8 @@ public class User {
 	private List<Party> parties;
 	//many users to many parties
 	
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
-	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "user")
 	private Set<Authorities> authorities = new HashSet<>();
-	
 	
 	
 	public User(Long userId, String username, String password, String firstName, String lastName, List<PlayerCharacter> characters, List<Party> parties, Set<Authorities> authorities) {
@@ -136,6 +133,15 @@ public class User {
 		this.authorities = authorities;
 	}
 
+
+//	@Override
+//	public String toString() {
+//		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
+//				+ firstName + ", lastName=" + lastName + ", characters=" + characters + ", parties=" + parties
+//				+ ", authorities=" + authorities + "]";
+//	}
+
+	
 
 
 	

@@ -1,0 +1,103 @@
+html {
+	font-family:"Libre Baskerville", serif;
+	background: url("/images/dragon.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size:  cover;
+	
+}
+body{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-family: "Libre Baskerville", serif;
+	color: white;
+}
+form{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	
+}
+.container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	
+}
+.container-form{
+	padding: 30px 50px;
+	border-radius: 11px;
+	
+}
+form>div {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 5px;
+}
+input[type= 'text']
+input[type = 'password']{
+	font-size: 25px;
+	border-radius: 10px;
+	color: blue;
+}
+.input-tags{
+	color: white;
+	font-size: 25px;
+}
+.form-holder{
+	color: black;
+	font-size: 18px;
+}
+form>div>label{
+	font-size: 25px;
+	margin-bottom: 5px;
+	color: #7BAFD4;
+}
+.buttons{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	gap: 4px;
+	margin-top: 4px;
+}
+button{
+	background-color: #4681f4;
+	text-decoration: none;
+	color: white;
+	border: 1px solid;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 25px;
+	width: 100%;
+}
+button:hover{
+	background-color: 55c2da;
+	scale: 1.10;
+}
+label{
+	font-size: 10px;
+}
+input{
+	background-color: gray;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 10px 15px;
+	margin: 5px 0;
+}
+input:focus{
+	border: 1px solid green;
+}
+h1{
+	
+}
+@font-face{
+	font-family: dndFont;
+	src: url
+}
