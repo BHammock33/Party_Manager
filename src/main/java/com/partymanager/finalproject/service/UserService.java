@@ -22,41 +22,35 @@ public class UserService {
 	@Autowired
 	private PartyRepository partyRepo;
 	
-	public List<User> findByUsername(String username){
+	public User findByUsername(String username){	
 		return userRepo.findByUsername(username);
-		
-	}
-	public User findExactlyOneUserByUsername(String username) {
-		List<User> users = userRepo.findExactlyOneUserByUsername(username);
-		if(users.size() > 0)
-			return users.get(0);
-		else
-			return new User();
 	}
 	
+	public User save(User user) {
+		return userRepo.save(user);
+	}
 	public User findById(Long userId) {
-		Optional<User> userOpt = userRepo.findById(userId);
-		return userOpt.orElse(new User());
+		return userRepo.findById(userId).orElse(new User());
+	}
+	public List<User> findAll(){
+		return userRepo.findAll();
+	}
+	public boolean usernameExists(String username) {
+		return userRepo.existsByUsername(username);
 	}
 	
-//	public User saveUser(User user) {
-//		if(user.getUserId() == null) {
-//			PlayerCharacter pc = new PlayerCharacter();
-//			
-//		}
-//	}
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
 	}
-	public User createUser(String name) {
-		User user = new User();
-		user.setName(name);
-		return userRepo.save(user);
-	}
+	
 	public List<User> findUsersByPartyId(long partyId){
 		Optional<Party> party = partyRepo.findById(partyId);
 		List<User> users = party.get().getUsers();
 		return users;
 	}
+	public List<User> saveAll(List<User> savedUsers){
+		return userRepo.saveAll(savedUsers);
+	}
+	
 	
 }

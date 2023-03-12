@@ -1,13 +1,10 @@
 package com.partymanager.finalproject.security;
 
-import java.util.Collection;
-
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.partymanager.finalproject.entity.UserEntity;
+import com.partymanager.finalproject.domain.User;
 
-public class CustomSecurityUser implements UserDetails {
+public class CustomSecurityUser extends User implements UserDetails {
 
 	/**
 	 * 
@@ -16,50 +13,40 @@ public class CustomSecurityUser implements UserDetails {
 	
 	public CustomSecurityUser() {}
 	
-	public CustomSecurityUser(UserEntity user) {
-		this.setId(user.getId());
+	public CustomSecurityUser(User user) {
+		this.setUserId(getUserId());
+		this.setUsername(getUsername());
+		this.setPassword(getPassword());
+		this.setFirstName(getfirstName());
+		this.setLastName(getLastName());
+		this.setCharacters(getCharacters());
+		this.setParties(getParties());
+		this.setAuthorities(getAuthorities());
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
+
+	
+
 
 }

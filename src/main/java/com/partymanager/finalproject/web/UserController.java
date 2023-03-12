@@ -17,13 +17,11 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/users")
-	public User createUser(@RequestBody String name) {
-		return userService.createUser(name);
-	}
-	@GetMapping("/party/{partyId}")
-	public String getPartyPlayers(ModelMap model, @PathVariable Long partyId) {
-		
-	}
 	
+//	@GetMapping("/party/{partyId}")
+//	public String getPartyPlayers(ModelMap model, @PathVariable Long partyId) {
+//		return null;
+//		
+//	}
+//	
 }
