@@ -24,4 +24,5 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		}
 		return new CustomSecurityUser(user);
 	}
+	
 }
