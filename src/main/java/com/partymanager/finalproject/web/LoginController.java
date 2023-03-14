@@ -27,12 +27,14 @@ public class LoginController {
 	public String getLogin(ModelMap model) {
 		User user = new User();
 		model.put("user", user);
+		System.out.println(user);
 		return "login";
 	}
 	
 	@PostMapping("/login")
 	public ResponseEntity<HttpStatus> login(@RequestBody User user) throws Exception{
 		Authentication auth;
+	
 		
 		try {
 			auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),
@@ -43,5 +45,6 @@ public class LoginController {
 		}
 		
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+		
 	}
 }
