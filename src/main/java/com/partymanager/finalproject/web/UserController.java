@@ -1,12 +1,12 @@
 package com.partymanager.finalproject.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.service.UserService;
@@ -23,5 +23,13 @@ public class UserController {
 //		return null;
 //		
 //	}
-//	
+
+	@GetMapping("/user/{userId}")
+	public String getUserPage(ModelMap model, @PathVariable Long userId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		User authUser = (User)authentication.getPrincipal();
+		model.put("user", authUser);
+		return "user";
+	}
 }

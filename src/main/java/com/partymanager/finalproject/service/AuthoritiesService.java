@@ -1,5 +1,8 @@
 package com.partymanager.finalproject.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +18,12 @@ public class AuthoritiesService {
 	public void saveAuth(Authorities auth) {
 		authRepo.save(auth);
 	}
+//	public List<Authorities> createAuthoritiesStrings(){
+//		List<Authorities> authorities = new ArrayList<>();
+//		Authorities dmAuthority = new Authorities("DM");
+//		Authorities userAuthority = new Authorities("USER");
+//		authorities.add(userAuthority);
+//		authorities.add(dmAuthority);
+//		return authorities;
+//	}
 }

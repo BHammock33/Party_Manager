@@ -1,5 +1,6 @@
 package com.partymanager.finalproject.security;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,10 +29,14 @@ public class Authorities implements GrantedAuthority {
 
 	private String authority;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private User user;
 
 	public Authorities() {
+	}
+	
+	public Authorities(String authority) {
+		this.authority = authority;
 	}
 
 	public Authorities(String authority, User user) {

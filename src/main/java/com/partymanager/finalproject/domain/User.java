@@ -50,7 +50,7 @@ public class User {
 	private List<Party> parties;
 	//many users to many parties
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities = new HashSet<>();
 	
 	
