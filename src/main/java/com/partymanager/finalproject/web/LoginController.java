@@ -8,7 +8,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +22,6 @@ public class LoginController {
 	@Autowired
 	private AuthenticationManager authManager;
 	
-	
-//	@Autowired
-//	private SecurityFilterChain filterChain;
-//	
 	
 	@GetMapping("/login")
 	public String getLogin(ModelMap model) {
@@ -49,6 +44,4 @@ public class LoginController {
 		
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
-	
-	
 }
