@@ -28,6 +28,11 @@ public class PartyService {
 	public Optional<Party> findByPartyId(Long partyId) {
 		return partyRepo.findById(partyId);
 	}
+
+	public Party save(Party party) {
+		return partyRepo.save(party);
+		
+	}
 	
 	
 

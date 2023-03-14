@@ -12,10 +12,10 @@
 		<div class="container-form">
 			<form action="" method="post">
 				<h1>Register Below</h1>
-				<label class="input-tags">First Name</label><input th:field="${user.firstName}" type= "text" class= "form-holder" placeholder="First Name">
-				<label class="input-tags">Last Name</label><input th:field="${user.lastName}" type= "text" class= "form-holder" placeholder="Last Name">
-				<label class="input-tags">Username</label><input th:field="${user.username}" type= "text" class= "form-holder" placeholder="Username">
-				<label class="input-tags">Password</label><input th:field="${user.password}" type= "password" class= "form-holder" placeholder="Passoword" required>
+				<label class="input-tags">First Name</label><input type= "text" th:field="${user.firstName}"  class= "form-holder" placeholder="First Name">
+				<label class="input-tags">Last Name</label><input type= "text"th:field="${user.lastName}"  class= "form-holder" placeholder="Last Name">
+				<label class="input-tags">Username</label><input type= "text" th:field="${user.username}"  class= "form-holder" placeholder="Username">
+				<label class="input-tags">Password</label><input type= "password" th:field="${user.password}"  class= "form-holder" placeholder="Passoword" required>
 				<button type="submit">Register</button>
 				<div>
 					<p style="color:white; margin-top: 5px">Login Below<a href="/login" style="color: blue">Login</a></p>

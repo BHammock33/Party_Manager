@@ -39,12 +39,12 @@ public class User {
 	@Column(name = "last_name")
 	private String lastName;
 	
-	@Column(name = "characters")
+	@Column(name = "characters", nullable = true)
 	@OneToMany(mappedBy = "user")
 	private List<PlayerCharacter> characters;
 	//one user to many characters
 	
-	@Column(name = "parties")
+	@Column(name = "parties", nullable = true)
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(name = "user_parties", joinColumns = {@JoinColumn(referencedColumnName = "userId")}, inverseJoinColumns = {@JoinColumn(referencedColumnName = "partyID")})
 	private List<Party> parties;
@@ -134,12 +134,12 @@ public class User {
 	}
 
 
-//	@Override
-//	public String toString() {
-//		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
-//				+ firstName + ", lastName=" + lastName + ", characters=" + characters + ", parties=" + parties
-//				+ ", authorities=" + authorities + "]";
-//	}
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", characters=" + characters + ", parties=" + parties
+				+ ", authorities=" + authorities + "]";
+	}
 
 	
 
