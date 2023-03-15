@@ -26,7 +26,7 @@ public class UserController {
 	@GetMapping("/user/{userId}")
 	public String getUserPage(ModelMap model, @PathVariable Long userId, @AuthenticationPrincipal User user) {
 		
-		User user = userService.findById(userId);
+		
 		System.out.println(user);
 		model.put("user", user);
 		return "user";
