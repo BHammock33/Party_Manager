@@ -27,11 +27,11 @@ public class LoginController {
 	
 	@GetMapping("/login")
 	public String getLogin(ModelMap model) {
-		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.findById(currentUser.getUserId());
-		//User user = new User();
+//		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		User user = userService.findById(currentUser.getUserId());
+		User user = new User();
 		model.put("user", user);
-		System.out.println(user);
+//		System.out.println(user);
 		return "login";
 	}
 	
