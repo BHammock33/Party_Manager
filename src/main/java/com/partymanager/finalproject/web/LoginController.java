@@ -15,20 +15,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.partymanager.finalproject.domain.User;
+import com.partymanager.finalproject.service.UserService;
 
 @Controller
 public class LoginController {
 
 	@Autowired
 	private AuthenticationManager authManager;
-	
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/login")
 	public String getLogin(ModelMap model) {
-		User user = new User();
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.findById(currentUser.getUserId());
 		model.put("user", user);
 		System.out.println(user);
-		return "login";
+		return "loginpage";
 	}
 	
 	@PostMapping("/login")

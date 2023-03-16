@@ -53,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		.anyRequest().authenticated().and()
 		.formLogin()
 		.loginPage("/login")
-		.defaultSuccessUrl("/user/{userId}", true).permitAll();
+		.defaultSuccessUrl("/home", true).permitAll();
 	}
 	
 	@Bean
