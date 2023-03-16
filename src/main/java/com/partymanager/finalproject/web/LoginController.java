@@ -29,9 +29,10 @@ public class LoginController {
 	public String getLogin(ModelMap model) {
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.findById(currentUser.getUserId());
+		//User user = new User();
 		model.put("user", user);
 		System.out.println(user);
-		return "loginpage";
+		return "login";
 	}
 	
 	@PostMapping("/login")

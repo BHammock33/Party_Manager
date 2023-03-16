@@ -43,7 +43,7 @@ public class RegistrationController {
 		roles.add("DM");
 		roles.add("Player");
 		model.addAttribute("listRole", roles);
-		//test test
+		
 		
 		return "register";
 	}
