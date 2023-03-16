@@ -50,7 +50,7 @@ public class RegistrationController {
 
 
 	@PostMapping("/register")
-	public String createUser(Model model, @ModelAttribute("userDro") UserDto userDto) {
+	public String createUser(Model model, @ModelAttribute("userDto") UserDto userDto) {
 		
 		
 		model.addAttribute("userDto",userDto);

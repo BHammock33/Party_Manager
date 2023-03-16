@@ -6,5 +6,20 @@
 
 <body>
 	<h1>Test</h1>
+	<p th:inline = "text"> Hey, [[${user.firstName}]] let's go on an adventure!</p>
+	<div>
+	<div class = "container-form">
+		<form action = "join-party" method = "post" th:object = "${user}">
+			<select th:field = "${user.parties}">
+				<option th:each = "party : ${partiesList}" th:value = "${party.partyName}" th:text = "${party.partyName}"></option>
+			</select>
+			<button class = "ui-button" type = "submit">Join your party</button>
+		</form>
+	</div>
+		<form th:action = "@{/home/delete/{userId} (userId = ${user.userId})}"
+		method = "post">
+			<input type = "submit" value = "Delete your account">
+		</form>
+	</div>
 </body>
 </html>

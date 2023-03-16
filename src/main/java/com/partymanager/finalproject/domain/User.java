@@ -40,17 +40,17 @@ public class User {
 	private String lastName;
 	
 	@Column(name = "characters")
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", orphanRemoval = true)
 	private List<PlayerCharacter> characters;
 	//one user to many characters
 	
 	@Column(name = "parties")
-	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable(name = "user_parties", joinColumns = {@JoinColumn(referencedColumnName = "userId")}, inverseJoinColumns = {@JoinColumn(referencedColumnName = "partyID")})
 	private List<Party> parties;
 	//many users to many parties
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private Set<Authorities> authorities = new HashSet<>();
 	
 	

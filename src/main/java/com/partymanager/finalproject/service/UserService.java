@@ -1,6 +1,7 @@
 package com.partymanager.finalproject.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,16 @@ public class UserService {
 		
 		
 		return userRepo.save(newUser);
+	}
+	
+	public void deleteById(Long userId) {
+		userRepo.deleteById(userId);
+	}
+	public void addParty(Long userId, Party party) {
+			User user = userRepo.findById(userId).get();
+			user.getParties().add(party);
+			userRepo.save(user);
+		
 	}
 
 	

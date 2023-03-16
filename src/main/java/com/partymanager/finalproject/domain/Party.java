@@ -21,7 +21,7 @@ public class Party {
 	@ManyToMany(mappedBy = "parties"  )
 	private List<User> users;
 	//Many Users Can have Many Parties, Many Parties can have Many Users
-	@OneToMany(mappedBy = "party")
+	@OneToMany(mappedBy = "party", orphanRemoval = true)
 	private List<PlayerCharacter> characters;
 	//one character can only be in one party, parties can have many characters
 	

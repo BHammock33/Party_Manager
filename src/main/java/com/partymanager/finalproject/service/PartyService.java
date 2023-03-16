@@ -1,5 +1,6 @@
 package com.partymanager.finalproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,25 @@ public class PartyService {
 	public Optional<Party> findByPartyId(Long partyId) {
 		return partyRepo.findById(partyId);
 	}
-	
+	public List<Party> createTestParties(){
+		List<Party> parties = new ArrayList<>();
+		Party testParty = new Party();
+		Party testParty2 = new Party();
+		Party testParty3 = new Party();
+		testParty.setPartyName("Washing Machine");
+		testParty2.setPartyName("Band of Boobs");
+		testParty3.setPartyName("The Two Crew");
+		parties.add(testParty);
+		parties.add(testParty2);
+		parties.add(testParty3);
+		return parties;
+		
+	}
+
+	public Party save(Party party) {
+		return partyRepo.save(party);
+		
+	}
 	
 
 }
