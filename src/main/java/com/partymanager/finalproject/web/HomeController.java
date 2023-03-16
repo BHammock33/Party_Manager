@@ -53,12 +53,14 @@ public class HomeController {
 		return "redirect:/register";
 	}
 	@PostMapping("/home/join-party")
-	public String joinParty(Model model, @ModelAttribute("partyDto") PartyDto partyDto) {
-		model.addAttribute("partyDto", partyDto);
-		Party party = new Party();
-		party.setPartyName(partyDto.getPartyName());
-		partyService.save(party);
+	public String joinParty(Model model) {
+		
 		
 		return "redirect:/home"; ///change to party screen later
+	}
+	@PostMapping("/home/create-party")
+	public String createParty(Model model, @ModelAttribute("partyDto") PartyDto partyDto) {
+		model.addAttribute("partyDto", partyDto);
+		return "redirect:/parties";
 	}
 }

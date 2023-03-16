@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.partymanager.finalproject.domain.Party;
+import com.partymanager.finalproject.domain.PlayerCharacter;
+import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.repository.PartyRepository;
 import com.partymanager.finalproject.repository.PlayerCharacterRepository;
 import com.partymanager.finalproject.repository.UserRepository;
@@ -47,6 +49,16 @@ public class PartyService {
 	public Party save(Party party) {
 		return partyRepo.save(party);
 		
+	}
+	public Party createParty(String partyName) {
+		Party party = new Party();
+		List<User> emptyUsers = new ArrayList<User>(7);
+		List<PlayerCharacter> emptyCharacters = new ArrayList<PlayerCharacter>(7);
+		party.setPartyName(partyName);
+		party.setPartyId(party.getPartyId());
+		party.setUsers(emptyUsers);
+		party.setCharacters(emptyCharacters);
+		return party;
 	}
 	
 
