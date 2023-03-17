@@ -58,6 +58,7 @@ public class HomeController {
 	}
 	@PostMapping("/join-party")
 	public String joinParty(Model model, @ModelAttribute List<Party> parties) {
+		//use th:object on two seperate divs one for user one for party
 		
 		
 		return "redirect:/home"; ///change to party screen later party/{partyId}
