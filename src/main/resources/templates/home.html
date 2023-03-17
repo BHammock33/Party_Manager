@@ -12,7 +12,7 @@
 	<div class = "container-form">
 		<form action = "join-party" method = "post" th:object = "${user}">
 			<select th:field = "${user.parties}">
-				<option th:each = "party : ${partiesList}" th:value = "${party.partyName}" th:text = "${party.partyName}"></option>
+				<option th:each = "party : ${partiesList}" th:value = "${party.partyId}" th:text = "${party.partyName}"></option>
 			</select>
 			<button class = "ui-button" type = "submit">Join your party</button>
 		</form>

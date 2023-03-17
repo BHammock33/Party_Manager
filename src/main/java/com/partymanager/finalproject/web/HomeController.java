@@ -40,7 +40,9 @@ public class HomeController {
 		if(user.getFirstName().equals(userById.getFirstName())) {
 			model.put("user", user);
 		}
-		List<Party> parties = partyService.createTestParties();
+//		List<Party> parties = partyService.createTestParties();
+//		model.put("partiesList", parties);
+		List<Party> parties = partyService.findAll();
 		model.put("partiesList", parties);
 		
 			
@@ -54,8 +56,8 @@ public class HomeController {
 		userService.deleteById(userId);
 		return "redirect:/register";
 	}
-	@PostMapping("/home/join-party")
-	public String joinParty(Model model) {
+	@PostMapping("/join-party")
+	public String joinParty(Model model, @ModelAttribute List<Party> parties) {
 		
 		
 		return "redirect:/home"; ///change to party screen later party/{partyId}

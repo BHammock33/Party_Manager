@@ -44,8 +44,5 @@ public class LoginController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 		
 	}
-	@PostMapping("/join-party")
-	public String joinPartyPlayer() {
-		return "redirect:/party/{partyId}";
-	}
+	
 }
