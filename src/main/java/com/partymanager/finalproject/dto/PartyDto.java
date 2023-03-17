@@ -1,5 +1,9 @@
 package com.partymanager.finalproject.dto;
 
+/**
+ * @author benne
+ *
+ */
 public class PartyDto {
 	
 	private String partyName;
@@ -17,6 +21,12 @@ public class PartyDto {
 		this.partyName = partyName;
 	}
 	
-	public PartyDto() {};
+	public PartyDto() {}
 
+	@Override
+	public String toString() {
+		return "PartyDto [partyName=" + partyName + "]";
+	};
+
+	
 }

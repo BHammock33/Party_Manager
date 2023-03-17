@@ -42,12 +42,12 @@ public class UserDto {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	@Override
-	public String toString() {
-		return "UserDto [username=" + username + ", password=" + password + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", role=" + role + "]";
-	}
-	
+//	@Override
+//	public String toString() {
+//		return "UserDto [username=" + username + ", password=" + password + ", firstName=" + firstName + ", lastName="
+//				+ lastName + ", role=" + role + "]";
+//	}
+//	
 	
 
 	

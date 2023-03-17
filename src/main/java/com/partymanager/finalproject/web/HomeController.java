@@ -29,7 +29,9 @@ public class HomeController {
 
 	@GetMapping("/home")
 	public String getHome(@AuthenticationPrincipal User user, ModelMap model) {
-		//System.out.println("line 20, home: " + user);
+		System.out.println("line 20, home: " + user);
+		PartyDto partyDto = new PartyDto();
+		model.put("partyDto", partyDto);
 		
 		//User savedUser = userService.save(userDto);
 		Long userId = user.getUserId();
@@ -56,11 +58,13 @@ public class HomeController {
 	public String joinParty(Model model) {
 		
 		
-		return "redirect:/home"; ///change to party screen later
+		return "redirect:/home"; ///change to party screen later party/{partyId}
 	}
-	@PostMapping("/home/create-party")
-	public String createParty(Model model, @ModelAttribute("partyDto") PartyDto partyDto) {
-		model.addAttribute("partyDto", partyDto);
-		return "redirect:/parties";
+	@PostMapping("/create-party")
+	public String createParty(ModelMap model, @ModelAttribute PartyDto partyDto) {
+		
+		partyService.createParty(partyDto);
+
+		return "redirect:/home"; //change to parties later
 	}
 }

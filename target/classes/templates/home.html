@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th = "https://thymeleaf.org">
+<html xmlns:th = "https://thymeleaf.org"
+	  xmlns:sec = "https://ww.thymeleaf.org/extras/spring-security"	>
 <head>
 	<title th:text = "${user.firstName}"></title>
 </head>
@@ -15,6 +16,13 @@
 			</select>
 			<button class = "ui-button" type = "submit">Join your party</button>
 		</form>
+	<div sec:authorize="hasRole('ROLE_DM')">
+		<form action = "create-party" method = "post" th:object = "${partyDto}">
+			<label class = "input-tags">Party Name: </label><input th:field="${partyDto.partyName}" type="text" class="form-holder" placeholder= "Party Name">
+			<button class="ui-button" type="submit">Create Party</button>
+		</form>
+	</div>
+	
 	</div>
 		<form th:action = "@{/home/delete/{userId} (userId = ${user.userId})}"
 		method = "post">

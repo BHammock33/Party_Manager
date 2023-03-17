@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
+import com.partymanager.finalproject.dto.PartyDto;
 import com.partymanager.finalproject.repository.PartyRepository;
 import com.partymanager.finalproject.repository.PlayerCharacterRepository;
 import com.partymanager.finalproject.repository.UserRepository;
@@ -50,14 +51,17 @@ public class PartyService {
 		return partyRepo.save(party);
 		
 	}
-	public Party createParty(String partyName) {
+	public Party createParty(PartyDto partyDto) {
 		Party party = new Party();
 		List<User> emptyUsers = new ArrayList<User>(7);
 		List<PlayerCharacter> emptyCharacters = new ArrayList<PlayerCharacter>(7);
-		party.setPartyName(partyName);
+		System.out.println(partyDto);
+		party.setPartyName(partyDto.getPartyName());
 		party.setPartyId(party.getPartyId());
 		party.setUsers(emptyUsers);
 		party.setCharacters(emptyCharacters);
+		partyRepo.save(party);
+		System.out.println(party);
 		return party;
 	}
 	

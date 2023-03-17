@@ -25,11 +25,6 @@ public class LoginController {
 	
 	@GetMapping("/login")
 	public String getLogin(ModelMap model) {
-//		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		User user = userService.findById(currentUser.getUserId());
-		User user = new User();
-		model.put("user", user);
-//		System.out.println(user);
 		return "login";
 	}
 	
@@ -48,5 +43,9 @@ public class LoginController {
 		
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 		
+	}
+	@PostMapping("/join-party")
+	public String joinPartyPlayer() {
+		return "redirect:/party/{partyId}";
 	}
 }

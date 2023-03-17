@@ -1,5 +1,6 @@
 package com.partymanager.finalproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -89,6 +90,12 @@ public class UserService {
 			user.getParties().add(party);
 			userRepo.save(user);
 		
+	}
+	public List<String> createUserRoles() {
+		List<String> roles = new ArrayList<>();
+		roles.add("DM");
+		roles.add("Player");
+		return roles;
 	}
 
 	
