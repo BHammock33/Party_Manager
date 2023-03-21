@@ -65,14 +65,14 @@ public class HomeController {
 		userService.deleteById(userId);
 		return "redirect:/register";
 	}
-	@PostMapping("/join-party/{partyId}")
-	public String joinParty(ModelMap model, User user, @PathVariable Long partyId ){
+	@PostMapping("/join-party")
+	public String joinParty(ModelMap model, User user){//@PathVariable Long partyId
 //		//use th:object on two seperate divs one for user one for party
 		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User userById = userService.findById(currentUser.getUserId());
-//		
-//		
-		userService.joinParty(userById, partyId);
+		
+		
+		//userService.joinParty(userById, partyId);
 		
 		return "redirect:/home"; ///change to party screen later party/{partyId}
 	}
