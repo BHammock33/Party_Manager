@@ -27,7 +27,7 @@ public class Party {
 	
 	
 	public Party(Long partyId, String partyName, List<User> users, List<PlayerCharacter> characters) {
-		super();
+	//	super();
 		this.partyId = partyId;
 		this.partyName = partyName;
 		this.users = users;
@@ -35,8 +35,9 @@ public class Party {
 	}
 	
 	public Party() {
-		super();
+	//	super();
 	}
+
 	
 
 	public Long getPartyId() {

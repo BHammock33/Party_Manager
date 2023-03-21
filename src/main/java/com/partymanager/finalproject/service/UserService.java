@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.User;
+import com.partymanager.finalproject.dto.PartyDto;
 import com.partymanager.finalproject.dto.UserDto;
 import com.partymanager.finalproject.repository.PartyRepository;
 import com.partymanager.finalproject.repository.PlayerCharacterRepository;
@@ -97,6 +98,25 @@ public class UserService {
 		roles.add("Player");
 		return roles;
 	}
+	public List<Party> joinParty(User user, Long partyId) {
+		Party partyToBeJoined = partyRepo.findById(partyId).orElseThrow();
+		if(user.getParties() != null) {
+			List<Party> userParties = user.getParties();
+			userParties.add(partyToBeJoined);
+			userRepo.save(user);
+			partyRepo.save(partyToBeJoined);
+			System.out.println(partyToBeJoined);
+			return userParties;
+		}else {
+			List<Party> userParties = new ArrayList<>();
+			userParties.add(partyToBeJoined);
+			userRepo.save(user);
+			partyRepo.save(partyToBeJoined);
+			System.out.println(partyToBeJoined);
+			return userParties;
+		}
+	}	
+	
 
 	
 	

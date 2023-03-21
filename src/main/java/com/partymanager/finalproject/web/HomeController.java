@@ -1,16 +1,18 @@
 package com.partymanager.finalproject.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.User;
@@ -26,7 +28,8 @@ public class HomeController {
 	
 	@Autowired
 	private PartyService partyService;
-
+	
+	
 	@GetMapping("/home")
 	public String getHome(@AuthenticationPrincipal User user, ModelMap model) {
 		System.out.println("line 20, home: " + user);
@@ -43,7 +46,13 @@ public class HomeController {
 //		List<Party> parties = partyService.createTestParties();
 //		model.put("partiesList", parties);
 		List<Party> parties = partyService.findAll();
+		List<Long> partyIds = new ArrayList<>();
+		for (Party party : parties) {
+			System.out.println(party.getPartyId());
+			partyIds.add(party.getPartyId());
+		}
 		model.put("partiesList", parties);
+		model.put("initialList", partyIds);
 		
 			
 		
@@ -56,10 +65,14 @@ public class HomeController {
 		userService.deleteById(userId);
 		return "redirect:/register";
 	}
-	@PostMapping("/join-party")
-	public String joinParty(Model model, @ModelAttribute List<Party> parties) {
-		//use th:object on two seperate divs one for user one for party
-		
+	@PostMapping("/join-party/{partyId}")
+	public String joinParty(ModelMap model, User user, @PathVariable Long partyId ){
+//		//use th:object on two seperate divs one for user one for party
+		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User userById = userService.findById(currentUser.getUserId());
+//		
+//		
+		userService.joinParty(userById, partyId);
 		
 		return "redirect:/home"; ///change to party screen later party/{partyId}
 	}
@@ -70,4 +83,10 @@ public class HomeController {
 
 		return "redirect:/home"; //change to parties later
 	}
+//	@RequestMapping("/party")
+//	public String redirect(@RequestParam(value = "parties") Long partyId, User user) {
+//		userService.joinParty(user, partyId);
+//		return "parties";
+//	}
+	
 }

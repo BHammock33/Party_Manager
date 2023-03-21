@@ -64,6 +64,11 @@ public class PartyService {
 		System.out.println(party);
 		return party;
 	}
+
+	public Party findByPartyName(String partyName) {
+		Party party = partyRepo.findByPartyName(partyName);
+		return party;
+	}
 	
 
 }
