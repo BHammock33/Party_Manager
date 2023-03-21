@@ -34,6 +34,11 @@ public class HomeController {
 	public String getHome(@AuthenticationPrincipal User user, ModelMap model) {
 		System.out.println("line 20, home: " + user);
 		PartyDto partyDto = new PartyDto();
+		PartyDto partyDtoTwo = new PartyDto();
+		Long partyDtoId = partyDtoTwo.getPartyDtoId();
+		List<PartyDto> partyDtoList = partyService.createDtoList();
+		model.put("partyDtoList", partyDtoList);
+		model.put("partyDtoTwo", partyDtoTwo);
 		model.put("partyDto", partyDto);
 		
 		//User savedUser = userService.save(userDto);
@@ -52,7 +57,7 @@ public class HomeController {
 			partyIds.add(party.getPartyId());
 		}
 		model.put("partiesList", parties);
-		model.put("initialList", partyIds);
+		model.put("initialList", partyDtoId);
 		
 			
 		
@@ -65,12 +70,14 @@ public class HomeController {
 		userService.deleteById(userId);
 		return "redirect:/register";
 	}
-	@PostMapping("/join-party")
-	public String joinParty(ModelMap model, User user){//@PathVariable Long partyId
+	@PostMapping("/join-party/{partyDtoId}")
+	public String joinParty(ModelMap model, User user, @PathVariable Long partyDtoId){//@PathVariable Long partyId
 //		//use th:object on two seperate divs one for user one for party
 		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User userById = userService.findById(currentUser.getUserId());
-		
+		Long userId = userById.getUserId();
+		partyService.joinParty(partyDtoId, userId);
+		System.out.println("were in post Mapping");
 		
 		//userService.joinParty(userById, partyId);
 		

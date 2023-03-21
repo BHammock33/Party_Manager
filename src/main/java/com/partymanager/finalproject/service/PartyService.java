@@ -24,6 +24,10 @@ public class PartyService {
 	private UserRepository userRepo;
 	@Autowired
 	private PlayerCharacterRepository pCRepo;
+	@Autowired
+	private PartyDtoService partyDtoService;
+	@Autowired
+	private UserService userService;
 	
 	public List<Party> findAll() {
 		return partyRepo.findAll();
@@ -69,6 +73,64 @@ public class PartyService {
 		Party party = partyRepo.findByPartyName(partyName);
 		return party;
 	}
+	public List<Party> joinParty(Long partyDtoId, Long userId) {
+		User foundUser = userService.findById(userId);
+		String error = "cant find party";
+		Party failedParty = new Party();
+		failedParty.setPartyName("Fail");
+		PartyDto partyDto = partyDtoService.findById(partyDtoId);
+		String partyDtoName = partyDto.getPartyName();
+		List<Party> allParties = partyRepo.findAll();
+		for(Party party : allParties) {
+			String partyName = party.getPartyName();
+			if(partyName.equalsIgnoreCase(partyDtoName)) {
+				Party partyToBeJoined = party;
+				List<Party> userParties = foundUser.getParties();
+				userParties.add(partyToBeJoined);
+				userService.save(foundUser);
+				partyRepo.save(partyToBeJoined);
+				System.out.println(partyToBeJoined +"Inside For loop");
+				return userParties;
+			}else {
+				System.out.println(error); 
+				List<Party> fail = new ArrayList<>();
+				fail.add(failedParty);
+				System.out.println("Insdie fail loop");
+				return fail;
+			}
+		}
+		
+		return null;
+	}
 	
+	public List<PartyDto> createDtoList(){
+		List<Party> allParties = partyRepo.findAll();
+		List<PartyDto> partyDtoList = new ArrayList<>();
+		for(Party party : allParties) {
+			PartyDto partyDto = new PartyDto();
+			partyDto.setPartyName(party.getPartyName());
+			partyDto.setPartyDtoId(party.getPartyId());
+			partyDtoList.add(partyDto);
+		}
+		System.out.println(partyDtoList +"create DTO list");
+		return partyDtoList;
+	}
+//	public Party compareParties(Long partyDtoId) {
+//		PartyDto partyDto = partyDtoService.findById(partyDtoId);
+//		String partyDtoName = partyDto.getPartyName();
+//		List<Party> allParties = partyRepo.findAll();
+//		for(Party party : allParties) {
+//			String partyName = party.getPartyName();
+//			if(partyName.equalsIgnoreCase(partyDtoName)) {
+//				Party partyToBeJoined = party;
+//				partyToBeJoined.setPartyId(partyToBeJoined.getPartyId());
+//				partyToBeJoined.setUsers(partyToBeJoined.getUsers());
+//				partyToBeJoined.setPartyName(partyName);
+//				partyToBeJoined.setCharacters(partyToBeJoined.getCharacters());
+//				return partyToBeJoined;
+//			}
+//		}
+//		return null;
+//	}//didn't solve my issue
 
 }
