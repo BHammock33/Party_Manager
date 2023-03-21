@@ -9,14 +9,32 @@
 <body>
 	<h1>Test</h1>
 	<p th:inline = "text"> Hey, [[${user.firstName}]] let's go on an adventure!</p>
-	<div>
+<!-- 	<div> -->
 	<div class = "container-form">
-		<form th:action = "@{/join-party/{partyDtoId} (partyDtoId = ${partyDto.partyDtoId})}" method="post" th:object = "${user}" onchange = "onChange()">
-			<select th:name="parties" th:field = "${user.parties}">
-				<option th:each = "party : ${partiesList}" th:value = "${party.partyId}" th:text = "${party.partyName}" ></option>
-			</select>
-			<button class = "ui-button" type = "submit">Join your party</button>
+<!-- 		<form id="joinParty" th:action = "@{/join-party/{partyDtoId} (partyDtoId = ${partyDtoTwo.partyDtoId})}" method = "post" th:object = "${partyDtoTwo}"></form> -->
+<!-- 		<form action = "" method="post" th:object = "${user}" onchange = "onChange()"> -->
+<!-- 			<select th:name="parties" th:field = "${user.parties}"> -->
+<!-- 				<option th:each = "party : ${partiesList}" th:value = "${party.partyId}" th:text = "${party.partyName}" ></option> -->
+<!-- 			</select> -->
+<!-- 			<button class = "ui-button" type = "submit" form="joinParty">Join your party</button> -->
+<!-- 		</form> -->
+			<h2>Parties List</h2>
+			<table>
+				<tr>
+					<th>Party Name</th>
+				</tr>
+				<tr th:each = "party : ${partiesList}">
+					<td>
+						<a th:href = "@{/join-party/{partyId} (partyId = ${party.partyId})}" th:text = "${party.partyName}">Join Party</a>
+					</td>
+			</table>
+	</div>	
+	<div class = "container-form">
+		<form action = "create-character" method = "get">
+			<button class = "ui-button" type="submit">Create Your Character</button>
 		</form>
+	</div>	
+			
 	<div sec:authorize="hasRole('ROLE_DM')">
 		<form action = "create-party" method = "post" th:object = "${partyDto}">
 			<label class = "input-tags">Party Name: </label><input th:field="${partyDto.partyName}" type="text" class="form-holder" placeholder= "Party Name">
@@ -28,7 +46,7 @@
 		</div>
 	</div>
 	
-	</div>
+	<div>
 		<form th:action = "@{/home/delete/{userId} (userId = ${user.userId})}"
 		method = "post">
 			<input type = "submit" value = "Delete your account">

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th = "http://thymeleaf.org">
 <head>
-<title th:text="${party.name}"></title>
+<!-- <title th:text="${party.name}"></title> -->
+<title th:text ="${party.partyName}"></title>
 
 <link rel= "stylesheet" th:href="@{/css/party.css}">
 </head>
@@ -10,7 +11,7 @@
 		<table>
 		<thead>	
 			<tr>
-				<th th:text = "${party.name}"><th>
+				<th th:text = "${party.partyName}"><th>
 			</tr>
 		</thead>
 		<thead>	
@@ -23,15 +24,20 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="player : ${players}">
-				<td th:text = "${player.name}"></td>
-				<td th:text = "${player.PlayerCharacter.name}"></td>
-				<td th:text = "${player.PlayerCharacter.xp}"></td>
-				<td th:text = "${player.PlayerCharacter.alighment}"></td>
-				<td th:text = "${player.PlayerCharacter.coins}"></td>
+			<tr th:each="user : ${players}">
+				<td th:text = "${user.firstName}"></td>
+				<td th:text = "${user.lastName}"></td>
+				<!-- <td th:text = "${user.PlayerCharacter.name}"></td>
+				<td th:text = "${user.PlayerCharacter.xp}"></td>
+				<td th:text = "${user.PlayerCharacter.alighment}"></td>
+				<td th:text = "${user.PlayerCharacter.coins}"></td> -->
 			</tr>
 		</tbody>			
 		</table>
+		<h1>Test</h1>
+		<form th:action = "@{/join-party/{partyId} (partyId = ${party.partyId})}" th:object = "${partyToBeJoined}" method = "post">
+			<button class = "ui-button" type = "submit">Join Party</button>
+		</form>
 	</div>
 </body>
 

@@ -33,67 +33,37 @@ public class HomeController {
 	@GetMapping("/home")
 	public String getHome(@AuthenticationPrincipal User user, ModelMap model) {
 		System.out.println("line 20, home: " + user);
+		
+		//insert PartyDto for conversion to a party
 		PartyDto partyDto = new PartyDto();
-		PartyDto partyDtoTwo = new PartyDto();
-		Long partyDtoId = partyDtoTwo.getPartyDtoId();
-		List<PartyDto> partyDtoList = partyService.createDtoList();
-		model.put("partyDtoList", partyDtoList);
-		model.put("partyDtoTwo", partyDtoTwo);
 		model.put("partyDto", partyDto);
 		
-		//User savedUser = userService.save(userDto);
+		//Find the currently logged in user and put 
+		//them on the model if they match the expected user
 		Long userId = user.getUserId();
 		User userById = userService.findById(userId);
-	//	System.out.println("Line 29: " + userById);
 		if(user.getFirstName().equals(userById.getFirstName())) {
 			model.put("user", user);
 		}
-//		List<Party> parties = partyService.createTestParties();
-//		model.put("partiesList", parties);
+		//get a collection of all parties and put them on the page
+		//so they can be dispalyed and clicked into
 		List<Party> parties = partyService.findAll();
-		List<Long> partyIds = new ArrayList<>();
-		for (Party party : parties) {
-			System.out.println(party.getPartyId());
-			partyIds.add(party.getPartyId());
-		}
-		model.put("partiesList", parties);
-		model.put("initialList", partyDtoId);
-		
-			
-		
-	//	model.put("user", savedUser);
-		
+		model.put("partiesList", parties);				
 		return "home";
 	}
 	@PostMapping("/home/delete/{userId}")
 	public String deleteUser(@PathVariable Long userId) {
+		
+		//delete user from DB
 		userService.deleteById(userId);
 		return "redirect:/register";
-	}
-	@PostMapping("/join-party/{partyDtoId}")
-	public String joinParty(ModelMap model, User user, @PathVariable Long partyDtoId){//@PathVariable Long partyId
-//		//use th:object on two seperate divs one for user one for party
-		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User userById = userService.findById(currentUser.getUserId());
-		Long userId = userById.getUserId();
-		partyService.joinParty(partyDtoId, userId);
-		System.out.println("were in post Mapping");
-		
-		//userService.joinParty(userById, partyId);
-		
-		return "redirect:/home"; ///change to party screen later party/{partyId}
 	}
 	@PostMapping("/create-party")
 	public String createParty(ModelMap model, @ModelAttribute PartyDto partyDto) {
 		
+		//convert DTO to Party
 		partyService.createParty(partyDto);
-
 		return "redirect:/home"; //change to parties later
 	}
-//	@RequestMapping("/party")
-//	public String redirect(@RequestParam(value = "parties") Long partyId, User user) {
-//		userService.joinParty(user, partyId);
-//		return "parties";
-//	}
 	
 }

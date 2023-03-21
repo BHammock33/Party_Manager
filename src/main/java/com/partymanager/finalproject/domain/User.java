@@ -45,12 +45,12 @@ public class User {
 	//one user to many characters
 	
 	@Column(name = "parties")
-	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinTable(name = "user_parties", joinColumns = {@JoinColumn(referencedColumnName = "userId")}, inverseJoinColumns = {@JoinColumn(referencedColumnName = "partyID")})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name = "user_parties", joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "userId")}, inverseJoinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "partyId")})
 	private List<Party> parties;
 	//many users to many parties
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "user")
 	private Set<Authorities> authorities = new HashSet<>();
 	
 	

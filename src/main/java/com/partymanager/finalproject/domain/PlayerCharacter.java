@@ -23,7 +23,8 @@ public class PlayerCharacter {
 	//will set to character_id
 	private String name;
 	private Integer xp;
-	private String allignment;
+	@Column(name = "alignment")
+	private String alignment;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -42,12 +43,12 @@ public class PlayerCharacter {
 	private Party party;
 	//one character can only be in one party, parties can have many characters
 
-	public PlayerCharacter(Long characterId, String name, Integer xp, String allignment, User user, List<Coin> coins) {
+	public PlayerCharacter(Long characterId, String name, Integer xp, String alignment, User user, List<Coin> coins) {
 		super();
 		this.characterId = characterId;
 		this.name = name;
 		this.xp = xp;
-		this.allignment = allignment;
+		this.alignment = alignment;
 		this.user = user;
 		this.coins = coins;
 	}
@@ -80,12 +81,12 @@ public class PlayerCharacter {
 		this.xp = xp;
 	}
 
-	public String getAllignment() {
-		return allignment;
+	public String getAlignment() {
+		return alignment;
 	}
 
-	public void setAllignment(String allignment) {
-		this.allignment = allignment;
+	public void setAlignment(String alignment) {
+		this.alignment = alignment;
 	}
 
 	public User getUser() {

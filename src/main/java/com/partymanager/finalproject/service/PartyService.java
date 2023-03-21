@@ -36,36 +36,27 @@ public class PartyService {
 	public Optional<Party> findByPartyId(Long partyId) {
 		return partyRepo.findById(partyId);
 	}
-	public List<Party> createTestParties(){
-		List<Party> parties = new ArrayList<>();
-		Party testParty = new Party();
-		Party testParty2 = new Party();
-		Party testParty3 = new Party();
-		testParty.setPartyName("Washing Machine");
-		testParty2.setPartyName("Band of Boobs");
-		testParty3.setPartyName("The Two Crew");
-		parties.add(testParty);
-		parties.add(testParty2);
-		parties.add(testParty3);
-		return parties;
-		
-	}
-
+	
 	public Party save(Party party) {
 		return partyRepo.save(party);
 		
 	}
 	public Party createParty(PartyDto partyDto) {
+		//create a new party, append an empty list of users and characters
 		Party party = new Party();
 		List<User> emptyUsers = new ArrayList<User>(7);
 		List<PlayerCharacter> emptyCharacters = new ArrayList<PlayerCharacter>(7);
-		System.out.println(partyDto);
+		
+		
+		//map DTO properites to Party
 		party.setPartyName(partyDto.getPartyName());
 		party.setPartyId(party.getPartyId());
 		party.setUsers(emptyUsers);
 		party.setCharacters(emptyCharacters);
+		
+		//save new party in partyRepo
 		partyRepo.save(party);
-		System.out.println(party);
+		System.out.println("Party is saved:" + party);//functions party has ID, name, empty users, and empty characters
 		return party;
 	}
 
@@ -73,34 +64,49 @@ public class PartyService {
 		Party party = partyRepo.findByPartyName(partyName);
 		return party;
 	}
-	public List<Party> joinParty(Long partyDtoId, Long userId) {
+	//Can Probably Delete below Later
+	
+//	public List<Party> joinParty(Long partyDtoId, Long userId) {
+//		User foundUser = userService.findById(userId);
+//		String error = "cant find party";
+//		Party failedParty = new Party();
+//		failedParty.setPartyName("Fail");
+//		PartyDto partyDto = partyDtoService.findById(partyDtoId);
+//		String partyDtoName = partyDto.getPartyName();
+//		List<Party> allParties = partyRepo.findAll();
+//		for(Party party : allParties) {
+//			String partyName = party.getPartyName();
+//			if(partyName.equalsIgnoreCase(partyDtoName)) {
+//				Party partyToBeJoined = party;
+//				List<Party> userParties = foundUser.getParties();
+//				userParties.add(partyToBeJoined);
+//				userService.save(foundUser);
+//				partyRepo.save(partyToBeJoined);
+//				System.out.println(partyToBeJoined +"Inside For loop");
+//				return userParties;
+//			}else {
+//				System.out.println(error); 
+//				List<Party> fail = new ArrayList<>();
+//				fail.add(failedParty);
+//				System.out.println("Insdie fail loop");
+//				return fail;
+//			}
+//		}
+//		
+//		return null;
+//	}
+	public List<Party> joinPartyById(Long partyId, Long userId){
 		User foundUser = userService.findById(userId);
-		String error = "cant find party";
-		Party failedParty = new Party();
-		failedParty.setPartyName("Fail");
-		PartyDto partyDto = partyDtoService.findById(partyDtoId);
-		String partyDtoName = partyDto.getPartyName();
-		List<Party> allParties = partyRepo.findAll();
-		for(Party party : allParties) {
-			String partyName = party.getPartyName();
-			if(partyName.equalsIgnoreCase(partyDtoName)) {
-				Party partyToBeJoined = party;
-				List<Party> userParties = foundUser.getParties();
-				userParties.add(partyToBeJoined);
-				userService.save(foundUser);
-				partyRepo.save(partyToBeJoined);
-				System.out.println(partyToBeJoined +"Inside For loop");
-				return userParties;
-			}else {
-				System.out.println(error); 
-				List<Party> fail = new ArrayList<>();
-				fail.add(failedParty);
-				System.out.println("Insdie fail loop");
-				return fail;
-			}
-		}
-		
-		return null;
+		List<Party> userParties = foundUser.getParties();
+		Party partyToBeJoined = partyRepo.findById(partyId).orElseThrow();
+	//	String partyName = partyToBeJoined.getPartyName();
+		userParties.add(partyToBeJoined);
+		userRepo.save(foundUser);
+		partyRepo.save(partyToBeJoined);
+		partyRepo.saveAll(userParties);
+		//System.out.println(userParties + "User Parties has been saved");
+		//System.out.println( partyName + " has been joined");
+		return userParties;
 	}
 	
 	public List<PartyDto> createDtoList(){

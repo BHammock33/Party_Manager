@@ -98,25 +98,27 @@ public class UserService {
 		roles.add("Player");
 		return roles;
 	}
-	public List<Party> joinParty(User user, Long partyId) {
-		Party partyToBeJoined = partyRepo.findById(partyId).orElseThrow();
-		if(user.getParties() != null) {
-			List<Party> userParties = user.getParties();
-			userParties.add(partyToBeJoined);
-			userRepo.save(user);
-			partyRepo.save(partyToBeJoined);
-			System.out.println(partyToBeJoined);
-			return userParties;
-		}else {
-			List<Party> userParties = new ArrayList<>();
-			userParties.add(partyToBeJoined);
-			userRepo.save(user);
-			partyRepo.save(partyToBeJoined);
-			System.out.println(partyToBeJoined);
-			return userParties;
-		}
-	}	
-	
+//	public List<Party> joinParty(User user, Long partyId) {
+//		Party partyToBeJoined = partyRepo.findById(partyId).orElseThrow();
+//		if(user.getParties() != null) {
+//			List<Party> userParties = user.getParties();
+//			userParties.add(partyToBeJoined);
+//			userRepo.save(user);
+//			partyRepo.save(partyToBeJoined);
+//			System.out.println(partyToBeJoined);
+//			return userParties;
+//		}else {
+//			List<Party> userParties = new ArrayList<>();
+//			userParties.add(partyToBeJoined);
+//			userRepo.save(user);
+//			partyRepo.save(partyToBeJoined);
+//			System.out.println(partyToBeJoined);
+//			return userParties;
+//		}
+//	}	
+//	public List<Party> findUserParties(Long userId){
+//		return userRepo.findUserParties(userId);
+//	}
 
 	
 	
