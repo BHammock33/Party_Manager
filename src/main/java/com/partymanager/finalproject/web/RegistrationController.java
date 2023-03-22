@@ -54,26 +54,7 @@ public class RegistrationController {
 	public String createUser(UserDto userDto) {
 		
 		userService.save(userDto);
-		//Model model, @ModelAttribute("userDto") 
-//		model.addAttribute("userDto",userDto);
-//		System.out.println(userDto);
-//		User user = new User();
-//		Authorities userAuth = new Authorities("ROLE_USER", user);
-//		Authorities dmAuth = new Authorities("ROLE_DM", user);
-//		user.setUsername(userDto.getUsername());
-//		user.setFirstName(userDto.getFirstName());
-//		user.setLastName(userDto.getLastName());
-//		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-//		if(userDto.getRole().equalsIgnoreCase("DM")) {
-//			user.getAuthorities().add(dmAuth);
-//			authService.saveAuth(dmAuth);
-//		}else {
-//			user.getAuthorities().add(userAuth);
-//			authService.saveAuth(userAuth);
-//		}
-//		userService.save(user);
-//		
-//		System.out.println(user);
+	
 		
 		
 		return "redirect:/login";

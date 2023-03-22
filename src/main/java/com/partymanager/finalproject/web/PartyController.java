@@ -25,6 +25,7 @@ public class PartyController {
 	private UserService userService;
 	
 	
+	
 	@GetMapping("/parties")
 	public String getParties(ModelMap model) {
 		List<Party> parties = partyService.findAll();
@@ -36,6 +37,11 @@ public class PartyController {
 		System.out.println("line 100 getmapping");
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
 		List<User> players = party.getUsers();
+		String partyName = party.getPartyName();
+		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.findById(currentUser.getUserId());
+		Boolean inParty = partyService.isInParty(partyName, user);
+		model.put("inParty", inParty);
 		model.put("players", players);
 		model.put("party", party);
 		PartyDto partyDto = new PartyDto();
@@ -53,6 +59,10 @@ public class PartyController {
 		Long userId = user.getUserId();
 		partyService.joinPartyById(partyId, userId);
 		return "redirect:/join-party/{partyId}";
+	}
+	@GetMapping("/back")
+	public String goBack() {
+		return "redirect:/home";
 	}
 
 }

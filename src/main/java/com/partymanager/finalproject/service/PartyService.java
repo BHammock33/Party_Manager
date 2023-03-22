@@ -139,4 +139,14 @@ public class PartyService {
 //		return null;
 //	}//didn't solve my issue
 
+	public Boolean isInParty(String partyName, User user) {
+		Boolean inParty = false;
+		List<Party> parties = user.getParties();
+		for(Party party : parties) {
+			String existingName = party.getPartyName();
+			if(existingName.equalsIgnoreCase(partyName)) {
+				return inParty = true;
+			}else return inParty = false;
+		}return inParty;
+	}
 }

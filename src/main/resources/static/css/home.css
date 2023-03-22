@@ -1,0 +1,13 @@
+html {
+	font-family:"Libre Baskerville", serif;
+	background: url("/images/gates.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size:  cover;
+	
+}
+@font-face{
+	font-family: dndFont;
+	src: url
+}

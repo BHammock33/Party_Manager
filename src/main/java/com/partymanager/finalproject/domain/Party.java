@@ -65,11 +65,11 @@ public class Party {
 		this.characters = characters;
 	}
 
-	@Override
-	public String toString() {
-		return "Party [partyId=" + partyId + ", partyName=" + partyName + ", users=" + users + ", characters="
-				+ characters + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Party [partyId=" + partyId + ", partyName=" + partyName + ", users=" + users + ", characters="
+//				+ characters + "]";
+//	}
 	
 	
 

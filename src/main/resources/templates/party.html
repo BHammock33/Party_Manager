@@ -27,6 +27,8 @@
 			<tr th:each="user : ${players}">
 				<td th:text = "${user.firstName}"></td>
 				<td th:text = "${user.lastName}"></td>
+				<td th:text = "${user.characters}"></td>
+				<td th:text = "${user.parties}"></td>
 				<!-- <td th:text = "${user.PlayerCharacter.name}"></td>
 				<td th:text = "${user.PlayerCharacter.xp}"></td>
 				<td th:text = "${user.PlayerCharacter.alighment}"></td>
@@ -35,8 +37,13 @@
 		</tbody>			
 		</table>
 		<h1>Test</h1>
-		<form th:action = "@{/join-party/{partyId} (partyId = ${party.partyId})}" th:object = "${partyToBeJoined}" method = "post">
-			<button class = "ui-button" type = "submit">Join Party</button>
+			<form th:action = "@{/join-party/{partyId} (partyId = ${party.partyId})}" th:object = "${partyToBeJoined}" method = "post">
+				<button id="join-party" class = "ui-button" type = "submit">Join Party</button>
+			</form>
+	</div>
+	<div>
+		<form action = "/back" method = "get">
+			<button class= "ui-button" type = "submit">Back To Home</button>
 		</form>
 	</div>
 </body>
