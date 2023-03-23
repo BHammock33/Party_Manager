@@ -14,4 +14,5 @@ public interface PartyRepository extends JpaRepository<Party, Long>{
 	Party findByPartyName(String partyName);
 
 	
+	
 }

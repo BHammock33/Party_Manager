@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
 
@@ -29,4 +28,9 @@ public interface UserRepository extends JpaRepository<User, Long>{
 //			+ "left join fetch u.party "
 //			+ "where u.userId = :userId")
 //	List<Party> findUserParties(Long userId);
+
+	@Query("select u from User u where u.firstName = :firstName")
+	User findByFirstName(String firstName);
+
+	
 }

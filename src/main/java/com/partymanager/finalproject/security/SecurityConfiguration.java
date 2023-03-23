@@ -70,28 +70,28 @@ public class SecurityConfiguration {//extends WebSecurityConfigurerAdapter{
 		return http.build();
 	}
 	
-//	protected void configure(AuthenticationManagerBuilder authentication) throws Exception {
-//		authentication
-//			.userDetailsService(userDetailsServiceImpl)
-//			.passwordEncoder(passwordEncoder());
-//	}
-//	
-//	
-//	protected void configure(HttpSecurity http) throws Exception{
-//		http.csrf().disable().authorizeHttpRequests()
-//		.antMatchers("/admin/").hasAnyRole("ADMIN")
-//		.antMatchers("/DM/").hasAnyRole("DM")
-//		.antMatchers("/register").permitAll()
-//		.antMatchers("/css/**").permitAll()
-//		.antMatchers("/images/**").permitAll()
-//		.anyRequest().authenticated().and()
-//		.formLogin()
-//		.loginPage("/login")
-//		.defaultSuccessUrl("/home", true).permitAll();
-//	}
-//	
+	//Revert Security To here if need be
 //	@Bean
-//	public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-//		return authenticationConfiguration.getAuthenticationManager();
+//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//		http.csrf().disable()
+//		.formLogin()
+//			.loginPage("/login")
+//			.defaultSuccessUrl("/home")
+//			.permitAll()
+//		.and()
+//			.logout()
+//			.logoutSuccessUrl("/login")
+//			.permitAll()
+//		.and()
+//			.authorizeHttpRequests()
+//			.antMatchers("/admin").hasAnyRole("ADMIN")
+//			.antMatchers("/DM").hasAnyRole("DM")
+//			.antMatchers("/", "/css/**", "/js/**", "/images/**").permitAll()
+//			.antMatchers("/index", "/register").permitAll()
+//			.antMatchers("/home").permitAll()
+//			.anyRequest()
+//			.authenticated();
+//		
+//		return http.build();
 //	}
 }

@@ -8,3 +8,4 @@ function onChange(){
 					var strUser = document.getElementById("parties").value;
 					console.log(strUser);
 				}
+				

@@ -5,6 +5,7 @@
 	<link rel="stylesheet" th:href="@{/css/register.css}">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<script src = "https://kit.fontawesome.com/7987438857.js" crossorigin="anonymous"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -15,7 +16,9 @@
 				<label class="input-tags">First Name</label><input th:field="${userDto.firstName}" type= "text" class= "form-holder" placeholder="First Name">
 				<label class="input-tags">Last Name</label><input th:field="${userDto.lastName}" type= "text" class= "form-holder" placeholder="Last Name">
 				<label class="input-tags">Username</label><input th:field="${userDto.username}" type= "text" class= "form-holder" placeholder="Username">
-				<label class="input-tags">Password</label><input th:field="${userDto.password}" type= "password" class= "form-holder" placeholder="Passoword" required>
+			<div>	
+				<label class="input-tags">Password</label><input th:field="${userDto.password}" type= "password" class= "form-holder" placeholder="Passoword" required><i id = "passwordEyeIcon" class ="fa-solid fa-eye"></i>
+			</div>	
 				<label class= "input-tags">Role:</label>
 				<select th:field = "*{role}">
 					<option th:each = "role : ${listRole}" th:value = "${role}" th:text = "${role}"></option>
@@ -28,7 +31,7 @@
 				
 		</div>
 	</div>
-
+	<script type = "text/javascript" src = "/js/register.js"></script>
 </body>
 
 </html>

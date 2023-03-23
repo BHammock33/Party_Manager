@@ -140,13 +140,28 @@ public class PartyService {
 //	}//didn't solve my issue
 
 	public Boolean isInParty(String partyName, User user) {
-		Boolean inParty = false;
+		
 		List<Party> parties = user.getParties();
+		List<String> partyNames = new ArrayList<>();
 		for(Party party : parties) {
 			String existingName = party.getPartyName();
-			if(existingName.equalsIgnoreCase(partyName)) {
-				return inParty = true;
-			}else return inParty = false;
-		}return inParty;
+			partyNames.add(existingName);
+		}
+		 Boolean contains = partyNames.contains(partyName);
+//		 System.out.println(partyNames);
+//		 System.out.println(parties);
+//		 System.out.println(partyName + "in boolean method");
+//		 System.out.println(contains);
+		 return contains;
+		
 	}
+	public void removeFromParty(Long userId, Long partyId) {
+		Party foundParty = partyRepo.findById(partyId).orElseThrow();
+		User foundUser = userService.findById(userId);
+		foundUser.getParties().remove(foundParty);
+		userRepo.save(foundUser);
+		partyRepo.save(foundParty);
+	}
+	
+	
 }

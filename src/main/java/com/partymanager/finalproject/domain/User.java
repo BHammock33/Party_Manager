@@ -45,12 +45,12 @@ public class User {
 	//one user to many characters
 	
 	@Column(name = "parties")
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinTable(name = "user_parties", joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "userId")}, inverseJoinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "partyId")})
 	private List<Party> parties;
 	//many users to many parties
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "user")
 	private Set<Authorities> authorities = new HashSet<>();
 	
 	
@@ -134,12 +134,12 @@ public class User {
 	}
 
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", characters=" + characters + ", parties=" + parties
-				+ ", authorities=" + authorities + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
+//				+ firstName + ", lastName=" + lastName + ", characters=" + characters + ", parties=" + parties
+//				+ ", authorities=" + authorities + "]";
+//	}
 
 	
 

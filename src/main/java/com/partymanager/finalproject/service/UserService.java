@@ -2,7 +2,6 @@ package com.partymanager.finalproject.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.User;
-import com.partymanager.finalproject.dto.PartyDto;
 import com.partymanager.finalproject.dto.UserDto;
 import com.partymanager.finalproject.repository.PartyRepository;
 import com.partymanager.finalproject.repository.PlayerCharacterRepository;
@@ -119,6 +117,10 @@ public class UserService {
 //	public List<Party> findUserParties(Long userId){
 //		return userRepo.findUserParties(userId);
 //	}
+
+	public User findByFirstName(String firstName) {
+		return userRepo.findByFirstName(firstName);
+	}
 
 	
 	

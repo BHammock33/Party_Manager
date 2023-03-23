@@ -105,11 +105,11 @@ public class PlayerCharacter {
 		this.coins = coins;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "PlayerCharacter [characterId=" + characterId + ", name=" + name + ", xp=" + xp + ", alignment="
-//				+ alignment + ", user=" + user + ", coins=" + coins + ", party=" + party + "]";
-//	}
-	
+	@Override
+	public String toString() {
+		return "PlayerCharacter [characterId=" + characterId + ", name=" + name + ", xp=" + xp + ", alignment="
+				+ alignment + ", user=" + user + ", coins=" + coins + ", party=" + party + "]";
+	}
+
 
 }

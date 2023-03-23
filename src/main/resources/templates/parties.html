@@ -5,7 +5,17 @@
 	</head>
 	<body>
 		<h1>Test</h1>
-		<h1 th:inline = "text"> You're in party [[${party.partyName}]]</h1>	
+		<p th:inline = "text"> Hey, [[${user.firstName}]] let's go on an adventure!</p>
+		<table>
+		<thead>
+			<tr>
+				<th>Your Parties</th>
+		</thead>
+		<tbody>
+			<tr th:each = "party : ${parties}">
+				<td th:href = "@{/join-party/{partyId} (partyId = ${party.partyId})}"th:text = "${party.partyName}">
+		</tbody>
+		</table>
 	</body>
 	
 </html>
