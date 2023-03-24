@@ -11,8 +11,8 @@
 </head>
 
 <body>
-	<h1>Test</h1>
-	<p th:inline = "text"> Hey, [[${user.firstName}]] let's go on an adventure!</p>
+	
+	<p class="welcome" th:inline = "text"> Hey, [[${user.firstName}]] let's go on an adventure!</p>
 <!-- 	<div> -->
 	<div sec:authorize = "hasRole('ROLE_USER')" class = "container-form">
 <!-- 		<form id="joinParty" th:action = "@{/join-party/{partyDtoId} (partyDtoId = ${partyDtoTwo.partyDtoId})}" method = "post" th:object = "${partyDtoTwo}"></form> -->
@@ -22,10 +22,9 @@
 <!-- 			</select> -->
 <!-- 			<button class = "ui-button" type = "submit" form="joinParty">Join your party</button> -->
 <!-- 		</form> -->
-			<h2>Parties List</h2>
 			<table>
 				<tr>
-					<th>Party Name</th>
+					<th>Join Your Party Below</th>
 				</tr>
 				<tr th:each = "party : ${partiesList}">
 					<td>
@@ -33,16 +32,16 @@
 					</td>
 			</table>
 	</div>	
-	<div sec:authorize = "hasRole('ROLE_USER')" class = "container-form">
+	<div sec:authorize = "hasRole('ROLE_USER')">
 		<form action = "create-character" method = "get">
-			<button class = "ui-button" type="submit">Create Your Character</button>
+			<button class = "user-button" type="submit">Create Your Character</button>
 		</form>
 	</div>	
 			
 	<div sec:authorize="hasRole('ROLE_DM')">
 		<form action = "create-party" method = "post" th:object = "${partyDto}">
 			<label class = "input-tags">Party Name: </label><input th:field="${partyDto.partyName}" type="text" class="form-holder" placeholder= "Party Name">
-			<button class="ui-button" type="submit">Create Party</button>
+			<button class="button" type="submit">Create Party</button>
 		</form>
 		<div>
 			<label class = "input-tags">Click here for randomly generated Party Names:</label><a href = "https://codexnomina.com/party-names/" target="_blank">Party Generator</a>
@@ -50,15 +49,20 @@
 		</div>
 	</div>
 	
-	<div>
+	<div class = "delete-button">
 		<form th:action = "@{/home/delete/{userId} (userId = ${user.userId})}"
 		method = "post">
-			<input type = "submit" value = "Delete your account">
+			<input type = "submit" value = "Delete your account" class= "delete-button">
 		</form>
 	</div>
 	<div>
 		<form th:action = "@{/home/parties/{userId} (userId = ${user.userId})}" method = "get">
-			<input type = "submit" value = "See your parties">
+			<input type = "submit" value = "See your parties" class = "user-button">
+		</form>
+	</div>
+	<div class = "logout-button">
+		<form action = "/logout" method = "post">
+			<button type = "submit" class = "logout-button">Logout</button>
 		</form>
 	</div>
 </body>

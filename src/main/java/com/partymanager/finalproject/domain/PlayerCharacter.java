@@ -43,7 +43,14 @@ public class PlayerCharacter {
 	private Party party;
 	//one character can only be in one party, parties can have many characters
 
-	public PlayerCharacter(Long characterId, String name, Integer xp, String alignment, User user, List<Coin> coins) {
+	
+
+	public PlayerCharacter() {
+		super();
+	}
+
+	public PlayerCharacter(Long characterId, String name, Integer xp, String alignment, User user, List<Coin> coins,
+			Party party) {
 		super();
 		this.characterId = characterId;
 		this.name = name;
@@ -51,10 +58,7 @@ public class PlayerCharacter {
 		this.alignment = alignment;
 		this.user = user;
 		this.coins = coins;
-	}
-
-	public PlayerCharacter() {
-		super();
+		this.party = party;
 	}
 
 	public Long getCharacterId() {
@@ -103,6 +107,15 @@ public class PlayerCharacter {
 
 	public void setCoins(List<Coin> coins) {
 		this.coins = coins;
+	}
+	
+
+	public Party getParty() {
+		return party;
+	}
+
+	public void setParty(Party party) {
+		this.party = party;
 	}
 
 	@Override

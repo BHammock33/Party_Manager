@@ -13,7 +13,9 @@
 		</thead>
 		<tbody>
 			<tr th:each = "party : ${parties}">
-				<td th:href = "@{/join-party/{partyId} (partyId = ${party.partyId})}"th:text = "${party.partyName}">
+				<td>
+					<a th:href = "@{/join-party/{partyId} (partyId = ${party.partyId})}"th:text = "${party.partyName}"></a>
+				</td>
 		</tbody>
 		</table>
 	</body>

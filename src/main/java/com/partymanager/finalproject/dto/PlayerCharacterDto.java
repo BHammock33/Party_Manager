@@ -5,15 +5,17 @@ public class PlayerCharacterDto {
 	private String name;
 	private Integer xp;
 	private String alignment;
+	private String partyName;
 	
 	public PlayerCharacterDto() {
 		super();
 	}
-	public PlayerCharacterDto(String name, Integer xp, String alignment) {
+	public PlayerCharacterDto(String name, Integer xp, String alignment, String partyName) {
 		super();
 		this.name = name;
 		this.xp = xp;
 		this.alignment = alignment;
+		this.partyName = partyName;
 	}
 	public String getName() {
 		return name;
@@ -33,6 +35,13 @@ public class PlayerCharacterDto {
 	public void setAlignment(String alignment) {
 		this.alignment = alignment;
 	}
+	public String getPartyName() {
+		return partyName;
+	}
+	public void setPartyName(String partyName) {
+		this.partyName = partyName;
+	}
+	
 	
 	
 

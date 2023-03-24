@@ -9,7 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.partymanager.finalproject.domain.Party;
+import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
+import com.partymanager.finalproject.dto.OnePartyPlayer;
 import com.partymanager.finalproject.dto.UserDto;
 import com.partymanager.finalproject.repository.PartyRepository;
 import com.partymanager.finalproject.repository.PlayerCharacterRepository;
@@ -120,6 +122,22 @@ public class UserService {
 
 	public User findByFirstName(String firstName) {
 		return userRepo.findByFirstName(firstName);
+	}
+	
+	public OnePartyPlayer createOnePartyPlayer(Long userId, Long partyId, Long characterId) {
+		User user = userRepo.findById(userId).orElseThrow();
+		PlayerCharacter pc = pCRepo.findById(characterId).orElseThrow();
+		
+		OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
+		onePartyPlayer.setOnePartyUserId(user.getUserId());
+		onePartyPlayer.setFirstName(user.getFirstName());
+		onePartyPlayer.setCharacterName(pc.getName());
+		onePartyPlayer.setExperience(pc.getXp());
+		onePartyPlayer.setAlighment(pc.getAlignment());
+		onePartyPlayer.setOnePartyID(partyId);
+		
+		return onePartyPlayer;
+		
 	}
 
 	

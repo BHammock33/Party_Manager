@@ -4,13 +4,14 @@
 	<title>test</title>
 </head>
 <body>
-	<h1>Character Test</h1>
+	<p class = "welcome" th:inline = "text"> Create your character for [[${pc.partyName}]] party!
 	<div class = "container">
 		<div class = "container-form">
 			<h1>Create your character Below</h1>
 			<form action= "/create-character" method = "post" th:object = "${pc}">
 				<label class="input-tags">Character Name: </label><input th:field="${pc.name}" type="text" class = "form-holder" placeholder = "Character Name">
 				<label class="input-tags">Character Experience: </label><input th:field="${pc.xp}" type="number" class = "form-holder" placeholder = "Experience">
+				<label class= "input-tags">Party Name: </label><input th:field = "${pc.partyName}" type = "text" class = "form-holder" placeholder = "Party Name">
 				<label class="input-tags">Character Alignment: </label><input th:field="${pc.alignment}" type="text" class = "form-holder" placeholder = "Alignment">
 				<button class = "ui-button" type="submit">Create Character</button>
 			</form>
