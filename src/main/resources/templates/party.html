@@ -30,8 +30,7 @@
 				<td th:text = "${onePartyPlayer.firstName}"></td>
 			    <td th:text = "${onePartyPlayer?.characterName}"></td>
 				<td th:text = "${onePartyPlayer?.experience}"></td>
-				<td>	</td>
-				<td><form th:action = "@{/add-xp/{characterName}/{experience}  (characterName = ${onePartyPlayer.characterName}, experience = ${xpModifier.value})}" method="post"><input th:field = "${xpModifier.value}" type = "submit">Add XP</form></td>
+				<td><input id= "xp-submit" type = "number"><input type="button" class="xp-button" id="xp-button" value="add XP" ></td>
 				<td th:text = "${onePartyPlayer?.alignment}"></td>	
 				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit">Delete From party</button></form></td>
 				<!-- <td th:text = "${user.PlayerCharacter.name}"></td>
@@ -59,6 +58,17 @@
 			<button class= "ui-button" type = "submit">Back To Home</button>
 		</form>
 	</div>
+<script type = "text/javascript"> 
+	var xpButton = document.querySelector(".xp-button");
+	xpButton.addEventListener('click', fun1);
+	var xp = document.getElementById('xp-submit');
+	
+	function fun1(){
+		console.log(xp.value);
+	}
+	
+</script>	
+	
 </body>
-
+<!-- <form th:action = "@{/add-xp/{characterName}/{experience}  (characterName = ${onePartyPlayer.characterName}, experience = ${xpModifier.value})}" method="post"> -->
 </html>

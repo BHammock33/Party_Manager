@@ -141,9 +141,10 @@ public class PartyController {
 //		return user;
 //	}
 	@PostMapping("/add-xp/{characterName}/{experience}")
-	public String addCharacterXP(@PathVariable String characterName, @ModelAttribute XpModifier xpModifier) {
+	public String addCharacterXP(@PathVariable String characterName, @PathVariable Integer experience) {
 		PlayerCharacter playerCharacter = pcService.findByName(characterName);
-		xpModifier.getValue();
+		XpModifier xpModifier = new XpModifier();
+		xpModifier.setValue(experience);
 		
 		Integer additionalXp = xpModifier.getValue();
 		Integer previousXp = playerCharacter.getXp();
