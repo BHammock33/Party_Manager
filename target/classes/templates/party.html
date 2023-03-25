@@ -13,7 +13,7 @@
 		<table>
 		<thead>	
 			<tr>
-				<th th:text = "${party.partyName}"><th>
+				<th class = "party-name" th:text = "${party.partyName}"><th>
 			</tr>
 		</thead>
 		<thead>	
@@ -26,11 +26,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="user : ${players}">
-				<td th:text = "${user.firstName}"></td>
-			    <td th:text = "${user.characters}"></td>
-				<!--  <td th:text = "${user.parties}"></td> -->
-				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${user.firstName})}" method = "post"><button type = "submit">Delete From party</button></form></td>
+			<tr th:each="onePartyPlayer : ${players}">
+				<td th:text = "${onePartyPlayer.firstName}"></td>
+			    <td th:text = "${onePartyPlayer?.characterName}"></td>
+				<td th:text = "${onePartyPlayer?.experience}"></td>
+				<td>	</td>
+				<td><form th:action = "@{/add-xp/{characterName}/{experience}  (characterName = ${onePartyPlayer.characterName}, experience = ${xpModifier.value})}" method="post"><input th:field = "${xpModifier.value}" type = "submit">Add XP</form></td>
+				<td th:text = "${onePartyPlayer?.alignment}"></td>	
+				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit">Delete From party</button></form></td>
 				<!-- <td th:text = "${user.PlayerCharacter.name}"></td>
 				<td th:text = "${user.PlayerCharacter.xp}"></td>
 				<td th:text = "${user.PlayerCharacter.alighment}"></td>

@@ -17,6 +17,11 @@ public class PlayerCharacterDto {
 		this.alignment = alignment;
 		this.partyName = partyName;
 	}
+	public PlayerCharacterDto(Integer xp) {
+		super();
+		this.xp=xp;
+	}
+	
 	public String getName() {
 		return name;
 	}

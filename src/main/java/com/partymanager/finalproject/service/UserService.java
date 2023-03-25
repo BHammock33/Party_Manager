@@ -133,7 +133,7 @@ public class UserService {
 		onePartyPlayer.setFirstName(user.getFirstName());
 		onePartyPlayer.setCharacterName(pc.getName());
 		onePartyPlayer.setExperience(pc.getXp());
-		onePartyPlayer.setAlighment(pc.getAlignment());
+		onePartyPlayer.setAlignment(pc.getAlignment());
 		onePartyPlayer.setOnePartyID(partyId);
 		
 		return onePartyPlayer;

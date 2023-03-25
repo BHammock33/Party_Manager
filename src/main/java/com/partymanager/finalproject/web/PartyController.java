@@ -1,5 +1,6 @@
 package com.partymanager.finalproject.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -16,7 +18,7 @@ import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.OnePartyPlayer;
 import com.partymanager.finalproject.dto.PartyDto;
 import com.partymanager.finalproject.dto.PlayerCharacterDto;
-import com.partymanager.finalproject.dto.UserDto;
+import com.partymanager.finalproject.dto.XpModifier;
 import com.partymanager.finalproject.service.PartyService;
 import com.partymanager.finalproject.service.PlayerCharacterService;
 import com.partymanager.finalproject.service.UserService;
@@ -38,6 +40,29 @@ public class PartyController {
 		System.out.println("line 100 getmapping");
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
 		List<User> players = party.getUsers();
+		List<OnePartyPlayer> onePartyPlayers = new ArrayList<>();
+		for(User user : players) {
+			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
+			onePartyPlayer.setOnePartyUserId(user.getUserId());
+			onePartyPlayer.setFirstName(user.getFirstName());
+			onePartyPlayer.setOnePartyID(partyId);
+			Long userId = user.getUserId();
+			try {
+				PlayerCharacter characterInParty = pcService.findUserCharactersByPartyId(userId, partyId);
+				String characterName = characterInParty.getName();
+				String characterAlignment = characterInParty.getAlignment();
+				Integer characterExperience = characterInParty.getXp();
+				onePartyPlayer.setCharacterName(characterName);
+				onePartyPlayer.setExperience(characterExperience);
+				onePartyPlayer.setAlignment(characterAlignment);
+			}catch
+				(Exception e){
+				System.out.println("No character in party");	
+			}
+			onePartyPlayers.add(onePartyPlayer);
+			
+		}
+		System.out.println("OnePartyPlayers" + onePartyPlayers);
 //		for(User user : players) {
 //			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
 //			Long userId = user.getUserId();
@@ -54,19 +79,20 @@ public class PartyController {
 		
 		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.findById(currentUser.getUserId());
-		Long userId = user.getUserId();
-		PlayerCharacter characterInParty = pcService.findUserCharactersByPartyId(userId, partyId);
+		
+		//determine if player is in party
 		Boolean inParty = partyService.isInParty(partyName, user);
 		System.out.println(inParty + "inParty value");
-		UserDto userDto = new UserDto();
-		PlayerCharacterDto pcDto = new PlayerCharacterDto();
-		pcDto.setName("test");
+		XpModifier xpModifier = new XpModifier();
+	//	PlayerCharacterDto pcDto = new PlayerCharacterDto();
+		//pcDto.setName("test");
 		model.put("inParty", inParty);
-		model.put("players", players);
+		model.put("players", onePartyPlayers);
 		model.put("players2", players);
 		model.put("party", party);
 		model.put("user", user);
-		model.put("playerCharacterDto", pcDto);
+		model.put("xpModifier", xpModifier);
+		//model.put("playerCharacterDto", pcDto);
 		
 		PartyDto partyDto = new PartyDto();
 		model.put("partyDto", partyDto);
@@ -114,5 +140,16 @@ public class PartyController {
 //		partyService.save(party);
 //		return user;
 //	}
+	@PostMapping("/add-xp/{characterName}/{experience}")
+	public String addCharacterXP(@PathVariable String characterName, @ModelAttribute XpModifier xpModifier) {
+		PlayerCharacter playerCharacter = pcService.findByName(characterName);
+		xpModifier.getValue();
+		
+		Integer additionalXp = xpModifier.getValue();
+		Integer previousXp = playerCharacter.getXp();
+		Integer newXp = previousXp + additionalXp;
+		playerCharacter.setXp(newXp);
+		return "redirect:/join-party/{partyId}";
+	}
 
 }
