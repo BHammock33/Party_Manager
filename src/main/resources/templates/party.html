@@ -6,7 +6,7 @@
 <title th:text ="${party.partyName}"></title>
 
 <link rel= "stylesheet" th:href="@{/css/party.css}">
-<script type = "text/javascript" src = "/js/party.js"></script>
+
 </head>
 <body>
 	<div class="table">
@@ -58,17 +58,7 @@
 			<button class= "ui-button" type = "submit">Back To Home</button>
 		</form>
 	</div>
-<script type = "text/javascript"> 
-	var xpButton = document.querySelector(".xp-button");
-	xpButton.addEventListener('click', fun1);
-	var xp = document.getElementById('xp-submit');
-	
-	function fun1(){
-		console.log(xp.value);
-	}
-	
-</script>	
-	
+<script type = "text/javascript" src = "/js/party.js"></script>
 </body>
 <!-- <form th:action = "@{/add-xp/{characterName}/{experience}  (characterName = ${onePartyPlayer.characterName}, experience = ${xpModifier.value})}" method="post"> -->
 </html>
