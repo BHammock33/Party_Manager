@@ -9,11 +9,15 @@
 
 </head>
 <body>
+
 	<div class="table">
 		<table>
 		<thead>	
 			<tr>
 				<th class = "party-name" th:text = "${party.partyName}"><th>
+			</tr>
+			<tr>
+				<th th:text = "${dm.firstName}">
 			</tr>
 		</thead>
 		<thead>	
@@ -30,7 +34,7 @@
 				<td th:text = "${onePartyPlayer.firstName}"></td>
 			    <td th:text = "${onePartyPlayer?.characterName}"></td>
 				<td th:text = "${onePartyPlayer?.experience}"></td>
-				<td><input id= "xp-submit" type = "number"><input type="button" class="xp-button" id="xp-button" value="add XP" ></td>
+				<td><form th:action = "@{/add-xp/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${xpModifier}"><input id= "xp-submit" type = "number" th:field = "*{amount}"><button type = "submit">Add XP</button></form></td>
 				<td th:text = "${onePartyPlayer?.alignment}"></td>	
 				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit">Delete From party</button></form></td>
 				<!-- <td th:text = "${user.PlayerCharacter.name}"></td>
@@ -50,7 +54,7 @@
 	</div>
 	<div sec:authorize = "hasRole('ROLE_USER')">
 		<form th:action = "@{/create-character/{partyName} (partyName = ${party.partyName})}" method = "get" th:object = "${partyToBeJoined}">
-			<button class = "user-button" type="submit">Create Your Character</button>
+			<span th:unless = "${characterInParty}" th:object = "${characterInParty}"> <button class = "user-button" type="submit">Create Your Character</button></span>
 		</form>
 	</div>	
 	<div>
@@ -60,5 +64,5 @@
 	</div>
 <script type = "text/javascript" src = "/js/party.js"></script>
 </body>
-<!-- <form th:action = "@{/add-xp/{characterName}/{experience}  (characterName = ${onePartyPlayer.characterName}, experience = ${xpModifier.value})}" method="post"> -->
+<!--  -->
 </html>

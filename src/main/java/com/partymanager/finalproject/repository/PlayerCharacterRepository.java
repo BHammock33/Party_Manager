@@ -9,8 +9,13 @@ import com.partymanager.finalproject.domain.PlayerCharacter;
 @Repository
 public interface PlayerCharacterRepository extends JpaRepository<PlayerCharacter, Long> {
 
-	@Query(value = "select from PlayerCharacter p where p.name = :name", nativeQuery = true)
-	PlayerCharacter findByName(String name);
+	@Query(value = "select * from characters c where c.name = :name", nativeQuery = true)
+	public PlayerCharacter findByName(String name);
 
+
+	
+	
+	
+	
 	
 }

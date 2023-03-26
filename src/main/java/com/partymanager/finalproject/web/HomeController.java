@@ -57,10 +57,11 @@ public class HomeController {
 		return "redirect:/register";
 	}
 	@PostMapping("/create-party")
-	public String createParty(ModelMap model, @ModelAttribute PartyDto partyDto) {
-		
+	public String createParty(@AuthenticationPrincipal User user, ModelMap model, @ModelAttribute PartyDto partyDto) {
+		Long userId = user.getUserId();
+		User userById = userService.findById(userId);
 		//convert DTO to Party
-		partyService.createParty(partyDto);
+		partyService.createParty(partyDto, userById);
 		return "redirect:/home"; //change to parties later
 	}
 	

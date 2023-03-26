@@ -2,23 +2,23 @@ package com.partymanager.finalproject.dto;
 
 public class XpModifier {
 
-	private Integer value;
+	private Integer amount = 0;
 
-	public XpModifier(Integer value) {
+	public XpModifier(Integer amount) {
 		super();
-		this.value = value;
+		this.amount = amount;
 	}
 
 	public XpModifier() {
 		super();
 	}
 
-	public Integer getValue() {
-		return value;
+	public Integer getAmount() {
+		return amount;
 	}
 
-	public void setValue(Integer value) {
-		this.value = value;
+	public void setAmount(Integer amount) {
+		this.amount = amount;
 	}
 	
 	

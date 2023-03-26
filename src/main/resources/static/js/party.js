@@ -3,11 +3,20 @@ function hideButton(){
 }
 
 
-var xpButton = document.querySelector(".xp-button");
-	xpButton.addEventListener('click', fun1);
-	var xp = document.getElementById('xp-submit');
+let xpButton = document.querySelector('.xp-button');
+	xpButton.addEventListener('click', addXPClick);
 	
-	function fun1(){
+let xp = document.getElementById('xp-submit');
+let xpAmountHidden = document.querySelector('.hidden-xp');
+let xpHidden = (xpAmountHidden.value);
+let allXp = document.querySelectorAll('xpModifier.amount');
+
+	function addXPClick(){
 		console.log(xp.value);
+		xpHidden = (xp.value);
+		console.log(xpHidden);
+		allXp = (xp.value);
+		console.log(allXp.value);
+		
 	}
 

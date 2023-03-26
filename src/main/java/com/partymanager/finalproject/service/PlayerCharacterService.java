@@ -12,6 +12,8 @@ import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.repository.PlayerCharacterRepository;
 import com.partymanager.finalproject.repository.UserRepository;
 
+import edu.emory.mathcs.backport.java.util.Collections;
+
 @Service
 public class PlayerCharacterService {
 	
@@ -61,6 +63,15 @@ public class PlayerCharacterService {
 		System.out.println(pcInParty);
 		return pcInParty;
 		
+	}
+	public Boolean checkIfInParty(Long partyId, Long userId) {
+		User user = userService.findById(userId);
+		List<PlayerCharacter> userCharacters = user.getCharacters();
+		Party party = partyService.findByPartyId(partyId).orElseThrow();
+		List<PlayerCharacter> partyCharacters = party.getCharacters();
+		Boolean characterInParty = partyCharacters.stream().anyMatch(userCharacters :: contains);
+		System.out.println("characterInParty");
+		return characterInParty;
 	}
 	
 }

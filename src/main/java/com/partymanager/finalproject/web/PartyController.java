@@ -40,28 +40,11 @@ public class PartyController {
 		System.out.println("line 100 getmapping");
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
 		List<User> players = party.getUsers();
-		List<OnePartyPlayer> onePartyPlayers = new ArrayList<>();
-		for(User user : players) {
-			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
-			onePartyPlayer.setOnePartyUserId(user.getUserId());
-			onePartyPlayer.setFirstName(user.getFirstName());
-			onePartyPlayer.setOnePartyID(partyId);
-			Long userId = user.getUserId();
-			try {
-				PlayerCharacter characterInParty = pcService.findUserCharactersByPartyId(userId, partyId);
-				String characterName = characterInParty.getName();
-				String characterAlignment = characterInParty.getAlignment();
-				Integer characterExperience = characterInParty.getXp();
-				onePartyPlayer.setCharacterName(characterName);
-				onePartyPlayer.setExperience(characterExperience);
-				onePartyPlayer.setAlignment(characterAlignment);
-			}catch
-				(Exception e){
-				System.out.println("No character in party");	
-			}
-			onePartyPlayers.add(onePartyPlayer);
-			
-		}
+		List<OnePartyPlayer> onePartyPlayers = partyService.changeToOneParty(partyId);
+		OnePartyPlayer dm = onePartyPlayers.get(0);
+		System.out.println(dm +"DM STATS");
+		model.put("dm", dm);
+		
 		System.out.println("OnePartyPlayers" + onePartyPlayers);
 //		for(User user : players) {
 //			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
@@ -80,6 +63,7 @@ public class PartyController {
 		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.findById(currentUser.getUserId());
 		
+		Boolean characterInParty = pcService.checkIfInParty(partyId, user.getUserId());
 		//determine if player is in party
 		Boolean inParty = partyService.isInParty(partyName, user);
 		System.out.println(inParty + "inParty value");
@@ -92,6 +76,7 @@ public class PartyController {
 		model.put("party", party);
 		model.put("user", user);
 		model.put("xpModifier", xpModifier);
+		model.put("characterInParty", characterInParty);
 		//model.put("playerCharacterDto", pcDto);
 		
 		PartyDto partyDto = new PartyDto();
@@ -140,16 +125,18 @@ public class PartyController {
 //		partyService.save(party);
 //		return user;
 //	}
-	@PostMapping("/add-xp/{characterName}/{experience}")
-	public String addCharacterXP(@PathVariable String characterName, @PathVariable Integer experience) {
+	@PostMapping("/add-xp/{characterName}/{partyId}")
+	public String addCharacterXP(@PathVariable String characterName,@PathVariable Long partyId, @ModelAttribute("xpModifier") XpModifier amount) {
 		PlayerCharacter playerCharacter = pcService.findByName(characterName);
-		XpModifier xpModifier = new XpModifier();
-		xpModifier.setValue(experience);
-		
-		Integer additionalXp = xpModifier.getValue();
+		Integer xpToAdd = amount.getAmount();
 		Integer previousXp = playerCharacter.getXp();
-		Integer newXp = previousXp + additionalXp;
+		Integer newXp = previousXp + xpToAdd;
 		playerCharacter.setXp(newXp);
+		pcService.save(playerCharacter);
+		User user = playerCharacter.getUser();
+		userService.save(user);
+		System.out.println("In adding Xp");
+		System.out.println("new Xp = " + playerCharacter.getXp());
 		return "redirect:/join-party/{partyId}";
 	}
 

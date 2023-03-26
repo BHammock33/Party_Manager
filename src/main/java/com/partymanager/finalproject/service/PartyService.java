@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
+import com.partymanager.finalproject.dto.OnePartyPlayer;
 import com.partymanager.finalproject.dto.PartyDto;
 import com.partymanager.finalproject.repository.PartyRepository;
-import com.partymanager.finalproject.repository.PlayerCharacterRepository;
 import com.partymanager.finalproject.repository.UserRepository;
 
 @Service
@@ -23,9 +23,7 @@ public class PartyService {
 	@Autowired
 	private UserRepository userRepo;
 	@Autowired
-	private PlayerCharacterRepository pCRepo;
-	@Autowired
-	private PartyDtoService partyDtoService;
+	private PlayerCharacterService pcService;
 	@Autowired
 	private UserService userService;
 	
@@ -41,11 +39,12 @@ public class PartyService {
 		return partyRepo.save(party);
 		
 	}
-	public Party createParty(PartyDto partyDto) {
+	public Party createParty(PartyDto partyDto, User user) {
 		//create a new party, append an empty list of users and characters
 		Party party = new Party();
 		List<User> emptyUsers = new ArrayList<User>(7);
 		List<PlayerCharacter> emptyCharacters = new ArrayList<PlayerCharacter>(7);
+		List<Party> userParties = user.getParties();
 		
 		
 		//map DTO properites to Party
@@ -54,7 +53,11 @@ public class PartyService {
 		party.setUsers(emptyUsers);
 		party.setCharacters(emptyCharacters);
 		
+		//add current user to party
+		userParties.add(party);
+		party.getUsers().add(user);
 		//save new party in partyRepo
+		userRepo.save(user);
 		partyRepo.save(party);
 		System.out.println("Party is saved:" + party);//functions party has ID, name, empty users, and empty characters
 		return party;
@@ -163,5 +166,40 @@ public class PartyService {
 		partyRepo.save(foundParty);
 	}
 	
+	public User getPartyDm(Long partyId) {
+		Party party = partyRepo.findById(partyId).orElseThrow();
+		List<User> partyPlayers = party.getUsers();
+//		Integer size = partyPlayers.size();
+//		List<User> players = partyPlayers.subList(1, size);
+		User dm = partyPlayers.get(0);
+		return dm;
+		
+	}
+	public List<OnePartyPlayer> changeToOneParty(Long partyId) {
+		Party party = partyRepo.findById(partyId).orElseThrow();
+		List<User> players = party.getUsers();
+		List<OnePartyPlayer> onePartyPlayers = new ArrayList<>();
+		for(User user : players) {
+			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
+			onePartyPlayer.setOnePartyUserId(user.getUserId());
+			onePartyPlayer.setFirstName(user.getFirstName());
+			onePartyPlayer.setOnePartyID(partyId);
+			Long userId = user.getUserId();
+			try {
+				PlayerCharacter characterInParty = pcService.findUserCharactersByPartyId(userId, partyId);
+				String characterName = characterInParty.getName();
+				String characterAlignment = characterInParty.getAlignment();
+				Integer characterExperience = characterInParty.getXp();
+				onePartyPlayer.setCharacterName(characterName);
+				onePartyPlayer.setExperience(characterExperience);
+				onePartyPlayer.setAlignment(characterAlignment);
+			}catch
+				(Exception e){
+				System.out.println("No character in party");	
+			}
+			onePartyPlayers.add(onePartyPlayer);
+			
+		}return onePartyPlayers;
+	}
 	
 }
