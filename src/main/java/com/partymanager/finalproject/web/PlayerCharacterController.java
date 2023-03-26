@@ -1,6 +1,5 @@
 package com.partymanager.finalproject.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.PlayerCharacterDto;
+import com.partymanager.finalproject.service.CoinService;
 import com.partymanager.finalproject.service.PartyService;
 import com.partymanager.finalproject.service.PlayerCharacterService;
 import com.partymanager.finalproject.service.UserService;
@@ -28,6 +28,8 @@ public class PlayerCharacterController {
 	private UserService userService;
 	@Autowired
 	PartyService partyService;
+	@Autowired
+	CoinService coinService;
 	
 	@GetMapping("/create-character")
 	public String getCreateCharacter(ModelMap model){
@@ -40,7 +42,7 @@ public class PlayerCharacterController {
 		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.findById(currentUser.getUserId());
 		PlayerCharacter playerCharacter = new PlayerCharacter();
-		List<Coin> coins = new ArrayList<>();
+		List<Coin> coins = coinService.createCoinsGold();
 		List<PlayerCharacter> uPC = user.getCharacters();
 		String partyName = playerCharacterDto.getPartyName();
 		Party party = partyService.findByPartyName(partyName);

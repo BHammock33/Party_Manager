@@ -42,13 +42,7 @@ public class PlayerCharacterService {
 	public List<PlayerCharacter> findByUsername(String username) {
 		return userRepo.findUserCharacters(username);
 	}
-	public PlayerCharacter findUserCharactersByPartyId(Long userId, Long partyId) {
-//		User user = userService.findById(userId);
-//		Party partyById = partyService.findByPartyId(partyId).orElseThrow();
-//		List<PlayerCharacter> userCharacters = user.getCharacters();
-//		Optional<PlayerCharacter> optionalCharacterInParty = userCharacters.stream().filter(pc -> pc.getParty().equals(partyById)).findAny();
-//		PlayerCharacter characterInParty = optionalCharacterInParty.get();
-//		System.out.println("pc Service "+ characterInParty);
+	public PlayerCharacter findUserCharactersByPartyId(Long userId, Long partyId) {		
 		User user = userService.findById(userId);
 		Party partyById = partyService.findByPartyId(partyId).orElseThrow();
 		List<PlayerCharacter> userCharacters = user.getCharacters();

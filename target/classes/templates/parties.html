@@ -2,10 +2,13 @@
 <html xmlns:th = "http://thymeleaf.org">
 	<head>
 		<title>Parties</title>
+		<link rel="stylesheet" th:href="@{/css/parties.css}">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<h1>Test</h1>
-		<p th:inline = "text"> Hey, [[${user.firstName}]] let's go on an adventure!</p>
+		<h2 th:inline = "text"> Hey, [[${user.firstName}]] which party is adventuring today?</h2>
 		<table>
 		<thead>
 			<tr>
@@ -18,6 +21,11 @@
 				</td>
 		</tbody>
 		</table>
+		<div>
+			<form action = "/back" method = "get">
+				<button class = "ui-button" type = "submit">Back to Home</button>
+			</form>
+		</div>
 	</body>
 	
 </html>

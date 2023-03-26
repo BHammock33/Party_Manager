@@ -2,6 +2,7 @@ package com.partymanager.finalproject.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,24 +41,37 @@ public class PartyController {
 		System.out.println("line 100 getmapping");
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
 		List<User> players = party.getUsers();
-		List<OnePartyPlayer> onePartyPlayers = partyService.changeToOneParty(partyId);
+		List<OnePartyPlayer> onePartyPlayers = new ArrayList<>();
+		for(User player : players) {
+			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
+			onePartyPlayer.setOnePartyUserId(player.getUserId());
+			onePartyPlayer.setFirstName(player.getFirstName());
+			onePartyPlayer.setOnePartyID(partyId);
+			Long userId = player.getUserId();
+			try {
+				PlayerCharacter characterInParty = pcService.findUserCharactersByPartyId(userId, partyId);
+				String characterName = characterInParty.getName();
+				String characterAlignment = characterInParty.getAlignment();
+				Integer characterExperience = characterInParty.getXp();
+				onePartyPlayer.setCharacterName(characterName);
+				onePartyPlayer.setExperience(characterExperience);
+				onePartyPlayer.setAlignment(characterAlignment);
+			}catch
+				(Exception e){
+				System.out.println("No character in party");	
+			}
+			onePartyPlayers.add(onePartyPlayer);
+		}
 		OnePartyPlayer dm = onePartyPlayers.get(0);
 		System.out.println(dm +"DM STATS");
 		model.put("dm", dm);
 		
-		System.out.println("OnePartyPlayers" + onePartyPlayers);
-//		for(User user : players) {
-//			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
-//			Long userId = user.getUserId();
-//			onePartyPlayer.setFirstName(user.getFirstName());
-//			onePartyPlayer.setOnePartyUserId(user.getUserId());
-//			onePartyPlayer.setOnePartyID(partyId);
-//			PlayerCharacter characterInParty = pcService.findUserCharactersByPartyId(userId, partyId);
-//			onePartyPlayer.setCharacterName(characterInParty.getName());
-//			onePartyPlayer.setExperience(characterInParty.getXp());
-//			onePartyPlayer.setAlighment(characterInParty.getAlignment());
-//			System.out.println(onePartyPlayer);
-//		}
+		List<OnePartyPlayer> justPlayers = onePartyPlayers.stream().skip(1).collect(Collectors.toList());
+		
+		
+		
+		System.out.println("OnePartyPlayers" + justPlayers);
+		
 		String partyName = party.getPartyName();
 		
 		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -71,8 +85,8 @@ public class PartyController {
 	//	PlayerCharacterDto pcDto = new PlayerCharacterDto();
 		//pcDto.setName("test");
 		model.put("inParty", inParty);
-		model.put("players", onePartyPlayers);
-		model.put("players2", players);
+		model.put("players", justPlayers);
+	//	model.put("players2", players);
 		model.put("party", party);
 		model.put("user", user);
 		model.put("xpModifier", xpModifier);

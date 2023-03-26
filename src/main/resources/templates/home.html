@@ -32,11 +32,7 @@
 					</td>
 			</table>
 	</div>	
-	<div sec:authorize = "hasRole('ROLE_USER')">
-		<form action = "create-character" method = "get">
-			<button class = "user-button" type="submit">Create Your Character</button>
-		</form>
-	</div>	
+	
 			
 	<div sec:authorize="hasRole('ROLE_DM')">
 		<form action = "create-party" method = "post" th:object = "${partyDto}">

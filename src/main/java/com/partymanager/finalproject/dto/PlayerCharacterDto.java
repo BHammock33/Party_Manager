@@ -6,17 +6,29 @@ public class PlayerCharacterDto {
 	private Integer xp;
 	private String alignment;
 	private String partyName;
+	private Integer gold;
+	private Integer silver;
+	private Integer copper;
 	
-	public PlayerCharacterDto() {
-		super();
-	}
-	public PlayerCharacterDto(String name, Integer xp, String alignment, String partyName) {
+	
+	public PlayerCharacterDto(String name, Integer xp, String alignment, String partyName, Integer gold, Integer silver,
+			Integer copper) {
 		super();
 		this.name = name;
 		this.xp = xp;
 		this.alignment = alignment;
 		this.partyName = partyName;
+		this.gold = gold;
+		this.silver = silver;
+		this.copper = copper;
 	}
+	
+
+	public PlayerCharacterDto() {
+		super();
+	}
+
+
 	public PlayerCharacterDto(Integer xp) {
 		super();
 		this.xp=xp;
@@ -46,6 +58,37 @@ public class PlayerCharacterDto {
 	public void setPartyName(String partyName) {
 		this.partyName = partyName;
 	}
+
+
+	public Integer getGold() {
+		return gold;
+	}
+
+
+	public void setGold(Integer gold) {
+		this.gold = gold;
+	}
+
+
+	public Integer getSilver() {
+		return silver;
+	}
+
+
+	public void setSilver(Integer silver) {
+		this.silver = silver;
+	}
+
+
+	public Integer getCopper() {
+		return copper;
+	}
+
+
+	public void setCopper(Integer copper) {
+		this.copper = copper;
+	}
+	
 	
 	
 	

@@ -2,6 +2,10 @@
 <html xmlns:th = "http://thymeleaf.org">
 <head>
 	<title>test</title>
+	<link rel="stylesheet" th:href="@{/css/character.css}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
 </head>
 <body>
 	<p class = "welcome" th:inline = "text"> Create your character for [[${pc.partyName}]] party!
@@ -13,6 +17,7 @@
 				<label class="input-tags">Character Experience: </label><input th:field="${pc.xp}" type="number" class = "form-holder" placeholder = "Experience">
 				<label class= "input-tags">Party Name: </label><input th:field = "${pc.partyName}" type = "text" class = "form-holder" placeholder = "Party Name">
 				<label class="input-tags">Character Alignment: </label><input th:field="${pc.alignment}" type="text" class = "form-holder" placeholder = "Alignment">
+				<label class="input-tags">Starting Gold: </label><input th:field="${pc.coins}" type="text" class = "form-holder" placeholder = "coins">
 				<button class = "ui-button" type="submit">Create Character</button>
 			</form>
 		</div>

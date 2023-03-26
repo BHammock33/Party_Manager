@@ -4,7 +4,9 @@
 <head>
 <!-- <title th:text="${party.name}"></title> -->
 <title th:text ="${party.partyName}"></title>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
 <link rel= "stylesheet" th:href="@{/css/party.css}">
 
 </head>
@@ -14,28 +16,28 @@
 		<table>
 		<thead>	
 			<tr>
-				<th class = "party-name" th:text = "${party.partyName}"><th>
-			</tr>
-			<tr>
-				<th th:text = "${dm.firstName}">
+				<th class = "party-name" th:inline = "text"> [[${party.partyName}]] DM'd by [[${dm.firstName}]]<th>
 			</tr>
 		</thead>
 		<thead>	
 			<tr>
-				<th>Player<th>
-				<th>Character<th>
-				<th>Experience<th>
-				<th>Alignment<th>
-				<th>Coins<th>
+				<th>Player</th>
+				<th>Character</th>
+				<th>Experience</th>
+				<th>Change XP</th>
+				<th>Alignment</th>
+				<th>Coins</th>
+				<th sec:authorize = "hasRole('ROLE_DM')">Remove From Party</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody class = "character-table">
 			<tr th:each="onePartyPlayer : ${players}">
 				<td th:text = "${onePartyPlayer.firstName}"></td>
 			    <td th:text = "${onePartyPlayer?.characterName}"></td>
 				<td th:text = "${onePartyPlayer?.experience}"></td>
 				<td><form th:action = "@{/add-xp/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${xpModifier}"><input id= "xp-submit" type = "number" th:field = "*{amount}"><button type = "submit">Add XP</button></form></td>
 				<td th:text = "${onePartyPlayer?.alignment}"></td>	
+				<td sec:authorize = "hasRole('ROLE_DM')"></td>
 				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit">Delete From party</button></form></td>
 				<!-- <td th:text = "${user.PlayerCharacter.name}"></td>
 				<td th:text = "${user.PlayerCharacter.xp}"></td>
@@ -45,7 +47,7 @@
 			</tr>
 		</tbody>			
 		</table>
-		<h1>Test</h1>
+		
 		   
 			<form th:action = "@{/join-party/{partyId} (partyId = ${party.partyId})}" th:object = "${partyToBeJoined}" method = "post">
 			<span th:unless = "${inParty}" th:object = "${inParty}"><button id="join-party" class = "ui-button" type = "submit" onclick = "hideButton()">Join Party</button></span>

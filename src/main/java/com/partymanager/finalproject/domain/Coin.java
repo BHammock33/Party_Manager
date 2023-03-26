@@ -74,6 +74,12 @@ public class Coin {
 	public void setPlayerCharacter(PlayerCharacter playerCharacter) {
 		this.playerCharacter = playerCharacter;
 	}
+
+	@Override
+	public String toString() {
+		return "Coin [coinId=" + coinId + ", type=" + type + ", quantity=" + quantity + ", playerCharacter="
+				+ playerCharacter + "]";
+	}
 	
 
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
-import com.partymanager.finalproject.dto.OnePartyPlayer;
 import com.partymanager.finalproject.dto.PartyDto;
 import com.partymanager.finalproject.repository.PartyRepository;
 import com.partymanager.finalproject.repository.UserRepository;
@@ -22,8 +21,7 @@ public class PartyService {
 	private PartyRepository partyRepo;
 	@Autowired
 	private UserRepository userRepo;
-	@Autowired
-	private PlayerCharacterService pcService;
+	
 	@Autowired
 	private UserService userService;
 	
@@ -57,7 +55,7 @@ public class PartyService {
 		userParties.add(party);
 		party.getUsers().add(user);
 		//save new party in partyRepo
-		userRepo.save(user);
+		//userRepo.save(user);
 		partyRepo.save(party);
 		System.out.println("Party is saved:" + party);//functions party has ID, name, empty users, and empty characters
 		return party;
@@ -175,31 +173,31 @@ public class PartyService {
 		return dm;
 		
 	}
-	public List<OnePartyPlayer> changeToOneParty(Long partyId) {
-		Party party = partyRepo.findById(partyId).orElseThrow();
-		List<User> players = party.getUsers();
-		List<OnePartyPlayer> onePartyPlayers = new ArrayList<>();
-		for(User user : players) {
-			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
-			onePartyPlayer.setOnePartyUserId(user.getUserId());
-			onePartyPlayer.setFirstName(user.getFirstName());
-			onePartyPlayer.setOnePartyID(partyId);
-			Long userId = user.getUserId();
-			try {
-				PlayerCharacter characterInParty = pcService.findUserCharactersByPartyId(userId, partyId);
-				String characterName = characterInParty.getName();
-				String characterAlignment = characterInParty.getAlignment();
-				Integer characterExperience = characterInParty.getXp();
-				onePartyPlayer.setCharacterName(characterName);
-				onePartyPlayer.setExperience(characterExperience);
-				onePartyPlayer.setAlignment(characterAlignment);
-			}catch
-				(Exception e){
-				System.out.println("No character in party");	
-			}
-			onePartyPlayers.add(onePartyPlayer);
-			
-		}return onePartyPlayers;
-	}
+//	public List<OnePartyPlayer> changeToOneParty(Long partyId) {
+//		Party party = partyRepo.findById(partyId).orElseThrow();
+//		List<User> players = party.getUsers();
+//		List<OnePartyPlayer> onePartyPlayers = new ArrayList<>();
+//		for(User user : players) {
+//			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
+//			onePartyPlayer.setOnePartyUserId(user.getUserId());
+//			onePartyPlayer.setFirstName(user.getFirstName());
+//			onePartyPlayer.setOnePartyID(partyId);
+//			Long userId = user.getUserId();
+//			try {
+//				PlayerCharacter characterInParty = pcService.findUserCharactersByPartyId(userId, partyId);
+//				String characterName = characterInParty.getName();
+//				String characterAlignment = characterInParty.getAlignment();
+//				Integer characterExperience = characterInParty.getXp();
+//				onePartyPlayer.setCharacterName(characterName);
+//				onePartyPlayer.setExperience(characterExperience);
+//				onePartyPlayer.setAlignment(characterAlignment);
+//			}catch
+//				(Exception e){
+//				System.out.println("No character in party");	
+//			}
+//			onePartyPlayers.add(onePartyPlayer);
+//			
+//		}return onePartyPlayers;
+//	}
 	
 }
