@@ -1,7 +1,5 @@
 package com.partymanager.finalproject.domain;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -31,17 +28,18 @@ public class PlayerCharacter {
 	private User user;
 	//joins many characters under one user_id
 
-	@OneToMany(mappedBy="playerCharacter")
-	private List<Coin> coins;
-	//one list of coins mapped to one character
-	//need to change because a collection on one side
-	//one character to many coins 
-	// Issue Still here, referenced property unknown Java.util.List.playerCharacter 
-
 	@ManyToOne
 	@JoinColumn(name = "party_id")
 	private Party party;
 	//one character can only be in one party, parties can have many characters
+	private Integer gold;
+	private Integer silver;
+	private Integer copper;
+	//10 copper for 1 silver
+	//100 copper for 1 gold
+	//10 silver for 1 gold 
+	private Integer level;
+	private Integer xpToLevel;
 
 	
 
@@ -49,17 +47,25 @@ public class PlayerCharacter {
 		super();
 	}
 
-	public PlayerCharacter(Long characterId, String name, Integer xp, String alignment, User user, List<Coin> coins,
-			Party party) {
+	
+
+	public PlayerCharacter(Long characterId, String name, Integer xp, String alignment, User user, Party party,
+			Integer gold, Integer silver, Integer copper, Integer level, Integer xpToLevel) {
 		super();
 		this.characterId = characterId;
 		this.name = name;
 		this.xp = xp;
 		this.alignment = alignment;
 		this.user = user;
-		this.coins = coins;
 		this.party = party;
+		this.gold = gold;
+		this.silver = silver;
+		this.copper = copper;
+		this.level = level;
+		this.xpToLevel = xpToLevel;
 	}
+
+
 
 	public Long getCharacterId() {
 		return characterId;
@@ -99,16 +105,7 @@ public class PlayerCharacter {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public List<Coin> getCoins() {
-		return coins;
-	}
-
-	public void setCoins(List<Coin> coins) {
-		this.coins = coins;
-	}
-	
+	}	
 
 	public Party getParty() {
 		return party;
@@ -118,11 +115,86 @@ public class PlayerCharacter {
 		this.party = party;
 	}
 
+
+
+	public Integer getGold() {
+		return gold;
+	}
+
+
+
+	public void setGold(Integer gold) {
+		this.gold = gold;
+	}
+
+
+
+	public Integer getSilver() {
+		return silver;
+	}
+
+
+
+	public void setSilver(Integer silver) {
+		this.silver = silver;
+	}
+
+
+
+	public Integer getCopper() {
+		return copper;
+	}
+
+
+
+	public void setCopper(Integer copper) {
+		this.copper = copper;
+	}
+	
+
+
+
+	public Integer getLevel() {
+		return level;
+	}
+
+
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	
+
+
+	public Integer getXpToLevel() {
+		return xpToLevel;
+	}
+
+
+
+	public void setXpToLevel(Integer xpToLevel) {
+		this.xpToLevel = xpToLevel;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "PlayerCharacter [characterId=" + characterId + ", name=" + name + ", xp=" + xp + ", alignment="
-				+ alignment + ", user=" + user + ", coins=" + coins + ", party=" + party + "]";
+				+ alignment + ", user=" + user + ", party=" + party + ", gold=" + gold + ", silver=" + silver
+				+ ", copper=" + copper + ", level=" + level + ", xpToLevel=" + xpToLevel + "]";
 	}
 
+
+
+	
+
+
+	
+	
+	
+
+	
 
 }

@@ -12,10 +12,4 @@ public interface PlayerCharacterRepository extends JpaRepository<PlayerCharacter
 	@Query(value = "select * from characters c where c.name = :name", nativeQuery = true)
 	public PlayerCharacter findByName(String name);
 
-
-	
-	
-	
-	
-	
 }

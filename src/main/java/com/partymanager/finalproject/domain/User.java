@@ -45,7 +45,7 @@ public class User {
 	//one user to many characters
 	
 	@Column(name = "parties")
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.DETACH})
 	@JoinTable(name = "user_parties", joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "userId")}, inverseJoinColumns = {@JoinColumn(name = "party_id", referencedColumnName = "partyId")})
 	private List<Party> parties;
 	//many users to many parties

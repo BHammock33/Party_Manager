@@ -17,7 +17,10 @@
 				<label class="input-tags">Last Name</label><input th:field="${userDto.lastName}" type= "text" class= "form-holder" placeholder="Last Name">
 				<label class="input-tags">Username</label><input th:field="${userDto.username}" type= "text" class= "form-holder" placeholder="Username">
 			<div>	
-				<label class="input-tags">Password</label><input th:field="${userDto.password}" type= "password" class= "form-holder" placeholder="Passoword" required><i id = "passwordEyeIcon" class ="fa-solid fa-eye"></i>
+				<label class="input-tags">Password</label><input th:field="${userDto.password}" type= "password" id = "password" class= "form-holder" placeholder="Password" required><i id = "passwordEyeIcon" class ="fa-solid fa-eye"></i>
+			</div>	
+			<div>	
+				<label class="input-tags">Confirm Password</label><input type= "password" class= "form-holder" id = "confirmPassword" placeholder="Password" required><i id = "passwordEyeIcon" class ="fa-solid fa-eye"></i>
 			</div>	
 				<label class= "input-tags">Role:</label>
 				<select th:field = "*{role}">

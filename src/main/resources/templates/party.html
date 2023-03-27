@@ -14,19 +14,27 @@
 
 	<div class="table">
 		<table>
-		<thead>	
+		<thead class = "party-name">	
 			<tr>
 				<th class = "party-name" th:inline = "text"> [[${party.partyName}]] DM'd by [[${dm.firstName}]]<th>
-			</tr>
+			<tr>	
 		</thead>
 		<thead>	
 			<tr>
 				<th>Player</th>
 				<th>Character</th>
+				<th>Level</th>
 				<th>Experience</th>
 				<th>Change XP</th>
+				<th>XP to Next Level</th>
 				<th>Alignment</th>
-				<th>Coins</th>
+				<th>Gold</th>
+				<th>Earn/Spend</th>
+				<th>Silver</th>
+				<th>Earn/Spend</th>
+				<th>Copper</th>
+				<th>Earn/Spend</th>
+				
 				<th sec:authorize = "hasRole('ROLE_DM')">Remove From Party</th>
 			</tr>
 		</thead>
@@ -34,16 +42,19 @@
 			<tr th:each="onePartyPlayer : ${players}">
 				<td th:text = "${onePartyPlayer.firstName}"></td>
 			    <td th:text = "${onePartyPlayer?.characterName}"></td>
+			    <td th:text = "${onePartyPlayer?.level}"></td>
 				<td th:text = "${onePartyPlayer?.experience}"></td>
 				<td><form th:action = "@{/add-xp/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${xpModifier}"><input id= "xp-submit" type = "number" th:field = "*{amount}"><button type = "submit">Add XP</button></form></td>
+				<td th:text = "${onePartyPlayer?.xpToLevel}"> </td>
 				<td th:text = "${onePartyPlayer?.alignment}"></td>	
-				<td sec:authorize = "hasRole('ROLE_DM')"></td>
+				<td th:text = "${onePartyPlayer?.gold}"></td>
+				<td><form th:action = "@{/add-gold/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${goldModifier}"><input id= "coin-submit" type = "number" th:field = "*{amount}"><button type = "submit">Earn/Spend Gold</button></form></td>
+				<td th:text = "${onePartyPlayer?.silver}"></td>
+				<td><form th:action = "@{/add-silver/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${silverModifier}"><input id= "coin-submit" type = "number" th:field = "*{amount}"><button type = "submit">Earn/Spend Silver</button></form></td>
+				<td th:text = "${onePartyPlayer?.copper}"></td>
+				<td><form th:action = "@{/add-copper/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${copperModifier}"><input id= "coin-submit" type = "number" th:field = "*{amount}"><button type = "submit">Earn/Spend Copper</button></form></td>
+				
 				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit">Delete From party</button></form></td>
-				<!-- <td th:text = "${user.PlayerCharacter.name}"></td>
-				<td th:text = "${user.PlayerCharacter.xp}"></td>
-				<td th:text = "${user.PlayerCharacter.alighment}"></td>
-				<td th:text = "${user.PlayerCharacter.coins}"></td> -->
-				<!-- might need to add a Model object that holds all of these values or use another table side by side -->
 			</tr>
 		</tbody>			
 		</table>

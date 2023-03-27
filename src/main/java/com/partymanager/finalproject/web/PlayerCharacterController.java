@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.partymanager.finalproject.domain.Coin;
-import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.PlayerCharacterDto;
-import com.partymanager.finalproject.service.CoinService;
 import com.partymanager.finalproject.service.PartyService;
 import com.partymanager.finalproject.service.PlayerCharacterService;
 import com.partymanager.finalproject.service.UserService;
@@ -28,39 +25,33 @@ public class PlayerCharacterController {
 	private UserService userService;
 	@Autowired
 	PartyService partyService;
-	@Autowired
-	CoinService coinService;
-	
+
 	@GetMapping("/create-character")
-	public String getCreateCharacter(ModelMap model){
+	public String getCreateCharacter(ModelMap model) {
 		PlayerCharacterDto playerCharacterDto = new PlayerCharacterDto();
 		model.put("pc", playerCharacterDto);
 		return "character";
 	}
+
 	@PostMapping("/create-character")
 	public String createCharacter(@ModelAttribute("pc") PlayerCharacterDto playerCharacterDto) {
-		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		// Get the User
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.findById(currentUser.getUserId());
-		PlayerCharacter playerCharacter = new PlayerCharacter();
-		List<Coin> coins = coinService.createCoinsGold();
-		List<PlayerCharacter> uPC = user.getCharacters();
-		String partyName = playerCharacterDto.getPartyName();
-		Party party = partyService.findByPartyName(partyName);
-		playerCharacter.setCharacterId(playerCharacter.getCharacterId());
-		playerCharacter.setName(playerCharacterDto.getName());
-		playerCharacter.setXp(playerCharacterDto.getXp());
-		playerCharacter.setAlignment(playerCharacterDto.getAlignment());
-		playerCharacter.setParty(party);
-		playerCharacter.setUser(user);
-		playerCharacter.setCoins(coins);
-		uPC.add(playerCharacter);
-		pcService.save(playerCharacter);
+
+		// PC from PCDTO
+		PlayerCharacter playerCharacter = pcService.convertDtoToPc(playerCharacterDto, user);
+
+		// Add PC to users characters
+		List<PlayerCharacter> userPcs = user.getCharacters();
+		userPcs.add(playerCharacter);
 		userService.save(user);
-		partyService.save(party);
-		
-		System.out.println(playerCharacter);
-		
-		
+		pcService.save(playerCharacter);
+
+		// convert coins upon creation if need be
+		Long pcId = playerCharacter.getCharacterId();
+		pcService.coinConversion(pcId);
+
 		return "redirect:/home";
 	}
 

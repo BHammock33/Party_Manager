@@ -15,6 +15,7 @@ td{
 	justify-content: center;
 	align-items: center;
 	text-align: center;
+	padding: 0px;
 }
 thead{
 	display:table-header-group;

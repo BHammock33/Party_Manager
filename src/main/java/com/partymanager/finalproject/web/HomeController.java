@@ -43,7 +43,7 @@ public class HomeController {
 			model.put("user", user);
 		}
 		//get a collection of all parties and put them on the page
-		//so they can be dispalyed and clicked into
+		//so they can be displayed and clicked into
 		List<Party> parties = partyService.findAll();
 		model.put("partiesList", parties);			
 		
@@ -51,7 +51,13 @@ public class HomeController {
 	}
 	@PostMapping("/home/delete/{userId}")
 	public String deleteUser(@PathVariable Long userId) {
-		
+		//remove player from all parties
+		List<Party> parties = partyService.findAll();
+		for(Party party : parties) {
+			Long partyId = party.getPartyId();
+			partyService.removeFromParty(userId, partyId);
+			partyService.save(party);
+		}
 		//delete user from DB
 		userService.deleteById(userId);
 		return "redirect:/register";
@@ -63,6 +69,10 @@ public class HomeController {
 		//convert DTO to Party
 		partyService.createParty(partyDto, userById);
 		return "redirect:/home"; //change to parties later
+	}
+	@GetMapping("/back-login")
+	public String goBack() {
+		return "redirect:/login";
 	}
 	
 	

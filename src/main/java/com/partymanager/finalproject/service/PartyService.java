@@ -65,48 +65,17 @@ public class PartyService {
 		Party party = partyRepo.findByPartyName(partyName);
 		return party;
 	}
-	//Can Probably Delete below Later
-	
-//	public List<Party> joinParty(Long partyDtoId, Long userId) {
-//		User foundUser = userService.findById(userId);
-//		String error = "cant find party";
-//		Party failedParty = new Party();
-//		failedParty.setPartyName("Fail");
-//		PartyDto partyDto = partyDtoService.findById(partyDtoId);
-//		String partyDtoName = partyDto.getPartyName();
-//		List<Party> allParties = partyRepo.findAll();
-//		for(Party party : allParties) {
-//			String partyName = party.getPartyName();
-//			if(partyName.equalsIgnoreCase(partyDtoName)) {
-//				Party partyToBeJoined = party;
-//				List<Party> userParties = foundUser.getParties();
-//				userParties.add(partyToBeJoined);
-//				userService.save(foundUser);
-//				partyRepo.save(partyToBeJoined);
-//				System.out.println(partyToBeJoined +"Inside For loop");
-//				return userParties;
-//			}else {
-//				System.out.println(error); 
-//				List<Party> fail = new ArrayList<>();
-//				fail.add(failedParty);
-//				System.out.println("Insdie fail loop");
-//				return fail;
-//			}
-//		}
-//		
-//		return null;
-//	}
+
 	public List<Party> joinPartyById(Long partyId, Long userId){
 		User foundUser = userService.findById(userId);
 		List<Party> userParties = foundUser.getParties();
 		Party partyToBeJoined = partyRepo.findById(partyId).orElseThrow();
-	//	String partyName = partyToBeJoined.getPartyName();
+	
 		userParties.add(partyToBeJoined);
 		userRepo.save(foundUser);
 		partyRepo.save(partyToBeJoined);
 		partyRepo.saveAll(userParties);
-		//System.out.println(userParties + "User Parties has been saved");
-		//System.out.println( partyName + " has been joined");
+		
 		return userParties;
 	}
 	
@@ -122,23 +91,7 @@ public class PartyService {
 		System.out.println(partyDtoList +"create DTO list");
 		return partyDtoList;
 	}
-//	public Party compareParties(Long partyDtoId) {
-//		PartyDto partyDto = partyDtoService.findById(partyDtoId);
-//		String partyDtoName = partyDto.getPartyName();
-//		List<Party> allParties = partyRepo.findAll();
-//		for(Party party : allParties) {
-//			String partyName = party.getPartyName();
-//			if(partyName.equalsIgnoreCase(partyDtoName)) {
-//				Party partyToBeJoined = party;
-//				partyToBeJoined.setPartyId(partyToBeJoined.getPartyId());
-//				partyToBeJoined.setUsers(partyToBeJoined.getUsers());
-//				partyToBeJoined.setPartyName(partyName);
-//				partyToBeJoined.setCharacters(partyToBeJoined.getCharacters());
-//				return partyToBeJoined;
-//			}
-//		}
-//		return null;
-//	}//didn't solve my issue
+
 
 	public Boolean isInParty(String partyName, User user) {
 		
@@ -148,11 +101,7 @@ public class PartyService {
 			String existingName = party.getPartyName();
 			partyNames.add(existingName);
 		}
-		 Boolean contains = partyNames.contains(partyName);
-//		 System.out.println(partyNames);
-//		 System.out.println(parties);
-//		 System.out.println(partyName + "in boolean method");
-//		 System.out.println(contains);
+		 Boolean contains = partyNames.contains(partyName);		
 		 return contains;
 		
 	}
@@ -167,8 +116,6 @@ public class PartyService {
 	public User getPartyDm(Long partyId) {
 		Party party = partyRepo.findById(partyId).orElseThrow();
 		List<User> partyPlayers = party.getUsers();
-//		Integer size = partyPlayers.size();
-//		List<User> players = partyPlayers.subList(1, size);
 		User dm = partyPlayers.get(0);
 		return dm;
 		

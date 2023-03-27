@@ -94,8 +94,8 @@ public class UserService {
 	}
 	public List<String> createUserRoles() {
 		List<String> roles = new ArrayList<>();
-		roles.add("DM");
 		roles.add("Player");
+		roles.add("DM");
 		return roles;
 	}
 //	public List<Party> joinParty(User user, Long partyId) {
