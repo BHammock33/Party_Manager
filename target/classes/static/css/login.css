@@ -50,7 +50,7 @@ form{
 	vertical-align: 50%;
 }
 
-input[type='text'], input[type='password']{
+.ui-input{
 	font-size: 20px;
 	border-radius: 5px;
 	color:white
@@ -69,7 +69,6 @@ button{
 	color: black;
 	border: 1px solid black;
 	border-radius: 8px;
-	cursor: pointer;
 	font-size: 20px;
 	width: 100%;
 }

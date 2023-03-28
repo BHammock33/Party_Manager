@@ -1,6 +1,5 @@
 package com.partymanager.finalproject.web;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,8 +17,8 @@ import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.CoinModifier;
 import com.partymanager.finalproject.dto.OnePartyPlayer;
-import com.partymanager.finalproject.dto.PlayerCharacterDto;
 import com.partymanager.finalproject.dto.XpModifier;
+import com.partymanager.finalproject.service.OnePartyPlayerService;
 import com.partymanager.finalproject.service.PartyService;
 import com.partymanager.finalproject.service.PlayerCharacterService;
 import com.partymanager.finalproject.service.UserService;
@@ -33,73 +32,41 @@ public class PartyController {
 	private UserService userService;
 	@Autowired
 	private PlayerCharacterService pcService;
+	@Autowired
+	private OnePartyPlayerService oPPservice;
 
 	@GetMapping("/join-party/{partyId}")
 	public String getPartyPage(ModelMap model, @PathVariable Long partyId) {
-		
+
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
 		String partyName = party.getPartyName();
-		List<User> players = party.getUsers();
-		List<OnePartyPlayer> onePartyPlayers = new ArrayList<>();
-		//converting the users in the party into "Single Party Players" to allow
-		//for easier displaying of character attributes on the page
-		//still working on moving this to a service but it doesn't want to work
-		//anywhere else
-		for (User player : players) {
-			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
-			onePartyPlayer.setOnePartyUserId(player.getUserId());
-			onePartyPlayer.setFirstName(player.getFirstName());
-			onePartyPlayer.setOnePartyID(partyId);
-			Long userId = player.getUserId();
-			try {
-				PlayerCharacter characterInParty = pcService.findUserCharactersByPartyId(userId, partyId);
-				String characterName = characterInParty.getName();
-				String characterAlignment = characterInParty.getAlignment();
-				Integer characterExperience = characterInParty.getXp();
-				onePartyPlayer.setCharacterName(characterName);
-				onePartyPlayer.setExperience(characterExperience);
-				onePartyPlayer.setLevel(characterInParty.getLevel());
-				onePartyPlayer.setAlignment(characterAlignment);
-				onePartyPlayer.setGold(characterInParty.getGold());
-				onePartyPlayer.setSilver(characterInParty.getSilver());
-				onePartyPlayer.setCopper(characterInParty.getCopper());
-				onePartyPlayer.setOnePartyCharacterId(characterInParty.getCharacterId());
-				Integer xpToLevel = pcService.xpToNextLevel(onePartyPlayer.getOnePartyCharacterId());
-				onePartyPlayer.setXpToLevel(xpToLevel);
-				pcService.levelUpCharacter(onePartyPlayer.getOnePartyCharacterId());
-				pcService.coinConversion(onePartyPlayer.getOnePartyCharacterId());
-			} catch (Exception e) {
-				System.out.println("No character in party");
-			}
-			onePartyPlayers.add(onePartyPlayer);
-		}
-		;
 		
-		//The Dm will create the party and will always be the first in the array of players
+		//create One party Players for Thymeleaf
+		List<OnePartyPlayer> onePartyPlayers = oPPservice.createOnePartyPlayers(partyId);
+		
+		// The Dm will create the party and will always be the first in the array of
+		// players
 		OnePartyPlayer dm = onePartyPlayers.get(0);
 		System.out.println(dm + "DM STATS");
 		model.put("dm", dm);
 
-		//Get everyone but the Dm
+		// Get everyone but the Dm
 		List<OnePartyPlayer> justPlayers = onePartyPlayers.stream().skip(1).collect(Collectors.toList());
 		System.out.println("OnePartyPlayers" + justPlayers);
 
-		
-		
-		//get the logged in user and see if they're already in the party
+		// get the logged in user and see if they're already in the party
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.findById(currentUser.getUserId());
 		Boolean characterInParty = pcService.checkIfInParty(partyId, user.getUserId());
 		// determine if player is in party
 		Boolean inParty = partyService.isInParty(partyName, user);
-	
-		//put data objects for experience and currency transactions
+
+		// put data objects for experience and currency transactions
 		XpModifier xpModifier = new XpModifier();
 		CoinModifier coinModifier = new CoinModifier();
-		
+
 		model.put("inParty", inParty);
 		model.put("players", justPlayers);
-		
 
 		model.put("party", party);
 		model.put("user", user);
@@ -109,7 +76,6 @@ public class PartyController {
 		model.put("copperModifier", coinModifier);
 
 		model.put("characterInParty", characterInParty);
-		
 
 		return "party";
 	}
@@ -127,10 +93,7 @@ public class PartyController {
 		return "redirect:/join-party/{partyId}";
 	}
 
-	@GetMapping("/back")
-	public String goBack() {
-		return "redirect:/home";
-	}
+
 
 	@PostMapping("/remove-from-party/{partyId}/{firstName}")
 	public String removeFromParty(ModelMap model, @PathVariable String firstName, @PathVariable Long partyId) {
@@ -141,25 +104,6 @@ public class PartyController {
 		return "redirect:/join-party/{partyId}";
 	}
 
-	@GetMapping("/create-character/{partyName}")
-	public String createCharacterfromParty(ModelMap model, @PathVariable String partyName) {
-		PlayerCharacterDto playerCharacterDto = new PlayerCharacterDto();
-		playerCharacterDto.setPartyName(partyName);
-		model.put("pc", playerCharacterDto);
-		return "character";
-
-	}
-
-//	@PostMapping("/join-party/{partyId}/{userId}/delete")
-//	@ResponseBody
-//	public User removeUser(@RequestBody User removedUser, @PathVariable Long userId, @PathVariable Long PartyId) {
-//		User user = userService.findById(userId);
-//		Party party = partyService.findByPartyId(PartyId).orElseThrow();
-//		partyService.removeFromParty(userId, PartyId);
-//		userService.save(user);
-//		partyService.save(party);
-//		return user;
-//	}
 	@PostMapping("/add-xp/{characterName}/{partyId}")
 	public String addCharacterXP(@PathVariable String characterName, @PathVariable Long partyId,
 			@ModelAttribute("xpModifier") XpModifier amount) {

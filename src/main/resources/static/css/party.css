@@ -1,6 +1,6 @@
 table {border-collapse:collapse;}
 
-table, th, td {border: 1px solid #000;}
+table, th, td {border: 1px solid white;}
 
 .character-table{
 	justify-content: center;
@@ -10,6 +10,7 @@ table{
 	justify-content: center;
 	align-items: center;
 	text-align: center;
+	
 }
 td{
 	justify-content: center;
@@ -20,3 +21,52 @@ td{
 thead{
 	display:table-header-group;
 }
+.party-name{
+	font-size: 150%;
+}
+html{
+	font-family:"Libre Baskerville", serif;
+	background: url("/images/dndBackground.jpg") no-repeat center center fixed;
+	font-size: 80%;
+	background-size:cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	color: white;
+	text-shadow: black 1px 1px 2px;
+}
+@font-face{
+	font-family: dndFont;
+	src: url
+}
+.ui-button{
+	border-radius: 8px;
+}
+.ui-button:hover{
+	background-color:#62C6F2;
+	color: white;
+}
+.coin-submit{
+	background-color:transparent;
+	color: transparent;
+}
+.coin-submit:focus{
+	color: white;
+}
+:placeholder::focus{
+	color: transparent;
+}
+.coin-submit:focus::placeholder{
+	color: transparent;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+		

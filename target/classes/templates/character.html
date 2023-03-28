@@ -8,24 +8,36 @@
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
 </head>
 <body>
-	<p class = "welcome" th:inline = "text"> Create your character for [[${pc.partyName}]] party!
+	<p class = "welcome" th:inline = "text"> Create your character for [[${pc.partyName}]]!
 	<div class = "container">
 		<div class = "container-form">
-			<h1>Create your character Below</h1>
-			<form action= "/create-character" method = "post" th:object = "${pc}">
+		<input type = "hidden" th:object = "${party}">;
+			<form th:action= "@{/create-character/{partyId} (partyId = ${party.partyId})}" method = "post" th:object = "${pc}">
+			<div>
 				<label class="input-tags">Character Name: </label><input th:field="${pc.name}" type="text" class = "form-holder" placeholder = "Character Name">
 				<label class="input-tags">Character Experience: </label><input th:field="${pc.xp}" type="number" class = "form-holder" placeholder = "0 If starting at Level 1">
+			</div>
+			<div>	
 				<label class="input-tags">Character Level: </label><input th:field="${pc.level}" type="number" class = "form-holder" placeholder = "Character level">
 				<input th:field = "${pc.partyName}" type = "hidden" class = "form-holder" placeholder = "Party Name">
 				<label class="input-tags">Character Alignment: </label><input th:field="${pc.alignment}" type="text" class = "form-holder" placeholder = "Alignment">
-				<label class="input-tags">Starting Gold: </label><input th:field="${pc.gold}" type="text" class = "form-holder" placeholder = "gold">
-				<label class="input-tags">Starting Silver: </label><input th:field="${pc.silver}" type="text" class = "form-holder" placeholder = "silver">
-				<label class="input-tags">Starting Copper: </label><input th:field="${pc.copper}" type="text" class = "form-holder" placeholder = "copper">
+			</div>	
+			<div>	
+				<label class="input-tags">Starting Gold: </label><input th:field="${pc.gold}" type="text" class = "form-holder" placeholder = "Gold">
+				<label class="input-tags">Starting Silver: </label><input th:field="${pc.silver}" type="text" class = "form-holder" placeholder = "Silver">
+				<label class="input-tags">Starting Copper: </label><input th:field="${pc.copper}" type="text" class = "form-holder" placeholder = "Copper">
+			</div>	
 				<button class = "ui-button" type="submit">Create Character</button>
 			</form>
 		</div>
-		<div>
+		
+		<div class = "image-container">
+			<div class = "img1">
 			<img src = "/images/alignment.jpg">
+			</div>
+			<div class = "img2">
+			<img src = "/images/xptable.jpg">
+			</div>
 		</div>
 	</div>
 		

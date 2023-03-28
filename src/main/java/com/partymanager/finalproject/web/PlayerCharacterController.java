@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.PlayerCharacterDto;
@@ -26,15 +28,9 @@ public class PlayerCharacterController {
 	@Autowired
 	PartyService partyService;
 
-	@GetMapping("/create-character")
-	public String getCreateCharacter(ModelMap model) {
-		PlayerCharacterDto playerCharacterDto = new PlayerCharacterDto();
-		model.put("pc", playerCharacterDto);
-		return "character";
-	}
-
-	@PostMapping("/create-character")
-	public String createCharacter(@ModelAttribute("pc") PlayerCharacterDto playerCharacterDto) {
+	@PostMapping("/create-character/{partyId}")
+	public String createCharacter(@ModelAttribute("pc") PlayerCharacterDto playerCharacterDto,
+			@PathVariable Long partyId) {
 		// Get the User
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.findById(currentUser.getUserId());
@@ -52,7 +48,17 @@ public class PlayerCharacterController {
 		Long pcId = playerCharacter.getCharacterId();
 		pcService.coinConversion(pcId);
 
-		return "redirect:/home";
+		return "redirect:/join-party/{partyId}";
+	}
+	@GetMapping("/create-character/{partyName}")
+	public String createCharacterfromParty(ModelMap model, @PathVariable String partyName) {
+		PlayerCharacterDto playerCharacterDto = new PlayerCharacterDto();
+		playerCharacterDto.setPartyName(partyName);
+		Party party = partyService.findByPartyName(partyName);
+		model.put("party", party);
+		model.put("pc", playerCharacterDto);
+		return "character";
+
 	}
 
 }

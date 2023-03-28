@@ -19,61 +19,67 @@ import com.partymanager.finalproject.service.UserService;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private PartyService partyService;
-	
-	
+
 	@GetMapping("/home")
 	public String getHome(@AuthenticationPrincipal User user, ModelMap model) {
 		System.out.println("line 20, home: " + user);
-		
-		//insert PartyDto for conversion to a party
+
+		// insert PartyDto for conversion to a party
 		PartyDto partyDto = new PartyDto();
 		model.put("partyDto", partyDto);
-		
-		//Find the currently logged in user and put 
-		//them on the model if they match the expected user
+
+		// Find the currently logged in user and put
+		// them on the model if they match the expected user
 		Long userId = user.getUserId();
 		User userById = userService.findById(userId);
-		if(user.getFirstName().equals(userById.getFirstName())) {
+		if (user.getFirstName().equals(userById.getFirstName())) {
 			model.put("user", user);
 		}
-		//get a collection of all parties and put them on the page
-		//so they can be displayed and clicked into
+		// get a collection of all parties and put them on the page
+		// so they can be displayed and clicked into
 		List<Party> parties = partyService.findAll();
-		model.put("partiesList", parties);			
-		
+		model.put("partiesList", parties);
+
 		return "home";
 	}
+
 	@PostMapping("/home/delete/{userId}")
 	public String deleteUser(@PathVariable Long userId) {
-		//remove player from all parties
+		// remove player from all parties
 		List<Party> parties = partyService.findAll();
-		for(Party party : parties) {
+		for (Party party : parties) {
 			Long partyId = party.getPartyId();
 			partyService.removeFromParty(userId, partyId);
 			partyService.save(party);
 		}
-		//delete user from DB
+		// delete user from DB
 		userService.deleteById(userId);
 		return "redirect:/register";
 	}
+
 	@PostMapping("/create-party")
 	public String createParty(@AuthenticationPrincipal User user, ModelMap model, @ModelAttribute PartyDto partyDto) {
 		Long userId = user.getUserId();
 		User userById = userService.findById(userId);
-		//convert DTO to Party
+		// convert DTO to Party
 		partyService.createParty(partyDto, userById);
-		return "redirect:/home"; //change to parties later
+		return "redirect:/home"; // change to parties later
 	}
+
 	@GetMapping("/back-login")
-	public String goBack() {
+	public String goBackToLogin() {
 		return "redirect:/login";
 	}
-	
-	
+
+	@GetMapping("/back")
+	public String goBack() {
+		return "redirect:/home";
+	}
+
 }

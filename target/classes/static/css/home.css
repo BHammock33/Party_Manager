@@ -6,6 +6,7 @@ html {
 	-o-background-size: cover;
 	background-size:  cover;
 	color: #ff6f61;
+	text-shadow: black 1px 1px 2px;
 	
 }
 @font-face{
@@ -13,9 +14,10 @@ html {
 	src: url
 }
 
-p{
+.welcome{
 	text-align: center;
 	font-size: 30px;
+	text-shadow: black 1px 1px 2px;
 }
 .container-form{
 	align-items: center;
@@ -26,17 +28,24 @@ table, th, td{
 	border: 1px solid;
 	text-align: center;
 	color: black;
+	border-collapse: collapse;
 	
 }
 th, td{
 	padding: 10px;
 	
 }
+td:hover{
+	background-color: #62C6F2;
+	opacity: .9;
+}
 a:link{
-	color: white;
+	color:black;
+	font-weight:bold;
 }
 a:visited{
-	color: white;
+	color:black;
+	font-weight: bold;
 }
 .button{
 	display:flex;
@@ -45,7 +54,13 @@ a:visited{
 	align-items: center;
 	gap: 8px;
 	margin-top: 8px;
+	margin-bottom: 8px;
 	color:black;
+	border-radius: 8px;
+	font-size: 20px;
+}
+.button:hover{
+	background-color:#62C6F2;
 }
 .delete-button {
   position: fixed;
@@ -69,15 +84,40 @@ a:visited{
   font-size: 16px;
   align-items:center;
   justify-content:center;
+  margin:auto
 }
 .user-button:hover{
 	background-color:#62C6F2;
 	color: white;
+}
+.see-party{
+	justify-content:center;
+	align-items:center;
+	text-align:center;
+	display:grid;
 }
 .logout-button{
 	position: fixed;
 	top: 10px;
 	right: 10px;
 	background-color: #62C6F2;
+	color: white;
+}
+.dm-name{
+	font-size: 12px;
+	color: black;
+	font-weight: bold;
+}
+.form-holder{
+	background: transparent;
+	color: #ff6f61;
+	font-size: 20px;
+	font-weight: bold;
+	text-shadow: black 1px 1px 2px;
+}
+::placeholder{
+	color: white;
+}
+.input-tags{
 	color: white;
 }

@@ -1,0 +1,48 @@
+img{
+	width: 100%;
+	height: auto;
+	object-fit: contain;
+	vertical-align: middle;
+}
+.image-container{
+	float: left;
+	display: flex;
+	vertical-align: bottom;
+	bottom: 0;
+}
+img1{
+	flex: 1.250;
+	position: relative;
+	bottom:0;
+}
+img2{
+	flex: .902;
+	position: relative;
+	bottom: 0;
+}
+
+html{
+	font-family:"Libre Baskerville", serif;
+	background: url("/images/pinkPurple.jpg") no-repeat center center fixed;
+	background-size:  cover;
+	text-shadow: black 1px 1px 2px;
+}
+@font-face{
+	font-family: dndFont;
+	src: url
+}
+.container-form{
+	display: flex;
+	justify-content: left;
+	align-items: left;
+}
+.form-holder{
+	background: transparent;
+}
+::placeholder{
+	color: black;
+}
+.ui-button{
+	border-radius: 12px;
+	font-size: 16px;
+}

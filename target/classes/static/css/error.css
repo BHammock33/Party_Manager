@@ -1,0 +1,10 @@
+html{
+	font-family:"Libre Baskerville", serif;
+	background: url("/images/beholder.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size:  cover;
+	color: red;
+	text-shadow: black 1px 1px 2px;
+}

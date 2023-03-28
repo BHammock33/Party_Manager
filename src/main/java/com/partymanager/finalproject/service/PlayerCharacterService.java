@@ -154,6 +154,22 @@ public class PlayerCharacterService {
 			pcGold = (pcGold + newGold);
 			pc.setGold(pcGold);
 		}
+		if(pcCopper <= 0) {
+			Integer newCop = Math.abs(pcCopper % 10);
+			Integer subFromSilver = Math.abs(newCop / 10);
+			Integer newSilver = ((pcSilver - subFromSilver)-1);
+			Integer finalCop = (10 - newCop);
+			pc.setSilver(newSilver);
+			pc.setCopper(finalCop);
+		}
+		if(pcSilver <= 0) {
+			Integer newSilver = Math.abs(pcSilver % 10);
+			Integer subFromGold = Math.abs(newSilver / 10);
+			Integer newGold = ((pcGold - subFromGold)-1);
+			Integer finalSilver = (10 - newSilver);
+			pc.setSilver(finalSilver);
+			pc.setGold(newGold);
+		}
 		pcRepo.save(pc);
 	}
 
