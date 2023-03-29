@@ -11,3 +11,5 @@ public class FinalprojectApplication {
 	}
 
 }
+// Authored by Bennett Hammock
+// With thanks to Wizards of the Coast

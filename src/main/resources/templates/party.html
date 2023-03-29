@@ -45,15 +45,15 @@
 			    <td th:text = "${onePartyPlayer?.characterName}"></td>
 			    <td th:text = "${onePartyPlayer?.level}"></td>
 				<td th:text = "${onePartyPlayer?.experience}"></td>
-				<td><form th:action = "@{/add-xp/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${xpModifier}"><input class="coin-submit" id= "coin-submit" type = "text" th:field = "*{amount}" onkeypress = "validate(event)"><button type = "submit" class = "ui-button">Add XP</button></form></td>
+				<td><form th:action = "@{/add-xp/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${xpModifier}"><input class="coin-submit" id= "coin-submit" type = "number" min = "0" step = "1" th:field = "*{amount}" onfocus="this.value=''"><button type = "submit" class = "ui-button">Add XP</button></form></td>
 				<td th:text = "${onePartyPlayer?.xpToLevel}"> </td>
 				<td th:text = "${onePartyPlayer?.alignment}"></td>	
 				<td th:text = "${onePartyPlayer?.gold}"></td>
-				<td><form th:action = "@{/add-gold/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${goldModifier}"><input class="coin-submit" id= "coin-submit" type = "number" th:field = "*{amount}" value=""><button type = "submit" class = "ui-button">Earn/Spend Gold</button></form></td>
+				<td><form th:action = "@{/add-gold/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${goldModifier}" id= "gold-amount"><input class="coin-submit" id= "gold-submit" type = "number" step = "1" th:field = "*{amount}" onfocus="this.value=''"><button type = "submit" class = "ui-button" id ="gold-button">Earn/Spend Gold</button></form></td>
 				<td th:text = "${onePartyPlayer?.silver}"></td>
-				<td><form th:action = "@{/add-silver/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${silverModifier}"><input class="coin-submit" id= "coin-submit" type = "number" th:field = "*{amount}" placeholder = 0><button type = "submit" class = "ui-button">Earn/Spend Silver</button></form></td>
+				<td><form th:action = "@{/add-silver/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${silverModifier}"><input class="coin-submit" id= "coin-submit" type = "number" step = "1" th:field = "*{amount}" onfocus="this.value=''"><button type = "submit" class = "ui-button">Earn/Spend Silver</button></form></td>
 				<td th:text = "${onePartyPlayer?.copper}"></td>
-				<td><form th:action = "@{/add-copper/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${copperModifier}"><input class="coin-submit" id= "coin-submit" type = "number" th:field = "*{amount}" placeholder = 0><button type = "submit" class = "ui-button">Earn/Spend Copper</button></form></td>
+				<td><form th:action = "@{/add-copper/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${copperModifier}"><input class="coin-submit" id= "coin-submit" type = "number" step = "1" th:field = "*{amount}" onfocus="this.value=''"><button type = "submit" class = "ui-button">Earn/Spend Copper</button></form></td>
 				
 				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit" class = "ui-button">Delete From party</button></form></td>
 			</tr>

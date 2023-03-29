@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.PartyDto;
+import com.partymanager.finalproject.service.OnePartyPlayerService;
 import com.partymanager.finalproject.service.PartyService;
 import com.partymanager.finalproject.service.UserService;
 
@@ -25,6 +26,8 @@ public class HomeController {
 
 	@Autowired
 	private PartyService partyService;
+	@Autowired
+	private OnePartyPlayerService oPPservice;
 
 	@GetMapping("/home")
 	public String getHome(@AuthenticationPrincipal User user, ModelMap model) {
@@ -51,6 +54,7 @@ public class HomeController {
 
 	@PostMapping("/home/delete/{userId}")
 	public String deleteUser(@PathVariable Long userId) {
+	
 		// remove player from all parties
 		List<Party> parties = partyService.findAll();
 		for (Party party : parties) {
@@ -70,6 +74,11 @@ public class HomeController {
 		// convert DTO to Party
 		partyService.createParty(partyDto, userById);
 		return "redirect:/home"; // change to parties later
+	}
+	@PostMapping("/delete-party/{partyId}")
+	public String deleteParty(@PathVariable Long partyId) {
+		oPPservice.prepForDeletion(partyId);
+		return "redirect:/home";
 	}
 
 	@GetMapping("/back-login")

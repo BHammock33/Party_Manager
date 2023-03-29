@@ -45,6 +45,7 @@ public class PlayerCharacterService {
 		return userRepo.findUserCharacters(username);
 	}
 
+	
 	public PlayerCharacter findUserCharactersByPartyId(Long userId, Long partyId) {
 		User user = userService.findById(userId);
 		Party partyById = partyService.findByPartyId(partyId).orElseThrow();
@@ -61,7 +62,7 @@ public class PlayerCharacterService {
 		return pcInParty;
 
 	}
-
+	//See if the user has a character in the party yet
 	public Boolean checkIfInParty(Long partyId, Long userId) {
 		User user = userService.findById(userId);
 		List<PlayerCharacter> userCharacters = user.getCharacters();
@@ -71,6 +72,7 @@ public class PlayerCharacterService {
 		System.out.println("characterInParty");
 		return characterInParty;
 	}
+	//Map PCDTO properties onto PC
 	public PlayerCharacter convertDtoToPc(PlayerCharacterDto playerCharacterDto, User user) {
 		PlayerCharacter playerCharacter = new PlayerCharacter();
 		
@@ -92,48 +94,7 @@ public class PlayerCharacterService {
 		return playerCharacter;
 	}
 	
-	//Breaks down in the try block
-	
-//	public List<OnePartyPlayer> convertPlayersToOneParty(Long partyId){
-//		Party party = partyService.findByPartyId(partyId).orElseThrow();
-//		List<User> players = party.getUsers();
-//		List<OnePartyPlayer> onePartyPlayers = new ArrayList<>();
-//		PlayerCharacterService pcService = new PlayerCharacterService();
-//		for (User player : players) {
-//			OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
-//			onePartyPlayer.setOnePartyUserId(player.getUserId());
-//			onePartyPlayer.setFirstName(player.getFirstName());
-//			onePartyPlayer.setOnePartyID(partyId);
-//			Long userId = player.getUserId();
-//			try {
-//				PlayerCharacter characterInParty = pcService.findUserCharactersByPartyId(userId, partyId);
-//				String characterName = characterInParty.getName();
-//				String characterAlignment = characterInParty.getAlignment();
-//				Integer characterExperience = characterInParty.getXp();
-//				onePartyPlayer.setCharacterName(characterName);
-//				onePartyPlayer.setExperience(characterExperience);
-//				onePartyPlayer.setLevel(characterInParty.getLevel());
-//				onePartyPlayer.setAlignment(characterAlignment);
-//				onePartyPlayer.setGold(characterInParty.getGold());
-//				onePartyPlayer.setSilver(characterInParty.getSilver());
-//				onePartyPlayer.setCopper(characterInParty.getCopper());
-//				onePartyPlayer.setOnePartyCharacterId(characterInParty.getCharacterId());
-//				Integer xpToLevel = pcService.xpToNextLevel(onePartyPlayer.getOnePartyCharacterId());
-//				onePartyPlayer.setXpToLevel(xpToLevel);
-//				pcService.levelUpCharacter(onePartyPlayer.getOnePartyCharacterId());
-//				pcService.coinConversion(onePartyPlayer.getOnePartyCharacterId());
-//			
-//				
-//			} catch (Exception e) {
-//				System.out.println("No character in party");
-//			}
-//			
-//			onePartyPlayers.add(onePartyPlayer);
-//		}
-//		return onePartyPlayers;
-//	}
-
-	
+	//1 gold = 10 silver = 100 copper
 	public void coinConversion(Long characterId) {
 		PlayerCharacter pc = pcRepo.findById(characterId).orElseThrow();
 		Integer pcGold = pc.getGold();
@@ -154,7 +115,7 @@ public class PlayerCharacterService {
 			pcGold = (pcGold + newGold);
 			pc.setGold(pcGold);
 		}
-		if(pcCopper <= 0) {
+		if(pcCopper < 0 && pcSilver > 0) {
 			Integer newCop = Math.abs(pcCopper % 10);
 			Integer subFromSilver = Math.abs(newCop / 10);
 			Integer newSilver = ((pcSilver - subFromSilver)-1);
@@ -162,7 +123,16 @@ public class PlayerCharacterService {
 			pc.setSilver(newSilver);
 			pc.setCopper(finalCop);
 		}
-		if(pcSilver <= 0) {
+		if(pcCopper <0 && pcSilver ==0) {
+			Integer newCop = Math.abs(pcCopper % 10);
+			Integer newSilver = (pcSilver + 9);
+			Integer newGold = (pcGold - 1);
+			Integer finalCop = (10 - newCop);
+			pc.setSilver(newSilver);
+			pc.setGold(newGold);
+			pc.setCopper(finalCop);
+		}
+		if(pcSilver < 0) {
 			Integer newSilver = Math.abs(pcSilver % 10);
 			Integer subFromGold = Math.abs(newSilver / 10);
 			Integer newGold = ((pcGold - subFromGold)-1);
@@ -275,6 +245,7 @@ public class PlayerCharacterService {
 				add(6500);
 				add(14000);
 				add(23000);
+				add(34000);
 				add(48000);
 				add(64000);
 				add(85000);

@@ -17,8 +17,9 @@ public class PlayerCharacter {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long characterId;
-	//will set to character_id
+	// will set to character_id
 	private String name;
+	// xp = experience throughout app
 	private Integer xp;
 	@Column(name = "alignment")
 	private String alignment;
@@ -26,28 +27,27 @@ public class PlayerCharacter {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	//joins many characters under one user_id
+	// joins many characters under one user_id
 
 	@ManyToOne
 	@JoinColumn(name = "party_id")
 	private Party party;
-	//one character can only be in one party, parties can have many characters
+	// one character can only be in one party, parties can have many characters
 	private Integer gold;
 	private Integer silver;
 	private Integer copper;
-	//10 copper for 1 silver
-	//100 copper for 1 gold
-	//10 silver for 1 gold 
+	// 10 copper for 1 silver
+	// 100 copper for 1 gold
+	// 10 silver for 1 gold
 	private Integer level;
+	// Essentially a function of XP and level but setting it as a property allows
+	// for easier grabbing for thymeleaf
 	private Integer xpToLevel;
 
-	
-
+	//no arg constructor
 	public PlayerCharacter() {
 		super();
 	}
-
-	
 
 	public PlayerCharacter(Long characterId, String name, Integer xp, String alignment, User user, Party party,
 			Integer gold, Integer silver, Integer copper, Integer level, Integer xpToLevel) {
@@ -64,8 +64,6 @@ public class PlayerCharacter {
 		this.level = level;
 		this.xpToLevel = xpToLevel;
 	}
-
-
 
 	public Long getCharacterId() {
 		return characterId;
@@ -105,7 +103,7 @@ public class PlayerCharacter {
 
 	public void setUser(User user) {
 		this.user = user;
-	}	
+	}
 
 	public Party getParty() {
 		return party;
@@ -115,69 +113,45 @@ public class PlayerCharacter {
 		this.party = party;
 	}
 
-
-
 	public Integer getGold() {
 		return gold;
 	}
-
-
 
 	public void setGold(Integer gold) {
 		this.gold = gold;
 	}
 
-
-
 	public Integer getSilver() {
 		return silver;
 	}
-
-
 
 	public void setSilver(Integer silver) {
 		this.silver = silver;
 	}
 
-
-
 	public Integer getCopper() {
 		return copper;
 	}
 
-
-
 	public void setCopper(Integer copper) {
 		this.copper = copper;
 	}
-	
-
-
 
 	public Integer getLevel() {
 		return level;
 	}
 
-
-
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
-
-	
-
 
 	public Integer getXpToLevel() {
 		return xpToLevel;
 	}
 
-
-
 	public void setXpToLevel(Integer xpToLevel) {
 		this.xpToLevel = xpToLevel;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -185,16 +159,5 @@ public class PlayerCharacter {
 				+ alignment + ", user=" + user + ", party=" + party + ", gold=" + gold + ", silver=" + silver
 				+ ", copper=" + copper + ", level=" + level + ", xpToLevel=" + xpToLevel + "]";
 	}
-
-
-
-	
-
-
-	
-	
-	
-
-	
 
 }

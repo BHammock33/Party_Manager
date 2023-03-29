@@ -45,3 +45,14 @@ function validate(evt) {
     if(theEvent.preventDefault) theEvent.preventDefault();
   }
 }
+
+let goldField = document.querySelector('gold-submit');
+let goldButton = document.querySelector('gold-button');
+goldButton.addEventListener('click', checkNegative);
+goldField.addEventListener('focus', checkNegative);
+let goldChange = (goldField.value);
+let goldAmount = document.querySelector('gold-amount');
+function checkNegative(){
+	alert(goldAmount);
+	console.log(goldChange);
+}

@@ -11,26 +11,27 @@
 	<p class = "welcome" th:inline = "text"> Create your character for [[${pc.partyName}]]!
 	<div class = "container">
 		<div class = "container-form">
-		<input type = "hidden" th:object = "${party}">;
+		<input type = "hidden" th:object = "${party}">
 			<form th:action= "@{/create-character/{partyId} (partyId = ${party.partyId})}" method = "post" th:object = "${pc}">
 			<div>
-				<label class="input-tags">Character Name: </label><input th:field="${pc.name}" type="text" class = "form-holder" placeholder = "Character Name">
-				<label class="input-tags">Character Experience: </label><input th:field="${pc.xp}" type="number" class = "form-holder" placeholder = "0 If starting at Level 1">
+				<label class="input-tags">Character Name: </label><input th:field="${pc.name}" type="text" class = "form-holder" placeholder = "Character Name" required autofocus>
+				<label class="input-tags">Character Experience: </label><input th:field="${pc.xp}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "0 If starting at Level 1">
 			</div>
 			<div>	
-				<label class="input-tags">Character Level: </label><input th:field="${pc.level}" type="number" class = "form-holder" placeholder = "Character level">
+				<label class="input-tags">Character Level: </label><input th:field="${pc.level}" type="number" min = "1" step = "1" class = "form-holder" placeholder = "Character level" required>
 				<input th:field = "${pc.partyName}" type = "hidden" class = "form-holder" placeholder = "Party Name">
 				<label class="input-tags">Character Alignment: </label><input th:field="${pc.alignment}" type="text" class = "form-holder" placeholder = "Alignment">
 			</div>	
 			<div>	
-				<label class="input-tags">Starting Gold: </label><input th:field="${pc.gold}" type="text" class = "form-holder" placeholder = "Gold">
-				<label class="input-tags">Starting Silver: </label><input th:field="${pc.silver}" type="text" class = "form-holder" placeholder = "Silver">
-				<label class="input-tags">Starting Copper: </label><input th:field="${pc.copper}" type="text" class = "form-holder" placeholder = "Copper">
+				<label class="input-tags">Starting Gold: </label><input th:field="${pc.gold}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "Gold">
+				<label class="input-tags">Starting Silver: </label><input th:field="${pc.silver}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "Silver">
+				<label class="input-tags">Starting Copper: </label><input th:field="${pc.copper}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "Copper">
 			</div>	
 				<button class = "ui-button" type="submit">Create Character</button>
+				<label class = "input-tags">Need help naming your character? Click </label><a href = "https://www.fantasynamegenerators.com/dungeons-and-dragons.php" target="_blank">Here</a>
 			</form>
 		</div>
-		
+		<h2>Examples of Alignment</h2>
 		<div class = "image-container">
 			<div class = "img1">
 			<img src = "/images/alignment.jpg">

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th = "http://thymeleaf.org">
+<html xmlns:th = "http://thymeleaf.org"
+	  xmlns:sec = "https://ww.thymeleaf.org/extras/spring-security">
 	<head>
 		<title>Parties</title>
 		<link rel="stylesheet" th:href="@{/css/parties.css}">
@@ -19,6 +20,7 @@
 				<td>
 					<a th:href = "@{/join-party/{partyId} (partyId = ${party.partyId})}"th:text = "${party.partyName}"></a>
 				</td>
+				<td><form sec:authorize = "hasRole('ROLE_DM')" th:action = "@{/delete-party/{partyId} (partyId = ${party.partyId})}" method = "post"><button type = "submit" class = "delete-button">Delete Party</button></form></td>
 		</tbody>
 		</table>
 		<div>

@@ -13,9 +13,9 @@
 		<div class="container-form">
 			<form action="" method="post" th:object = "${userDto}" >
 				<h1>Register Below</h1>
-				<label class="input-tags">First Name</label><input th:field="${userDto.firstName}" type= "text" class= "form-holder" placeholder="First Name">
+				<label class="input-tags">First Name</label><input th:field="${userDto.firstName}" type= "text" class= "form-holder" placeholder="First Name" required autofocus>
 				<label class="input-tags">Last Name</label><input th:field="${userDto.lastName}" type= "text" class= "form-holder" placeholder="Last Name">
-				<label class="input-tags">Username</label><input th:field="${userDto.username}" type= "text" class= "form-holder" placeholder="Username">
+				<label class="input-tags">Username</label><input th:field="${userDto.username}" type= "text" class= "form-holder" placeholder="Username" required>
 			<div>	
 				<label class="input-tags">Password</label><input th:field="${userDto.password}" type= "password" id = "password" class= "form-holder" placeholder="Password" required><i id = "passwordEyeIcon" class ="fa-solid fa-eye"></i>
 			</div>	

@@ -11,16 +11,9 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.partymanager.finalproject.domain.User;
 
-/**
- * @author benne
- *
- */
 @Entity
 public class Authorities implements GrantedAuthority {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6125802129870572206L;
 
 	@Id
@@ -34,7 +27,7 @@ public class Authorities implements GrantedAuthority {
 
 	public Authorities() {
 	}
-	
+
 	public Authorities(String authority) {
 		this.authority = authority;
 	}
@@ -69,10 +62,5 @@ public class Authorities implements GrantedAuthority {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-//	@Override
-//	public String toString() {
-//		return "Authorities [id=" + id + ", authority=" + authority + ", user=" + user + "]";
-//	}
 
 }

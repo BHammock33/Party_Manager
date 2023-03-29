@@ -6,25 +6,19 @@ import com.partymanager.finalproject.domain.User;
 
 public class CustomSecurityUser extends User implements UserDetails {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -447844476945983405L;
-	
-	public CustomSecurityUser() {}
-	
+
+	public CustomSecurityUser() {
+	}
+
 	public CustomSecurityUser(User user) {
 		this.setUserId(user.getUserId());
 		this.setUsername(user.getUsername());
 		this.setPassword(user.getPassword());
 		this.setFirstName(user.getFirstName());
 		this.setLastName(user.getLastName());
-		//this.setCharacters(getCharacters());
-		//this.setParties(getParties());
 		this.setAuthorities(user.getAuthorities());
 	}
-
-
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -45,8 +39,5 @@ public class CustomSecurityUser extends User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-
-	
-
 
 }

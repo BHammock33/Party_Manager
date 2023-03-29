@@ -2,6 +2,7 @@ package com.partymanager.finalproject.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+
+
+
 
 @Entity
 @Table(name = "party")
@@ -21,7 +26,7 @@ public class Party {
 	@ManyToMany(mappedBy = "parties")
 	private List<User> users;
 	// Many Users Can have Many Parties, Many Parties can have Many Users
-	@OneToMany(mappedBy = "party")
+	@OneToMany(mappedBy = "party", cascade = CascadeType.REMOVE)
 	private List<PlayerCharacter> characters;
 	// one character can only be in one party, parties can have many characters
 
@@ -33,6 +38,7 @@ public class Party {
 		this.characters = characters;
 	}
 
+	//no arg constructor
 	public Party() {
 		// super();
 	}
@@ -68,11 +74,5 @@ public class Party {
 	public void setCharacters(List<PlayerCharacter> characters) {
 		this.characters = characters;
 	}
-
-//	@Override
-//	public String toString() {
-//		return "Party [partyId=" + partyId + ", partyName=" + partyName + ", users=" + users + ", characters="
-//				+ characters + "]";
-//	}
 
 }

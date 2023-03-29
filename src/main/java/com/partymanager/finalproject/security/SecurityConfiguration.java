@@ -15,7 +15,7 @@ import com.partymanager.finalproject.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {// extends WebSecurityConfigurerAdapter{
+public class SecurityConfiguration {
 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsServiceImpl;
@@ -33,12 +33,21 @@ public class SecurityConfiguration {// extends WebSecurityConfigurerAdapter{
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.csrf().disable().formLogin().loginPage("/login").defaultSuccessUrl("/home").permitAll().and().logout()
-				.logoutSuccessUrl("/login").permitAll().and().authorizeHttpRequests().antMatchers("/admin")
-				.hasAnyRole("ADMIN").antMatchers("/DM").hasAnyRole("DM")
-				.antMatchers("/", "/css/**", "/js/**", "/images/**", "/error/**").permitAll()
-				.antMatchers("/index", "/register").permitAll().antMatchers("/home").permitAll().anyRequest()
-				.authenticated();
+		http.csrf().disable()
+			.formLogin().loginPage("/login")
+				.defaultSuccessUrl("/home").permitAll()
+				.and()
+				.logout()
+					.logoutSuccessUrl("/login").permitAll()
+				.and()
+					.authorizeHttpRequests()
+					.antMatchers("/admin").hasAnyRole("ADMIN")
+					.antMatchers("/DM").hasAnyRole("DM")
+					.antMatchers("/", "/css/**", "/js/**", "/images/**", "/error/**").permitAll()
+					.antMatchers("/index", "/register").permitAll()
+					.antMatchers("/home").permitAll()
+					.anyRequest()
+					.authenticated();
 
 		return http.build();
 	}

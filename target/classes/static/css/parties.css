@@ -37,3 +37,14 @@ a:visited{
 	color:white;
 	font-weight: bold;
 }
+.delete-button{
+	border: 1px solid black;
+	color: white;
+	text-align: center;
+	font-size: 12px;
+	background-color: #62C6F2;
+	margin-left: 45px;
+}
+.delete-button:hover{
+	background-color: red;
+}

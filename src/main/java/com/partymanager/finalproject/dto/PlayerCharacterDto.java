@@ -1,5 +1,8 @@
 package com.partymanager.finalproject.dto;
 
+// same principle as the party DTO, can be more easily be put onto the model
+// and then transfer the properties into the actual character entity
+// avoids dealing with null user/partyId
 public class PlayerCharacterDto {
 
 	private String name;

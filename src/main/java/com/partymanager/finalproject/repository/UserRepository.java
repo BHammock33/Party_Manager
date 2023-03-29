@@ -10,27 +10,17 @@ import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
-	
-	@Query("select u from User u "
-			+ "left join fetch u.authorities "
-			+"where u.username = :username")
+public interface UserRepository extends JpaRepository<User, Long> {
+
+	@Query("select u from User u " + "left join fetch u.authorities " + "where u.username = :username")
 	User findByUsername(String username);
-	
-	boolean existsByUsername(String username);
 
-	@Query("select u from User u "
-			+ "left join fetch u.characters "
-			+"where u.username = :username")
+	Boolean existsByUsername(String username);
+
+	@Query("select u from User u " + "left join fetch u.characters " + "where u.username = :username")
 	List<PlayerCharacter> findUserCharacters(String username);
-
-//	@Query("select u from User u "
-//			+ "left join fetch u.party "
-//			+ "where u.userId = :userId")
-//	List<Party> findUserParties(Long userId);
 
 	@Query("select u from User u where u.firstName = :firstName")
 	User findByFirstName(String firstName);
 
-	
 }
