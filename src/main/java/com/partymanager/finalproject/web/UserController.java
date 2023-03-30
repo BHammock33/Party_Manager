@@ -18,18 +18,16 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
-	
 
 	@GetMapping("/user/{userId}")
 	public String getUserPage(ModelMap model, @PathVariable Long userId) {
-		User currentUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.findById(currentUser.getUserId());
 		System.out.println(user);
 		model.put("user", user);
 		return "userpage";
 	}
-	
+
 	@GetMapping("/home/parties/{userId}")
 	public String getParties(ModelMap model, @PathVariable Long userId) {
 		User currentUser = userService.findById(userId);

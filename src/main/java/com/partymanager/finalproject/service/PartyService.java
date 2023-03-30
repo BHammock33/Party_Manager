@@ -116,6 +116,7 @@ public class PartyService {
 		return dm;
 
 	}
+
 	public void deleteParty(Long partyId) {
 		partyRepo.deleteById(partyId);
 	}

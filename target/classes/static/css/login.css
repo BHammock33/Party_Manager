@@ -9,6 +9,10 @@ html{
 	justify-content: center;
 	
 }
+@font-face{
+	font-family: dndFont;
+	src: url
+}
 
 body{
 	display: flex;

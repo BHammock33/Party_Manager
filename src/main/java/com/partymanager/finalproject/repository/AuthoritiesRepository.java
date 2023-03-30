@@ -8,5 +8,4 @@ import com.partymanager.finalproject.security.Authorities;
 @Repository
 public interface AuthoritiesRepository extends JpaRepository<Authorities, Long> {
 
-
 }

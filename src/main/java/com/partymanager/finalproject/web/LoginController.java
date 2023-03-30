@@ -21,28 +21,26 @@ public class LoginController {
 
 	@Autowired
 	private AuthenticationManager authManager;
-	
-	
+
 	@GetMapping("/login")
 	public String getLogin(ModelMap model) {
 		return "login";
 	}
-	
+
 	@PostMapping("/login")
-	public ResponseEntity<HttpStatus> login(@RequestBody User user) throws Exception{
+	public ResponseEntity<HttpStatus> login(@RequestBody User user) throws Exception {
 		Authentication auth;
-	
-		
+
 		try {
-			auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),
-					user.getPassword()));
+			auth = authManager
+					.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 			SecurityContextHolder.getContext().setAuthentication(auth);
 		} catch (BadCredentialsException e) {
-			throw new  Exception("Authentication Failed");
+			throw new Exception("Authentication Failed");
 		}
-		
+
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-		
+
 	}
-	
+
 }

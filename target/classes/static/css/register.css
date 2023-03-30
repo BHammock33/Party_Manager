@@ -59,7 +59,7 @@ form>div>label{
 	margin-bottom: 5px;
 	color: #7BAFD4;
 }
-.buttons{
+.ui-buttons{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
@@ -67,7 +67,7 @@ form>div>label{
 	gap: 4px;
 	margin-top: 4px;
 }
-button{
+.ui-button{
 	background-color: #4681f4;
 	text-decoration: none;
 	color: white;
@@ -77,7 +77,7 @@ button{
 	font-size: 25px;
 	width: 100%;
 }
-button:hover{
+ui-button:hover{
 	background-color: 55c2da;
 	scale: 1.10;
 }
@@ -94,9 +94,7 @@ input{
 input:focus{
 	border: 1px solid green;
 }
-h1{
-	
-}
+
 @font-face{
 	font-family: dndFont;
 	src: url

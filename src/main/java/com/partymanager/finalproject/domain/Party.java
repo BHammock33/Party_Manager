@@ -11,10 +11,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
-
-
-
 @Entity
 @Table(name = "party")
 public class Party {
@@ -38,7 +34,7 @@ public class Party {
 		this.characters = characters;
 	}
 
-	//no arg constructor
+	// no arg constructor
 	public Party() {
 		// super();
 	}

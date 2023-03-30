@@ -45,7 +45,6 @@ public class PlayerCharacterService {
 		return userRepo.findUserCharacters(username);
 	}
 
-	
 	public PlayerCharacter findUserCharactersByPartyId(Long userId, Long partyId) {
 		User user = userService.findById(userId);
 		Party partyById = partyService.findByPartyId(partyId).orElseThrow();
@@ -62,7 +61,8 @@ public class PlayerCharacterService {
 		return pcInParty;
 
 	}
-	//See if the user has a character in the party yet
+
+	// See if the user has a character in the party yet
 	public Boolean checkIfInParty(Long partyId, Long userId) {
 		User user = userService.findById(userId);
 		List<PlayerCharacter> userCharacters = user.getCharacters();
@@ -72,11 +72,11 @@ public class PlayerCharacterService {
 		System.out.println("characterInParty");
 		return characterInParty;
 	}
-	//Map PCDTO properties onto PC
+
+	// Map PCDTO properties onto PC
 	public PlayerCharacter convertDtoToPc(PlayerCharacterDto playerCharacterDto, User user) {
 		PlayerCharacter playerCharacter = new PlayerCharacter();
-		
-		
+
 		String partyName = playerCharacterDto.getPartyName();
 		Party party = partyService.findByPartyName(partyName);
 		playerCharacter.setCharacterId(playerCharacter.getCharacterId());
@@ -90,11 +90,11 @@ public class PlayerCharacterService {
 		playerCharacter.setCopper(playerCharacterDto.getCopper());
 		playerCharacter.setLevel(playerCharacterDto.getLevel());
 		partyService.save(party);
-		
+
 		return playerCharacter;
 	}
-	
-	//1 gold = 10 silver = 100 copper
+
+	// 1 gold = 10 silver = 100 copper
 	public void coinConversion(Long characterId) {
 		PlayerCharacter pc = pcRepo.findById(characterId).orElseThrow();
 		Integer pcGold = pc.getGold();
@@ -115,15 +115,15 @@ public class PlayerCharacterService {
 			pcGold = (pcGold + newGold);
 			pc.setGold(pcGold);
 		}
-		if(pcCopper < 0 && pcSilver > 0) {
+		if (pcCopper < 0 && pcSilver > 0) {
 			Integer newCop = Math.abs(pcCopper % 10);
 			Integer subFromSilver = Math.abs(newCop / 10);
-			Integer newSilver = ((pcSilver - subFromSilver)-1);
+			Integer newSilver = ((pcSilver - subFromSilver) - 1);
 			Integer finalCop = (10 - newCop);
 			pc.setSilver(newSilver);
 			pc.setCopper(finalCop);
 		}
-		if(pcCopper <0 && pcSilver ==0) {
+		if (pcCopper < 0 && pcSilver == 0) {
 			Integer newCop = Math.abs(pcCopper % 10);
 			Integer newSilver = (pcSilver + 9);
 			Integer newGold = (pcGold - 1);
@@ -132,10 +132,10 @@ public class PlayerCharacterService {
 			pc.setGold(newGold);
 			pc.setCopper(finalCop);
 		}
-		if(pcSilver < 0) {
+		if (pcSilver < 0) {
 			Integer newSilver = Math.abs(pcSilver % 10);
 			Integer subFromGold = Math.abs(newSilver / 10);
-			Integer newGold = ((pcGold - subFromGold)-1);
+			Integer newGold = ((pcGold - subFromGold) - 1);
 			Integer finalSilver = (10 - newSilver);
 			pc.setSilver(finalSilver);
 			pc.setGold(newGold);
@@ -147,7 +147,7 @@ public class PlayerCharacterService {
 	// between the two
 	// that is to say the experience needed to go from level to level is variable by
 	// design
-	//this design choice leads to the terribly ugly code below
+	// this design choice leads to the terribly ugly code below
 	public void levelUpCharacter(Long characterId) {
 		PlayerCharacter pc = pcRepo.findById(characterId).orElseThrow();
 		Integer pcExperience = pc.getXp();

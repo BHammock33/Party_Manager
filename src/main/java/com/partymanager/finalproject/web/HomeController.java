@@ -54,7 +54,7 @@ public class HomeController {
 
 	@PostMapping("/home/delete/{userId}")
 	public String deleteUser(@PathVariable Long userId) {
-	
+
 		// remove player from all parties
 		List<Party> parties = partyService.findAll();
 		for (Party party : parties) {
@@ -75,6 +75,7 @@ public class HomeController {
 		partyService.createParty(partyDto, userById);
 		return "redirect:/home"; // change to parties later
 	}
+
 	@PostMapping("/delete-party/{partyId}")
 	public String deleteParty(@PathVariable Long partyId) {
 		oPPservice.prepForDeletion(partyId);

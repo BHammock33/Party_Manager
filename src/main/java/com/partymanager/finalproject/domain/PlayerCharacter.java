@@ -44,7 +44,7 @@ public class PlayerCharacter {
 	// for easier grabbing for thymeleaf
 	private Integer xpToLevel;
 
-	//no arg constructor
+	// no arg constructor
 	public PlayerCharacter() {
 		super();
 	}

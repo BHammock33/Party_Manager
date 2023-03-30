@@ -12,7 +12,6 @@ import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.CoinModifier;
 import com.partymanager.finalproject.dto.OnePartyPlayer;
 
-
 @Service
 public class OnePartyPlayerService {
 
@@ -24,7 +23,7 @@ public class OnePartyPlayerService {
 	private UserService userService;
 
 	// Take All of the users in a party and convert them to "single party users"
-	// This allows for easier thymeleaf mapping on the model 
+	// This allows for easier thymeleaf mapping on the model
 	// Filters down to the character the user has in the specific party
 	public List<OnePartyPlayer> createOnePartyPlayers(Long partyId) {
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
@@ -62,7 +61,7 @@ public class OnePartyPlayerService {
 		;
 		return onePartyPlayers;
 	}
-	
+
 	// logic for adding/spending coins
 	public void addGold(String characterName, CoinModifier amount) {
 		PlayerCharacter pc = pcService.findByName(characterName);
@@ -74,6 +73,7 @@ public class OnePartyPlayerService {
 		User user = pc.getUser();
 		userService.save(user);
 	}
+
 	public void addSilver(String characterName, CoinModifier amount) {
 		PlayerCharacter pc = pcService.findByName(characterName);
 		Integer silverAdd = amount.getAmount();
@@ -84,6 +84,7 @@ public class OnePartyPlayerService {
 		User user = pc.getUser();
 		userService.save(user);
 	}
+
 	public void addCopper(String characterName, CoinModifier amount) {
 		PlayerCharacter pc = pcService.findByName(characterName);
 		Integer copperAdd = amount.getAmount();
@@ -94,15 +95,18 @@ public class OnePartyPlayerService {
 		User user = pc.getUser();
 		userService.save(user);
 	}
+
+	// Find all players in a to be deleted party and remove the party from their
+	// lists
 	public void prepForDeletion(Long partyId) {
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
 		List<User> players = party.getUsers();
 		List<Long> userIds = new ArrayList<>();
-		for(User player : players) {
+		for (User player : players) {
 			Long playerId = player.getUserId();
 			userIds.add(playerId);
 		}
-		for(Long userId : userIds) {
+		for (Long userId : userIds) {
 			partyService.removeFromParty(userId, partyId);
 			User userById = userService.findById(userId);
 			userService.save(userById);
