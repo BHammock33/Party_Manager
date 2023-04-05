@@ -128,5 +128,20 @@ public class PartyService {
 		userRepo.save(user);
 		partyRepo.save(party);
 	}
+	//All party fund users have the same First Name so we need to find the one
+	//specific to the party were in
+	public User getPartyFund(Long partyId) {
+		Party party = partyRepo.findById(partyId).orElseThrow();
+		List<User> users = party.getUsers();
+		List<User> partyFund = new ArrayList<>();
+		for(User user : users) {
+			String userName = user.getFirstName();
+			if(userName.equals("Party Fund")) {
+				partyFund.add(user);
+			}
+		}
+		User partyFundUser = partyFund.get(0);
+		return partyFundUser;
+	}
 
 }

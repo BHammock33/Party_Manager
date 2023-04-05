@@ -115,19 +115,25 @@ public class OnePartyPlayerService {
 		}
 		partyService.deleteParty(partyId);
 	}
+
 	public void createPartyFund(Long partyId) {
+		// get party and players and characters
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
 		List<User> players = party.getUsers();
 		List<PlayerCharacter> pcs = party.getCharacters();
+		List<Party> blankParties = new ArrayList<>();
+		// create a new user to assign to party fund
 		User newUser = new User();
 		newUser.setFirstName("Party Fund");
-		 byte[] array = new byte[7]; // length is bounded by 7
-		    new Random().nextBytes(array);
-		    String generatedUserName = new String(array, Charset.forName("UTF-8"));
+		// generate username and password
+		byte[] array = new byte[7]; // length is bounded by 7
+		new Random().nextBytes(array);
+		String generatedUserName = new String(array, Charset.forName("UTF-8"));
 		newUser.setUsername(generatedUserName);
-		 new Random().nextBytes(array);
-		    String generatedPassword = new String(array, Charset.forName("UTF-8"));
+		new Random().nextBytes(array);
+		String generatedPassword = new String(array, Charset.forName("UTF-8"));
 		newUser.setPassword(generatedPassword);
+		// create a new character for the new user to act as party fund
 		PlayerCharacter partyFundPc = new PlayerCharacter();
 		partyFundPc.setName("Party Fund");
 		partyFundPc.setCopper(0);
@@ -139,17 +145,37 @@ public class OnePartyPlayerService {
 		partyFundPc.setUser(newUser);
 		partyFundPc.setXp(0);
 		partyFundPc.setXpToLevel(0);
+		// add party fund character to party
 		pcs.add(partyFundPc);
+		// add party fund user to party
 		players.add(newUser);
-		List<Party> blankParties = new ArrayList<>();
+		// add party to users parties
 		blankParties.add(party);
 		newUser.setParties(blankParties);
+		// save
 		userService.save(newUser);
 		userService.saveAll(players);
 		pcService.save(partyFundPc);
 		partyService.save(party);
-		System.out.println(players + "PLAYERS");
-		System.out.println(party + "Party");
+
+	}
+	public Boolean checkForPartyFund(Long partyId) {
+		Party party = partyService.findByPartyId(partyId).orElseThrow();
+		List<User> players = party.getUsers();
+		List<String> names = new ArrayList<>();
+		String partyFund = "Party Fund";
+		for(User player : players) {
+			String name = player.getFirstName();
+			names.add(name);
+		}
+		Boolean partyFunded = false;
+		if(names.contains(partyFund)) {
+			partyFunded = true;
+			System.out.println("PARTY FUNDED" + partyFunded);
+			return partyFunded;
+		}
+		System.out.println("PARTY NOT FUNDED" + partyFunded);
+		return partyFunded;
 		
 	}
 }

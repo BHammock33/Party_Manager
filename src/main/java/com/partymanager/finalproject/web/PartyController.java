@@ -62,18 +62,23 @@ public class PartyController {
 		// put data objects for experience and currency transactions
 		XpModifier xpModifier = new XpModifier();
 		CoinModifier coinModifier = new CoinModifier();
+		// check if party fund has been created
+		Boolean partyFunded = oPPservice.checkForPartyFund(partyId);
 
+		// Boolean objects
 		model.put("inParty", inParty);
+		model.put("partyFund", partyFunded);
+		model.put("characterInParty", characterInParty);
+		// users minus DM
 		model.put("players", justPlayers);
-
+		// The Party
 		model.put("party", party);
-		model.put("user", user);
+
+		// DTO objects
 		model.put("xpModifier", xpModifier);
 		model.put("goldModifier", coinModifier);
 		model.put("silverModifier", coinModifier);
 		model.put("copperModifier", coinModifier);
-
-		model.put("characterInParty", characterInParty);
 
 		return "party";
 	}
@@ -91,10 +96,16 @@ public class PartyController {
 
 	@PostMapping("/remove-from-party/{partyId}/{firstName}")
 	public String removeFromParty(@PathVariable String firstName, @PathVariable Long partyId) {
-		User user = userService.findByFirstName(firstName);
-		Long userId = user.getUserId();
+		if (firstName.equals("Party Fund")) {
+			User partyFund = partyService.getPartyFund(partyId);
+			Long partyFundUId = partyFund.getUserId();
+			partyService.removeFromParty(partyFundUId, partyId);
+		} else {
+			User user = userService.findByFirstName(firstName);
+			Long userId = user.getUserId();
+			partyService.removeFromParty(userId, partyId);
+		}
 
-		partyService.removeFromParty(userId, partyId);
 		return "redirect:/join-party/{partyId}";
 	}
 
@@ -105,6 +116,7 @@ public class PartyController {
 		partyService.leaveParty(partyId, userId);
 		return "redirect:/home";
 	}
+
 	@PostMapping("/create-party-fund/{partyId}")
 	public String createPartyFund(@PathVariable Long partyId) {
 		oPPservice.createPartyFund(partyId);

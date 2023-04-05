@@ -2,7 +2,7 @@
 <html xmlns:th = "http://thymeleaf.org"
 	  xmlns:sec = "https://ww.thymeleaf.org/extras/spring-security">
 <head>
-<!-- <title th:text="${party.name}"></title> -->
+
 <title th:text ="${party.partyName}"></title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,15 +64,17 @@
 			<form th:action = "@{/join-party/{partyId} (partyId = ${party.partyId})}" th:object = "${partyToBeJoined}" method = "post">
 			<span th:unless = "${inParty}" th:object = "${inParty}"><button id="join-party" class = "ui-button" type = "submit" onclick = "hideButton()">Join Party</button></span>
 			</form>
+		<div sec:authorize = "hasRole('ROLE_USER')">	
 			<form action = "/see-characters/" method = "get">
 			<span th:if = "${inParty}" th:object = "${inParty}"><button id="join-party" class = "ui-button" type = "submit" onclick = "hideButton()">See Characters</button></span>
 			</form>
+		</div>	
 			
 			
 	</div>
 	<div sec:authorize = "hasRole('ROLE_DM')">
 		<form th:action = "@{/create-party-fund/{partyId} (partyId = ${party.partyId})}" method = "post" th:object = "${partyToBeJoined}">
-			<button class = "ui-button" type="submit">Create Party Fund</button>
+			<span th:unless = "${partyFund}" th:object = "${partyFund}"><button class = "ui-button" type="submit">Create Party Fund</button></span>
 		</form>
 	</div>	
 	<div sec:authorize = "hasRole('ROLE_USER')">

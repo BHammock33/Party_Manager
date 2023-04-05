@@ -19,15 +19,7 @@
 				<input type = "submit" value = "See your parties" class = "user-button">
 			</form>
 		</div>
-	<div sec:authorize = "hasRole('ROLE_USER')" class = "container-form">
-<!-- 		<form id="joinParty" th:action = "@{/join-party/{partyDtoId} (partyDtoId = ${partyDtoTwo.partyDtoId})}" method = "post" th:object = "${partyDtoTwo}"></form> -->
-<!-- 		<form action = "" method="post" th:object = "${user}" onchange = "onChange()"> -->
-<!-- 			<select th:name="parties" th:field = "${user.parties}"> -->
-<!-- 				<option th:each = "party : ${partiesList}" th:value = "${party.partyId}" th:text = "${party.partyName}" ></option> -->
-<!-- 			</select> -->
-<!-- 			<button class = "ui-button" type = "submit" form="joinParty">Join your party</button> -->
-<!-- 		</form> -->
-		
+	<div sec:authorize = "hasRole('ROLE_USER')" class = "container-form">		
 			<table>
 				<tr>
 					<th>Join Your Party Below</th>
@@ -48,7 +40,7 @@
 			<button class="button" type="submit">Create Party</button>
 		</form>
 		<div>
-			<label class = "input-tags">Randomly generate your Party Name:</label><a href = "https://codexnomina.com/party-names/" target="_blank">Party Generator</a>
+			<label class = "input-tags">Randomly generate your Party Name:</label><a href = "https://codexnomina.com/party-names/" target="_blank" id= "generator">Party Generator</a>
 			
 		</div>
 	</div>
@@ -61,7 +53,7 @@
 	</div>
 	<div class = "logout-button">
 		<form action = "/logout" method = "post">
-			<button type = "submit" class = "logout-button">Logout</button>
+			<button id = "zoom" type = "submit" class = "logout-button">Logout</button>
 		</form>
 	</div>
 </body>
