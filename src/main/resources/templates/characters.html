@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://thymeleaf.org">
+<head>
+	<title>test</title>
+	<link rel="stylesheet" th:href="@{/css/characters.css}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div>
+	<p class = "welcome" th:inline = "text"> [[${user.firstName}]], here are your characters
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Character</th>
+					<th>Party</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each = "character : ${characters}">
+					<td th:text = "${character.name}"></td>
+					<td th:text = "${character?.party.partyName}"></td>
+					<td><form th:action = "@{/delete-character/{characterId}/ (characterId = ${character.characterId})}" method = "post"><button type = "submit" class = "delete-button" id ="delete-button">Delete Character</button></form></td>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<form action = "/back" method = "get">
+			<button class= "ui-button" type = "submit">Back To Home</button>
+		</form>
+	</div>
+	
+	</div>
+		
+
+</body>
+</html>

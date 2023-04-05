@@ -1,0 +1,35 @@
+html{
+	font-family:"Libre Baskerville", serif;
+	background: url("/images/pinkPurple.jpg") no-repeat center center fixed;
+	background-size:  cover;
+	text-shadow: black 1px 1px 2px;
+}
+@font-face{
+	font-family: dndFont;
+	src: url
+}
+.ui-button{
+	border-radius: 12px;
+	font-size: 16px;
+	margin-top: 20px;
+}
+.ui-button:hover{
+	background-color: #62C6F2;
+}
+.delete-button:hover{
+	background-color: red;
+}
+.delete-button{
+	border-radius: 12px;
+	font-size: 16px;
+	margin-left: 60px;
+}
+.td{
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+table{
+	border-spacing: 10px;
+	border-collapse: separate;
+}

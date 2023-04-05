@@ -41,6 +41,7 @@ html{
 }
 .ui-button{
 	border-radius: 8px;
+	margin-top: 5px;
 }
 .ui-button:hover{
 	background-color:#62C6F2;
@@ -68,5 +69,19 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+.delete-button{
+	border-radius: 8px;
+	font-size: 10px;
+}
+.delete-button:hover{
+	background-color:red;
+	color: white;
+}
+#leave-party:hover{
+	background-color: red;
+}
+#leave-party{
+	margin-top: 100px;
 }
 		

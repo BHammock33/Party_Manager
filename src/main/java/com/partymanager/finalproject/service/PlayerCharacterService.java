@@ -32,6 +32,9 @@ public class PlayerCharacterService {
 	public PlayerCharacter findById(long characterId) {
 		return pcRepo.findById(characterId).orElse(new PlayerCharacter());
 	}
+	public void deleteById(Long characterId) {
+		pcRepo.deleteById(characterId);
+	}
 
 	public List<PlayerCharacter> findAll() {
 		return pcRepo.findAll();

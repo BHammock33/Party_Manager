@@ -83,16 +83,14 @@ public class PartyController {
 		Party foundParty = partyService.findByPartyId(partyId).orElseThrow();
 		model.put("partyToBeJoined", foundParty);
 		model.put("party", foundParty);
-		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Long currentUserId = currentUser.getUserId();
-		User user = userService.findById(currentUserId);
+		User user = userService.findLoggedIn();
 		Long userId = user.getUserId();
 		partyService.joinPartyById(partyId, userId);
 		return "redirect:/join-party/{partyId}";
 	}
 
 	@PostMapping("/remove-from-party/{partyId}/{firstName}")
-	public String removeFromParty(ModelMap model, @PathVariable String firstName, @PathVariable Long partyId) {
+	public String removeFromParty(@PathVariable String firstName, @PathVariable Long partyId) {
 		User user = userService.findByFirstName(firstName);
 		Long userId = user.getUserId();
 
@@ -100,4 +98,16 @@ public class PartyController {
 		return "redirect:/join-party/{partyId}";
 	}
 
+	@PostMapping("/leave-party/{partyId}/")
+	public String leaveParty(@PathVariable Long partyId) {
+		User user = userService.findLoggedIn();
+		Long userId = user.getUserId();
+		partyService.leaveParty(partyId, userId);
+		return "redirect:/home";
+	}
+	@PostMapping("/create-party-fund/{partyId}")
+	public String createPartyFund(@PathVariable Long partyId) {
+		oPPservice.createPartyFund(partyId);
+		return "redirect:/join-party/{partyId}";
+	}
 }

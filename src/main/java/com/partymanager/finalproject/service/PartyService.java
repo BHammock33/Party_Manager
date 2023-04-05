@@ -120,5 +120,13 @@ public class PartyService {
 	public void deleteParty(Long partyId) {
 		partyRepo.deleteById(partyId);
 	}
+	
+	public void leaveParty(Long partyId, Long userId) {
+		Party party = partyRepo.findById(partyId).orElseThrow();
+		User user = userService.findById(userId);
+		user.getParties().remove(party);
+		userRepo.save(user);
+		partyRepo.save(party);
+	}
 
 }

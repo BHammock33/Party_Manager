@@ -3,7 +3,6 @@ package com.partymanager.finalproject.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,8 +36,7 @@ public class PlayerCharacterController {
 	public String createCharacter(@ModelAttribute("pc") PlayerCharacterDto playerCharacterDto,
 			@PathVariable Long partyId) {
 		// Get the User
-		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.findById(currentUser.getUserId());
+		User user = userService.findLoggedIn();
 
 		// PC from PCDTO
 		PlayerCharacter playerCharacter = pcService.convertDtoToPc(playerCharacterDto, user);
@@ -146,4 +144,23 @@ public class PlayerCharacterController {
 		return "redirect:/join-party/{partyId}";
 	}
 
+	@GetMapping("/see-characters")
+	public String editCharacter(ModelMap model) {
+		User user = userService.findLoggedIn();
+
+		List<PlayerCharacter> pcs = user.getCharacters();
+		for (int i = 0; i < pcs.size(); i++) {
+			PlayerCharacter characterOne = pcs.get(i);
+			model.put("character", characterOne);
+		}
+		model.put("characters", pcs);
+		model.put("user", user);
+		return "characters";
+	}
+
+	@PostMapping("/delete-character/{characterId}")
+	public String deleteCharacter(@PathVariable Long characterId) {
+		pcService.deleteById(characterId);
+		return "redirect:/see-characters";
+	}
 }

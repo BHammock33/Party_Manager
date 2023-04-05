@@ -23,9 +23,9 @@
 				<label class="input-tags">Character Alignment: </label><input th:field="${pc.alignment}" type="text" class = "form-holder" placeholder = "Alignment">
 			</div>	
 			<div>	
-				<label class="input-tags">Starting Gold: </label><input th:field="${pc.gold}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "Gold">
-				<label class="input-tags">Starting Silver: </label><input th:field="${pc.silver}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "Silver">
-				<label class="input-tags">Starting Copper: </label><input th:field="${pc.copper}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "Copper">
+				<label class="input-tags">Starting Gold: </label><input th:field="${pc.gold}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "gold" required>
+				<label class="input-tags">Starting Silver: </label><input th:field="${pc.silver}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "silver" required>
+				<label class="input-tags">Starting Copper: </label><input th:field="${pc.copper}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "copper" required>
 			</div>	
 				<button class = "ui-button" type="submit">Create Character</button>
 				<label class = "input-tags">Need help naming your character? Click </label><a href = "https://www.fantasynamegenerators.com/dungeons-and-dragons.php" target="_blank">Here</a>

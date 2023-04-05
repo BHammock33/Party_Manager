@@ -55,7 +55,7 @@
 				<td th:text = "${onePartyPlayer?.copper}"></td>
 				<td><form th:action = "@{/add-copper/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${copperModifier}"><input class="coin-submit" id= "coin-submit" type = "number" step = "1" th:field = "*{amount}" onfocus="this.value=''"><button type = "submit" class = "ui-button">Earn/Spend Copper</button></form></td>
 				
-				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit" class = "ui-button">Delete From party</button></form></td>
+				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit" class = "delete-button">Remove From party</button></form></td>
 			</tr>
 		</tbody>			
 		</table>
@@ -64,17 +64,32 @@
 			<form th:action = "@{/join-party/{partyId} (partyId = ${party.partyId})}" th:object = "${partyToBeJoined}" method = "post">
 			<span th:unless = "${inParty}" th:object = "${inParty}"><button id="join-party" class = "ui-button" type = "submit" onclick = "hideButton()">Join Party</button></span>
 			</form>
+			<form action = "/see-characters/" method = "get">
+			<span th:if = "${inParty}" th:object = "${inParty}"><button id="join-party" class = "ui-button" type = "submit" onclick = "hideButton()">See Characters</button></span>
+			</form>
+			
 			
 	</div>
+	<div sec:authorize = "hasRole('ROLE_DM')">
+		<form th:action = "@{/create-party-fund/{partyId} (partyId = ${party.partyId})}" method = "post" th:object = "${partyToBeJoined}">
+			<button class = "ui-button" type="submit">Create Party Fund</button>
+		</form>
+	</div>	
 	<div sec:authorize = "hasRole('ROLE_USER')">
 		<form th:action = "@{/create-character/{partyName} (partyName = ${party.partyName})}" method = "get" th:object = "${partyToBeJoined}">
 			<span th:unless = "${characterInParty}" th:object = "${characterInParty}"> <button class = "ui-button" type="submit">Create Your Character</button></span>
 		</form>
 	</div>	
+	
 	<div>
 		<form action = "/back" method = "get">
 			<button class= "ui-button" type = "submit">Back To Home</button>
 		</form>
+	</div>
+	<div sec:authorize = "hasRole('ROLE_USER')">
+		<form th:action = "@{/leave-party/{partyId}/ (partyId = ${party.partyId})}"  method = "post">
+			<span th:if = "${inParty}" th:object = "${inParty}"><button id="leave-party" class = "ui-button" type = "submit" onclick = "hideButton()">Leave Party</button></span>
+			</form>
 	</div>
 
 </body>

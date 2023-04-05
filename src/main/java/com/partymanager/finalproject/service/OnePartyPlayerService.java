@@ -1,7 +1,9 @@
 package com.partymanager.finalproject.service;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,5 +114,42 @@ public class OnePartyPlayerService {
 			userService.save(userById);
 		}
 		partyService.deleteParty(partyId);
+	}
+	public void createPartyFund(Long partyId) {
+		Party party = partyService.findByPartyId(partyId).orElseThrow();
+		List<User> players = party.getUsers();
+		List<PlayerCharacter> pcs = party.getCharacters();
+		User newUser = new User();
+		newUser.setFirstName("Party Fund");
+		 byte[] array = new byte[7]; // length is bounded by 7
+		    new Random().nextBytes(array);
+		    String generatedUserName = new String(array, Charset.forName("UTF-8"));
+		newUser.setUsername(generatedUserName);
+		 new Random().nextBytes(array);
+		    String generatedPassword = new String(array, Charset.forName("UTF-8"));
+		newUser.setPassword(generatedPassword);
+		PlayerCharacter partyFundPc = new PlayerCharacter();
+		partyFundPc.setName("Party Fund");
+		partyFundPc.setCopper(0);
+		partyFundPc.setSilver(0);
+		partyFundPc.setGold(0);
+		partyFundPc.setLevel(0);
+		partyFundPc.setAlignment("");
+		partyFundPc.setParty(party);
+		partyFundPc.setUser(newUser);
+		partyFundPc.setXp(0);
+		partyFundPc.setXpToLevel(0);
+		pcs.add(partyFundPc);
+		players.add(newUser);
+		List<Party> blankParties = new ArrayList<>();
+		blankParties.add(party);
+		newUser.setParties(blankParties);
+		userService.save(newUser);
+		userService.saveAll(players);
+		pcService.save(partyFundPc);
+		partyService.save(party);
+		System.out.println(players + "PLAYERS");
+		System.out.println(party + "Party");
+		
 	}
 }
