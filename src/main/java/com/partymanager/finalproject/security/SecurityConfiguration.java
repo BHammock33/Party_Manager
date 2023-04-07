@@ -34,7 +34,7 @@ public class SecurityConfiguration {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable()
-			.formLogin().loginPage("/login")
+			.formLogin().loginPage("/login").permitAll()
 				.defaultSuccessUrl("/home").permitAll()
 				.and()
 				.logout()
