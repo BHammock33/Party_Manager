@@ -21,6 +21,7 @@ img2{
 	position: relative;
 	bottom: 0;
 	object-fit: cover;
+	min-width: 100px;
 }
 
 html{
