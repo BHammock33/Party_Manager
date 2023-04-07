@@ -14,11 +14,13 @@ img1{
 	flex: 1.250;
 	position: relative;
 	bottom:0;
+	object-fit: cover;
 }
 img2{
 	flex: .902;
 	position: relative;
 	bottom: 0;
+	object-fit: cover;
 }
 
 html{
