@@ -14,4 +14,5 @@ public interface PartyRepository extends JpaRepository<Party, Long> {
 
 	// same with PC repo, finding by name is used for mapping DTO to Party
 
+	
 }

@@ -3,6 +3,7 @@ package com.partymanager.finalproject.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.PartyDto;
 import com.partymanager.finalproject.repository.PartyRepository;
 import com.partymanager.finalproject.repository.UserRepository;
+import com.partymanager.finalproject.security.Authorities;
 
 @Service
 public class PartyService {
@@ -142,6 +144,24 @@ public class PartyService {
 		}
 		User partyFundUser = partyFund.get(0);
 		return partyFundUser;
+	}
+	public void forceDmToFront(Party party) {
+		List<User> players = party.getUsers();
+		List<User> dmUsers = new ArrayList<>();
+		for(User player : players) {
+			Set<Authorities> auths = player.getAuthorities();
+			for(Authorities auth : auths) {
+				String authority = auth.getAuthority();
+				if(authority.equalsIgnoreCase("ROLE_DM")) {
+					User dm = auth.getUser();
+					dmUsers.add(dm);
+				}
+			}
+		}
+		User dmUser = dmUsers.get(0);
+		int dmPos = players.indexOf(dmUser);
+		players.remove(dmPos);
+		players.add(0,dmUser);
 	}
 
 }

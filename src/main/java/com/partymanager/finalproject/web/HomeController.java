@@ -47,6 +47,9 @@ public class HomeController {
 		// get a collection of all parties and put them on the page
 		// so they can be displayed and clicked into
 		List<Party> parties = partyService.findAll();
+		for(Party party : parties) {
+			partyService.forceDmToFront(party);
+		}
 		model.put("partiesList", parties);
 
 		return "home";
