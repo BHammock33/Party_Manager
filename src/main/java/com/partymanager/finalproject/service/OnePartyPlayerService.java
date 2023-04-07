@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.CoinModifier;
 import com.partymanager.finalproject.dto.OnePartyPlayer;
+import com.partymanager.finalproject.security.Authorities;
 
 @Service
 public class OnePartyPlayerService {
@@ -159,23 +161,44 @@ public class OnePartyPlayerService {
 		partyService.save(party);
 
 	}
+
 	public Boolean checkForPartyFund(Long partyId) {
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
 		List<User> players = party.getUsers();
 		List<String> names = new ArrayList<>();
 		String partyFund = "Party Fund";
-		for(User player : players) {
+		for (User player : players) {
 			String name = player.getFirstName();
 			names.add(name);
 		}
 		Boolean partyFunded = false;
-		if(names.contains(partyFund)) {
+		if (names.contains(partyFund)) {
 			partyFunded = true;
-			System.out.println("PARTY FUNDED" + partyFunded);
 			return partyFunded;
 		}
-		System.out.println("PARTY NOT FUNDED" + partyFunded);
 		return partyFunded;
-		
+
 	}
+	public User getDm(Party party) {
+		List<User> users = party.getUsers();
+		List<Set<Authorities>> auths = new ArrayList<>();
+		List<User> dm = new ArrayList<>();
+		for(User user : users) {
+			Set<Authorities> authority = user.getAuthorities();
+			auths.add(authority);
+		}
+		for(Set<Authorities> authority : auths) {
+			for(Authorities auth : authority) {
+				String authString = auth.getAuthority();
+				if(authString.equalsIgnoreCase("ROLE_DM")) {
+					User dmUser = auth.getUser();
+					dm.add(dmUser);
+				}
+			}
+		}
+		User dmUser = dm.get(0);
+		System.out.println(dmUser + "DM USER DETAILS" + dmUser.toString());
+		return dmUser;
+	}
+
 }

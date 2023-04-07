@@ -44,12 +44,15 @@ public class PartyController {
 
 		// The Dm will create the party and will always be the first in the array of
 		// players
-		OnePartyPlayer dm = onePartyPlayers.get(0);
+		User dm = oPPservice.getDm(party);
+		Long dmId = dm.getUserId();
 		System.out.println(dm + "DM STATS");
 		model.put("dm", dm);
 
 		// Get everyone but the Dm
-		List<OnePartyPlayer> justPlayers = onePartyPlayers.stream().skip(1).collect(Collectors.toList());
+		//List<OnePartyPlayer> justPlayers = onePartyPlayers.stream().skip(1).collect(Collectors.toList());
+		List<OnePartyPlayer> justPlayers = onePartyPlayers.stream()
+				.filter(u ->  u.getOnePartyUserId() != (dmId)).collect(Collectors.toList());
 		System.out.println("OnePartyPlayers" + justPlayers);
 
 		// get the logged in user and see if they're already in the party
