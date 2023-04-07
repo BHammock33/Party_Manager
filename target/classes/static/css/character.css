@@ -10,18 +10,16 @@ img{
 	vertical-align: bottom;
 	bottom: 0;
 }
-img1{
-	flex: 1.250;
-	position: relative;
-	bottom:0;
-	object-fit: cover;
+
+.column{
+	float: left;
+	width: 50%;
+	padding: 5px;
 }
-img2{
-	flex: .902;
-	position: relative;
-	bottom: 0;
-	object-fit: cover;
-	min-width: 100px;
+.image-container::after{
+	content: "";
+	clear: both;
+	display: table;
 }
 
 html{
