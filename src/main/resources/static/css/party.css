@@ -17,6 +17,7 @@ td{
 	align-items: center;
 	text-align: center;
 	padding: 0px;
+	height: 55px;
 }
 thead{
 	display:table-header-group;
