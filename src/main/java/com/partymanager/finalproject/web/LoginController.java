@@ -42,5 +42,9 @@ public class LoginController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 
 	}
+	@GetMapping("")
+	public String landingPage() {
+		return "redirect:/login";
+	}
 
 }
