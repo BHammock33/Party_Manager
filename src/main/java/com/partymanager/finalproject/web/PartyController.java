@@ -1,6 +1,8 @@
 package com.partymanager.finalproject.web;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.partymanager.finalproject.domain.Party;
+import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.CoinModifier;
 import com.partymanager.finalproject.dto.OnePartyPlayer;
 import com.partymanager.finalproject.dto.XpModifier;
+import com.partymanager.finalproject.security.Authorities;
 import com.partymanager.finalproject.service.OnePartyPlayerService;
 import com.partymanager.finalproject.service.PartyService;
 import com.partymanager.finalproject.service.PlayerCharacterService;
@@ -47,17 +51,27 @@ public class PartyController {
 		User dm = oPPservice.getDm(party);
 		Long dmId = dm.getUserId();
 		System.out.println(dm + "DM STATS");
+		String dmName = dm.getFirstName();
 		model.put("dm", dm);
+		model.put("dmFirstName", dmName);
 
 		// Get everyone but the Dm
 		//List<OnePartyPlayer> justPlayers = onePartyPlayers.stream().skip(1).collect(Collectors.toList());
 		List<OnePartyPlayer> justPlayers = onePartyPlayers.stream()
 				.filter(u ->  u.getOnePartyUserId() != (dmId)).collect(Collectors.toList());
 		System.out.println("OnePartyPlayers" + justPlayers);
-
+		
+		
+		
+		
 		// get the logged in user and see if they're already in the party
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.findById(currentUser.getUserId());
+		String userFirstName = user.getFirstName();
+		model.put("userFirstName", userFirstName);
+		
+		
+		Boolean characterBoolean = false;
 		Boolean characterInParty = pcService.checkIfInParty(partyId, user.getUserId());
 		// determine if player is in party
 		Boolean inParty = partyService.isInParty(partyName, user);
@@ -67,11 +81,45 @@ public class PartyController {
 		CoinModifier coinModifier = new CoinModifier();
 		// check if party fund has been created
 		Boolean partyFunded = oPPservice.checkForPartyFund(partyId);
-
+		
+		List<PlayerCharacter> userPcs = user.getCharacters();
+		List<String> pcNames = new ArrayList<>();
+		for(PlayerCharacter pc : userPcs) {
+			String pcName = pc.getName();
+			pcNames.add(pcName);
+		}
+		List<PlayerCharacter> userPcInParty = new ArrayList<>();
+		for(PlayerCharacter pc : userPcs) {
+			Party pcParty = pc.getParty();
+			if(pcParty.equals(party)) {
+				userPcInParty.add(pc);
+			}
+		}
+		try {
+			PlayerCharacter pcInParty = userPcInParty.get(0);
+			String pcInPartyName = pcInParty.getName();
+			List<String> oPPpcNames = new ArrayList<>();
+			for(OnePartyPlayer player : justPlayers) {
+				String onePartyPcName = player.getCharacterName();
+				oPPpcNames.add(onePartyPcName);
+			}
+			for(String oPPpcName : oPPpcNames) {
+				if(oPPpcName.equalsIgnoreCase(pcInPartyName))
+					characterBoolean = true;
+					model.put("pcInPartyName", pcInPartyName);
+			}
+		}catch (Exception e){
+			characterBoolean = false;
+			System.out.println("DM");
+		}
+		
+		
 		// Boolean objects
 		model.put("inParty", inParty);
 		model.put("partyFund", partyFunded);
+		System.out.println("Character Boolean" + characterBoolean);
 		model.put("characterInParty", characterInParty);
+		model.put("characterBoolean", characterBoolean);
 		// users minus DM
 		model.put("players", justPlayers);
 		// The Party

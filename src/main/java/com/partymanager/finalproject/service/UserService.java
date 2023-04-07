@@ -131,6 +131,25 @@ public class UserService {
 		Long currentUserId = currentUser.getUserId();
 		User user = userRepo.findById(currentUserId).orElseThrow();
 		return user;
+
+	}
+
+	public Boolean firstNameMatch(User user, Party party) {
+		String userFirstName = user.getFirstName();
+		List<User> players = party.getUsers();
+		List<String> firstNames = new ArrayList<>();
+		Boolean characterBoolean = false;
+		for (User player : players) {
+			String firstName = player.getFirstName();
+			firstNames.add(firstName);
+		}
+		for (String firstName : firstNames) {
+			if(firstName.equals(userFirstName)) {
+				characterBoolean = true;
+				return characterBoolean;
+			}
+		}
+		return characterBoolean;
 	}
 
 }
