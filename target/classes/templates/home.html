@@ -19,7 +19,7 @@
 				<input type = "submit" value = "See your parties" class = "user-button">
 			</form>
 		</div>
-	<div sec:authorize = "hasRole('ROLE_USER')" class = "container-form">		
+	<div sec:authorize = "hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')" class = "container-form">		
 			<table>
 				<tr>
 					<th>Join Your Party Below</th>
@@ -29,6 +29,8 @@
 						<a th:href = "@{/join-party/{partyId} (partyId = ${party.partyId})}" th:text = "${party.partyName}">Join Party</a>
 						<p class = "dm-name" th:inline = "text">DM: [[${party.users[0].firstName}]] </p> 
 					</td>
+					<td><form sec:authorize ="hasRole('ROLE_ADMIN')" th:action = "@{/delete-party/{partyId} (partyId = ${party.partyId})}" method = "post"><button type = "submit" class = "button">Delete party</button></form></td>
+				</tr>	
 			</table>
 	</div>	
 	
