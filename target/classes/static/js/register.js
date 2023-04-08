@@ -29,3 +29,28 @@ function validatePassword() {
 }
 password.onchange = validatePassword;
 confirm_password.onkeyup = validatePassword;
+
+let textBoxes = document.querySelectorAll('.text-only');
+let regex = new RegExp('^[A-Za-z]+$');
+textBoxes.forEach((textBox) =>{
+	 textBox.addEventListener('onkeydown', lettersOnly);
+	
+})  
+
+const alphaOnlyInput = docume
+
+function lettersOnly(txtInput){
+	let textInput = document.querySelectorAll('.text-only');
+	textInput.forEach((input) => {
+		input.addEventListener('input', (e)=>{
+			let charCode = e.keyCode;
+			if ((charCode >= 65 && charCode <=90) || charCode == 8 || charCode == 32){
+				null;
+			}else{
+				e.preventDefault();
+			}
+		});
+	});
+}
+	
+	

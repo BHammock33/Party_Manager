@@ -7,7 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
-	<script type = "text/javascript" src = "/js/home.js"></script>
+	
 </head>
 
 <body>
@@ -36,7 +36,7 @@
 			
 	<div sec:authorize="hasRole('ROLE_DM')">
 		<form action = "create-party" method = "post" th:object = "${partyDto}">
-			<label class = "input-tags">Enter New Party Name: </label><input th:field="${partyDto.partyName}" type="text" class="form-holder" placeholder= "Party Name">
+			<label class = "input-tags">Enter New Party Name: </label><input th:field="${partyDto.partyName}" type="text" class="form-holder" placeholder= "Party Name" oninput="this.value = this.value.replace(/[^a-zA-Z]$/, '')">
 			<button class="button" type="submit">Create Party</button>
 		</form>
 		<div>
@@ -56,5 +56,6 @@
 			<button id = "zoom" type = "submit" class = "logout-button">Logout</button>
 		</form>
 	</div>
+	<script type = "text/javascript" src = "/js/home.js"></script>
 </body>
 </html>

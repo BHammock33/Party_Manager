@@ -23,6 +23,11 @@ html {
 	align-items: center;
 	justify-content: center;
 	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	height: 80vh;
+	overflow: auto;
+	
 }
 table, th, td{
 	border: 1px solid;

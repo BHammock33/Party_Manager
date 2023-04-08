@@ -99,3 +99,7 @@ input:focus{
 	font-family: dndFont;
 	src: url
 }
+.text-only{
+	color: black;
+	font-size: 18px;
+}
