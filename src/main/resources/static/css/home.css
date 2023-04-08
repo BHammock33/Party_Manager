@@ -40,6 +40,9 @@ th, td{
 	padding: 10px;
 	
 }
+td{
+	padding: 0px;
+}
 
 
 td:hover{
