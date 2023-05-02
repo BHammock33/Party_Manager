@@ -77,6 +77,7 @@ public class HomeController {
 		// convert DTO to Party
 		partyService.createParty(partyDto, userById);
 		return "redirect:/home"; // change to parties later
+		//add party unique contraint
 	}
 
 	@PostMapping("/delete-party/{partyId}")
