@@ -3,6 +3,7 @@ package com.partymanager.finalproject.domain;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ public class Party {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long partyId;
+	@Column(unique = true)
 	private String partyName;
 	@ManyToMany(mappedBy = "parties")
 	private List<User> users;
