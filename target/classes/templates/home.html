@@ -38,13 +38,17 @@
 			
 	<div sec:authorize="hasRole('ROLE_DM')">
 		<form action = "create-party" method = "post" th:object = "${partyDto}">
-			<label class = "input-tags">Enter New Party Name: </label><input th:field="${partyDto.partyName}" type="text" class="form-holder" placeholder= "Party Name" oninput="this.value = this.value.replace(/[^a-zA-Z]$/, '')">
+		<div th:if = "${nameError}">
+				<p class = "Error">[[${nameError}]]</p>
+		</div>
+			<label class = "input-tags">Enter New Party Name: </label><input th:field="${partyDto.partyName}" type="text" class="form-holder" placeholder= "Party Name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]*$/, '')">
 			<button class="button" type="submit">Create Party</button>
 		</form>
 		<div>
 			<label class = "input-tags">Randomly generate your Party Name:</label><a href = "https://codexnomina.com/party-names/" target="_blank" id= "generator">Party Generator</a>
 			
 		</div>
+		
 	</div>
 	
 	<div>

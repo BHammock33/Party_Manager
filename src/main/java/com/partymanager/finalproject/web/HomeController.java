@@ -74,10 +74,17 @@ public class HomeController {
 	public String createParty(@AuthenticationPrincipal User user, ModelMap model, @ModelAttribute PartyDto partyDto) {
 		Long userId = user.getUserId();
 		User userById = userService.findById(userId);
+		//add party unique contraint
+		boolean checkForPartyName = partyService.checkForPartyName(partyDto.getPartyName());
+		if(checkForPartyName) {
+			model.addAttribute("nameError", "Party name already Exists");
+			model.addAttribute("user", userById);
+			return "home";
+		}
 		// convert DTO to Party
 		partyService.createParty(partyDto, userById);
 		return "redirect:/home"; // change to parties later
-		//add party unique contraint
+		
 	}
 
 	@PostMapping("/delete-party/{partyId}")

@@ -37,7 +37,7 @@ textBoxes.forEach((textBox) =>{
 	
 })  
 
-const alphaOnlyInput = docume
+
 
 function lettersOnly(txtInput){
 	let textInput = document.querySelectorAll('.text-only');

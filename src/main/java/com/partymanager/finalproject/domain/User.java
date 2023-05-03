@@ -2,6 +2,7 @@ package com.partymanager.finalproject.domain;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -135,6 +136,17 @@ public class User {
 
 	public void setAuthorities(Set<Authorities> authorities) {
 		this.authorities = authorities;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(userId, other.userId);
 	}
 
 }

@@ -15,12 +15,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("select u from User u " + "left join fetch u.authorities " + "where u.username = :username")
 	User findByUsername(String username);
 
-	Boolean existsByUsername(String username);
 
 	@Query("select u from User u " + "left join fetch u.characters " + "where u.username = :username")
 	List<PlayerCharacter> findUserCharacters(String username);
 
 	@Query("select u from User u where u.firstName = :firstName")
 	User findByFirstName(String firstName);
+
+	boolean existsUserByUsername(String username);
 
 }

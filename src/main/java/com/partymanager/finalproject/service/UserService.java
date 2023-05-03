@@ -45,10 +45,6 @@ public class UserService {
 		return userRepo.findAll();
 	}
 
-	public boolean usernameExists(String username) {
-		return userRepo.existsByUsername(username);
-	}
-
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
 	}
@@ -150,6 +146,9 @@ public class UserService {
 			}
 		}
 		return characterBoolean;
+	}
+	public boolean checkForUsername(String username) {
+		return userRepo.existsUserByUsername(username);
 	}
 
 }

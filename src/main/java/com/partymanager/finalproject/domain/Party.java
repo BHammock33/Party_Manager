@@ -1,6 +1,7 @@
 package com.partymanager.finalproject.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -71,6 +72,17 @@ public class Party {
 
 	public void setCharacters(List<PlayerCharacter> characters) {
 		this.characters = characters;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Party other = (Party) obj;
+		return Objects.equals(partyId, other.partyId);
 	}
 
 }

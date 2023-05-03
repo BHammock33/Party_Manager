@@ -33,12 +33,14 @@ form{
 .container-form{
 	padding: 30px 50px;
 	border-radius: 11px;
+	justify-content: center;
 	
 }
 form>div {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 5px;
+	align-items: center;
 }
 input[type= 'text']
 input[type = 'password']{
@@ -49,6 +51,8 @@ input[type = 'password']{
 .input-tags{
 	color: white;
 	font-size: 25px;
+	justify-content: center;
+	align-items: center;
 }
 .form-holder{
 	color: black;
@@ -102,4 +106,9 @@ input:focus{
 .text-only{
 	color: black;
 	font-size: 18px;
+}
+.Error{
+	color: red;
+	font-weight: bold;
+	font-size: 20px;
 }

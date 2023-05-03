@@ -163,5 +163,8 @@ public class PartyService {
 		players.remove(dmPos);
 		players.add(0,dmUser);
 	}
+	public boolean checkForPartyName(String partyName) {
+		return partyRepo.existsPartyByPartyName(partyName);
+	}
 
 }

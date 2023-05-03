@@ -140,3 +140,7 @@ a:visited{
 #generator:visited{
 	color: #62C6F2;
 }
+.Error{
+	color: red;
+	font-weight: bold;
+}
