@@ -4,6 +4,7 @@ A tool for GM's and Players of TTRPGS to manage their parties, gold, expierence,
 A one stop shop for top level party management. 
  
 To run the application simply vist: [This Link](partymanager-production.up.railway.app)
+This will take you to partymanager-production.up.railway.app
  
 No need for any downloading of dependencies or pulling in other applications, this app functions by itself.
  
