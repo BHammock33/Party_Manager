@@ -3,7 +3,7 @@ Final Project For Coders Campus
 A tool for GM's and Players of TTRPGS to manage their parties, gold, expierence, and alignment.
 A one stop shop for top level party management. 
  
-To run the application simply vist: [This Link](partymanager-production.up.railway.app)
+To run the application simply vist: [This Link](partymanager-production.up.railway.app/login)
 
 This will take you to partymanager-production.up.railway.app
  
