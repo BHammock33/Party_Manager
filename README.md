@@ -6,7 +6,7 @@ A one stop shop for top level party management.
 To run the application simply vist: partymanager-production.up.railway.app/login
 
  
-No need for any downloading of dependencies or pulling in other applications, this app functions by itself.
+No need for any downloading of dependencies or pulling in other applications, this app functions by itself
  
 
 
