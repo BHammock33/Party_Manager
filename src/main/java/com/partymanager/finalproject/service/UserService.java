@@ -1,8 +1,10 @@
 package com.partymanager.finalproject.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -150,5 +152,22 @@ public class UserService {
 	public boolean checkForUsername(String username) {
 		return userRepo.existsUserByUsername(username);
 	}
+//	public User createFakeUser(String firstName) {
+//		User user = new User();
+//		Set<Authorities> auths = new HashSet();
+//		Authorities auth = new Authorities();
+//		List<PlayerCharacter> newPCs = new ArrayList<>();
+//		auth.setAuthority("");
+//		auth.setAuthority("player");
+//		user.setFirstName(firstName);
+//		user.setLastName("LastName");
+//		user.setAuthorities(auths);
+//		user.setCharacters(newPCs);
+//		user.s
+		//finish out tomorrow, may need to just replicate party fund
+		
+		
+		
+	//}
 
 }

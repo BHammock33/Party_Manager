@@ -2,7 +2,6 @@ package com.partymanager.finalproject.web;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,9 @@ import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.PlayerCharacter;
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.CoinModifier;
+import com.partymanager.finalproject.dto.Note;
 import com.partymanager.finalproject.dto.OnePartyPlayer;
 import com.partymanager.finalproject.dto.XpModifier;
-import com.partymanager.finalproject.security.Authorities;
 import com.partymanager.finalproject.service.OnePartyPlayerService;
 import com.partymanager.finalproject.service.PartyService;
 import com.partymanager.finalproject.service.PlayerCharacterService;
@@ -45,7 +44,13 @@ public class PartyController {
 
 		// create One party Players for Thymeleaf
 		List<OnePartyPlayer> onePartyPlayers = oPPservice.createOnePartyPlayers(partyId);
-
+		Note newNote = new Note();
+		if(party.getNote()== null) {
+			party.setNote(newNote);
+		}
+		Note note = party.getNote();
+		model.addAttribute("note",note);
+		
 		// The Dm will create the party and will always be the first in the array of
 		// players
 		User dm = oPPservice.getDm(party);
@@ -173,4 +178,19 @@ public class PartyController {
 		oPPservice.createPartyFund(partyId);
 		return "redirect:/join-party/{partyId}";
 	}
+	@PostMapping("/create-nonUser-player/{partyId}")
+	public String createNonUserPlayer(@PathVariable Long partyId) {
+		oPPservice.createNonUserPlayer(partyId);
+		return "redirect:/join-party/{partyId}";
+	}
+//	@PostMapping("/add-note/{partyId}")
+//	public String updateNote(@PathVariable Long partyId, String noteText, ModelAttribute ) {
+//		Party party = partyService.findByPartyId(partyId).orElseThrow();
+//		Note partyNote = party.getNote();
+//		Note note = (Note) model.getAttribute(noteText);
+//		String text = note.getText();
+//		partyNote.setText(text);
+//		partyService.save(party);
+//		return "redirect:/join-party/{partyId}";
+//	}
 }

@@ -9,9 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.partymanager.finalproject.dto.Note;
 
 @Entity
 @Table(name = "party")
@@ -28,13 +32,17 @@ public class Party {
 	@OneToMany(mappedBy = "party", cascade = CascadeType.REMOVE)
 	private List<PlayerCharacter> characters;
 	// one character can only be in one party, parties can have many characters
+	@OneToOne
+	@JoinColumn(name = "note_id", referencedColumnName = "id")
+	private Note note;
 
-	public Party(Long partyId, String partyName, List<User> users, List<PlayerCharacter> characters) {
+	public Party(Long partyId, String partyName, List<User> users, List<PlayerCharacter> characters, Note note) {
 		// super();
 		this.partyId = partyId;
 		this.partyName = partyName;
 		this.users = users;
 		this.characters = characters;
+		this.note = note;
 	}
 
 	// no arg constructor
@@ -73,6 +81,15 @@ public class Party {
 	public void setCharacters(List<PlayerCharacter> characters) {
 		this.characters = characters;
 	}
+	
+	public Note getNote() {
+		return note;
+	}
+
+	public void setNote(Note note) {
+		this.note = note;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
