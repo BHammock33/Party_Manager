@@ -14,12 +14,12 @@
 		<div class="container-form">
 			<form action="" method="post" th:object = "${userDto}" >
 				<h1>Register Below</h1>
-				<label class="input-tags">First Name</label><input th:field="${userDto.firstName}" type= "text" class= "text-only"  placeholder="First Name" required autofocus oninput="this.value = this.value.replace(/[^a-zA-Z]$/, '')">
-				<label class="input-tags">Last Name</label><input th:field="${userDto.lastName}" type= "text" class= "text-only"  placeholder="Last Name" oninput="this.value = this.value.replace(/[^a-zA-Z]$/, '')">
+				<label class="input-tags">First Name</label><input th:field="${userDto.firstName}" type= "text" class= "text-only"  placeholder="First Name" required autofocus oninput="this.value = this.value.replace(/[^a-zA-Z]+$/, '')">
+				<label class="input-tags">Last Name</label><input th:field="${userDto.lastName}" type= "text" class= "text-only"  placeholder="Last Name" oninput="this.value = this.value.replace(/[^a-zA-Z]+$/, '')">
 				<div th:if = "${nameError}">
 					<p class = "Error">[[${nameError}]]</p>
 				</div>
-				<label class="input-tags">Username</label><input th:field="${userDto.username}" type= "text" class= "form-holder" placeholder="Username" required>
+				<label class="input-tags">Username</label><input th:field="${userDto.username}" type= "text" class= "form-holder" placeholder="Username" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9]+$/, '') >
 				
 				<label class="input-tags">Password</label><input th:field="${userDto.password}" type= "password" id = "password" class= "form-holder" placeholder="Password" required><i id = "passwordEyeIcon" class ="fa-solid fa-eye"></i>
 				

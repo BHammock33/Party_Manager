@@ -14,13 +14,13 @@
 		<input type = "hidden" th:object = "${party}">
 			<form th:action= "@{/create-character/{partyId} (partyId = ${party.partyId})}" method = "post" th:object = "${pc}">
 			<div>
-				<label class="input-tags">Character Name: </label><input th:field="${pc.name}" type="text" class = "form-holder" placeholder = "Character Name" required autofocus oninput="this.value = this.value.replace(/[^a-zA-Z\s]*$/, '')">
+				<label class="input-tags">Character Name: </label><input th:field="${pc.name}" type="text" class = "form-holder" placeholder = "Character Name" required autofocus oninput="this.value = this.value.replace(/[^a-zA-Z\s]+$/, '')">
 				<label class="input-tags">Character Experience: </label><input th:field="${pc.xp}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "0 If starting at Level 1">
 			</div>
 			<div>	
 				<label class="input-tags">Character Level: </label><input th:field="${pc.level}" type="number" min = "1" step = "1" class = "form-holder" placeholder = "Character level" required>
 				<input th:field = "${pc.partyName}" type = "hidden" class = "form-holder" placeholder = "Party Name">
-				<label class="input-tags">Character Alignment: </label><input th:field="${pc.alignment}" type="text" class = "form-holder" placeholder = "Alignment" oninput="this.value = this.value.replace(/[^a-zA-Z]$/, '')">
+				<label class="input-tags">Character Alignment: </label><input th:field="${pc.alignment}" type="text" class = "form-holder" placeholder = "Alignment" oninput="this.value = this.value.replace(/[^a-zA-Z]+$/, '')">
 			</div>	
 			<div>	
 				<label class="input-tags">Starting Gold: </label><input th:field="${pc.gold}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "gold" required>
