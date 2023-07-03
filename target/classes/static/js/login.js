@@ -20,11 +20,10 @@ function getCurrentURL(){
 	return window.location.href
 }
 var url = getCurrentURL.toString()
-function showError(){
-	if(url == "https://partymanager-production.up.railway.app/login?error"){
-		alert("incorrect username or password")
-	}
+if (window.location.toString().includes("error")){
+	alert("incorrect username or password")
 }
+
 function alertUser(msg) {
 	alert(msg);
 	}
