@@ -45,37 +45,32 @@ public class PartyController {
 		// create One party Players for Thymeleaf
 		List<OnePartyPlayer> onePartyPlayers = oPPservice.createOnePartyPlayers(partyId);
 		Note newNote = new Note();
-		if(party.getNote()== null) {
+		if (party.getNote() == null) {
 			party.setNote(newNote);
 		}
 		Note note = party.getNote();
-		model.addAttribute("note",note);
-		
+		model.addAttribute("note", note);
+
 		// The Dm will create the party and will always be the first in the array of
 		// players
 		User dm = oPPservice.getDm(party);
 		Long dmId = dm.getUserId();
-		System.out.println(dm + "DM STATS");
 		String dmName = dm.getFirstName();
 		model.put("dm", dm);
 		model.put("dmFirstName", dmName);
 
 		// Get everyone but the Dm
-		//List<OnePartyPlayer> justPlayers = onePartyPlayers.stream().skip(1).collect(Collectors.toList());
-		List<OnePartyPlayer> justPlayers = onePartyPlayers.stream()
-				.filter(u ->  u.getOnePartyUserId() != (dmId)).collect(Collectors.toList());
-		System.out.println("OnePartyPlayers" + justPlayers);
-		
-		
-		
-		
+		// List<OnePartyPlayer> justPlayers =
+		// onePartyPlayers.stream().skip(1).collect(Collectors.toList());
+		List<OnePartyPlayer> justPlayers = onePartyPlayers.stream().filter(u -> u.getOnePartyUserId() != (dmId))
+				.collect(Collectors.toList());
+
 		// get the logged in user and see if they're already in the party
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.findById(currentUser.getUserId());
 		String userFirstName = user.getFirstName();
 		model.put("userFirstName", userFirstName);
-		
-		
+
 		Boolean characterBoolean = false;
 		Boolean characterInParty = pcService.checkIfInParty(partyId, user.getUserId());
 		// determine if player is in party
@@ -86,17 +81,17 @@ public class PartyController {
 		CoinModifier coinModifier = new CoinModifier();
 		// check if party fund has been created
 		Boolean partyFunded = oPPservice.checkForPartyFund(partyId);
-		
+
 		List<PlayerCharacter> userPcs = user.getCharacters();
 		List<String> pcNames = new ArrayList<>();
-		for(PlayerCharacter pc : userPcs) {
+		for (PlayerCharacter pc : userPcs) {
 			String pcName = pc.getName();
 			pcNames.add(pcName);
 		}
 		List<PlayerCharacter> userPcInParty = new ArrayList<>();
-		for(PlayerCharacter pc : userPcs) {
+		for (PlayerCharacter pc : userPcs) {
 			Party pcParty = pc.getParty();
-			if(pcParty.equals(party)) {
+			if (pcParty.equals(party)) {
 				userPcInParty.add(pc);
 			}
 		}
@@ -104,25 +99,22 @@ public class PartyController {
 			PlayerCharacter pcInParty = userPcInParty.get(0);
 			String pcInPartyName = pcInParty.getName();
 			List<String> oPPpcNames = new ArrayList<>();
-			for(OnePartyPlayer player : justPlayers) {
+			for (OnePartyPlayer player : justPlayers) {
 				String onePartyPcName = player.getCharacterName();
 				oPPpcNames.add(onePartyPcName);
 			}
-			for(String oPPpcName : oPPpcNames) {
-				if(oPPpcName.equalsIgnoreCase(pcInPartyName))
+			for (String oPPpcName : oPPpcNames) {
+				if (oPPpcName.equalsIgnoreCase(pcInPartyName))
 					characterBoolean = true;
-					model.put("pcInPartyName", pcInPartyName);
+				model.put("pcInPartyName", pcInPartyName);
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			characterBoolean = false;
-			System.out.println("DM");
 		}
-		
-		
+
 		// Boolean objects
 		model.put("inParty", inParty);
 		model.put("partyFund", partyFunded);
-		System.out.println("Character Boolean" + characterBoolean);
 		model.put("characterInParty", characterInParty);
 		model.put("characterBoolean", characterBoolean);
 		// users minus DM
@@ -178,6 +170,7 @@ public class PartyController {
 		oPPservice.createPartyFund(partyId);
 		return "redirect:/join-party/{partyId}";
 	}
+
 	@PostMapping("/create-nonUser-player/{partyId}")
 	public String createNonUserPlayer(@PathVariable Long partyId) {
 		oPPservice.createNonUserPlayer(partyId);

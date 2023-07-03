@@ -1,5 +1,6 @@
 package com.partymanager.finalproject.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,20 @@ public class PlayerCharacterController {
 		Party party = partyService.findByPartyName(partyName);
 		model.put("party", party);
 		model.put("pc", playerCharacterDto);
+		List<String> alignments = new ArrayList<String>() {
+			{
+				add("Lawful Good");
+				add("Netural Good");
+				add("Choatic Good");
+				add("Lawful Neutral");
+				add("True Neutral");
+				add("Chaotic Neutral");
+				add("Lawful Evil");
+				add("Neutral Evil");
+				add("Choatic Evil");
+			}
+		};
+		model.put("alignments", alignments);
 		return "character";
 
 	}

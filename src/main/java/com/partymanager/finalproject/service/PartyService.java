@@ -60,7 +60,7 @@ public class PartyService {
 		// save new party in partyRepo
 		// userRepo.save(user);
 		partyRepo.save(party);
-		System.out.println("Party is saved:" + party);// functions party has ID, name, empty users, and empty characters
+		// functions party has ID, name, empty users, and empty characters
 		return party;
 	}
 
@@ -122,7 +122,7 @@ public class PartyService {
 	public void deleteParty(Long partyId) {
 		partyRepo.deleteById(partyId);
 	}
-	
+
 	public void leaveParty(Long partyId, Long userId) {
 		Party party = partyRepo.findById(partyId).orElseThrow();
 		User user = userService.findById(userId);
@@ -130,44 +130,46 @@ public class PartyService {
 		userRepo.save(user);
 		partyRepo.save(party);
 	}
-	//All party fund users have the same First Name so we need to find the one
-	//specific to the party were in
+
+	// All party fund users have the same First Name so we need to find the one
+	// specific to the party were in
 	public User getPartyFund(Long partyId) {
 		Party party = partyRepo.findById(partyId).orElseThrow();
 		List<User> users = party.getUsers();
 		List<User> partyFund = new ArrayList<>();
-		for(User user : users) {
+		for (User user : users) {
 			String userName = user.getFirstName();
-			if(userName.equals("Party Fund")) {
+			if (userName.equals("Party Fund")) {
 				partyFund.add(user);
 			}
 		}
 		User partyFundUser = partyFund.get(0);
 		return partyFundUser;
 	}
+
 	public void forceDmToFront(Party party) {
 		try {
-		List<User> players = party.getUsers();
-		List<User> dmUsers = new ArrayList<>();
-		for(User player : players) {
-			Set<Authorities> auths = player.getAuthorities();
-			for(Authorities auth : auths) {
-				String authority = auth.getAuthority();
-				if(authority.equalsIgnoreCase("ROLE_DM")) {
-					User dm = auth.getUser();
-					dmUsers.add(dm);
+			List<User> players = party.getUsers();
+			List<User> dmUsers = new ArrayList<>();
+			for (User player : players) {
+				Set<Authorities> auths = player.getAuthorities();
+				for (Authorities auth : auths) {
+					String authority = auth.getAuthority();
+					if (authority.equalsIgnoreCase("ROLE_DM")) {
+						User dm = auth.getUser();
+						dmUsers.add(dm);
+					}
 				}
 			}
-		}
-		User dmUser = dmUsers.get(0);
-		int dmPos = players.indexOf(dmUser);
-		players.remove(dmPos);
-		players.add(0,dmUser);
-	}
-		catch (Exception e){
+			User dmUser = dmUsers.get(0);
+			int dmPos = players.indexOf(dmUser);
+			players.remove(dmPos);
+			players.add(0, dmUser);
+		} catch (Exception e) {
 			System.out.println("no members");
 		}
-	}	
+	}
+
 	public boolean checkForPartyName(String partyName) {
 		return partyRepo.existsPartyByPartyName(partyName);
 	}

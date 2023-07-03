@@ -15,12 +15,16 @@
 			<form th:action= "@{/create-character/{partyId} (partyId = ${party.partyId})}" method = "post" th:object = "${pc}">
 			<div>
 				<label class="input-tags">Character Name: </label><input th:field="${pc.name}" type="text" class = "form-holder" placeholder = "Character Name" required autofocus oninput="this.value = this.value.replace(/[^a-zA-Z\s]*$/, '')">
-				<label class="input-tags">Character Experience: </label><input th:field="${pc.xp}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "0 If starting at Level 1">
+				<label class="input-tags">Character Level: </label><input th:field="${pc.level}" type="number" min = "1" step = "1" class = "form-holder" id = "xp1" placeholder = "Character level" onblur="onExperience()" required>
 			</div>
 			<div>	
-				<label class="input-tags">Character Level: </label><input th:field="${pc.level}" type="number" min = "1" step = "1" class = "form-holder" placeholder = "Character level" required>
+				
+				<label class="input-tags">Character Experience: </label><input th:field="${pc.xp}" type="number" min = "0" step = "1" class = "form-holder" id = "xp2" placeholder = "0 If starting at Level 1" >
 				<input th:field = "${pc.partyName}" type = "hidden" class = "form-holder" placeholder = "Party Name">
-				<label class="input-tags">Character Alignment: </label><input th:field="${pc.alignment}" type="text" class = "form-holder" placeholder = "Alignment" oninput="this.value = this.value.replace(/[^a-zA-Z]*$/, '')">
+				<label class="input-tags">Character Alignment: </label><select th:field="${pc.alignment}">
+						<option style="background: transparent" value="">Select Alignment</option>
+						<option style="background: transparent" th:each= "alignment : ${alignments}" th:value = "${alignment}" th:text = "${alignment}"></option>
+					</select>	
 			</div>	
 			<div>	
 				<label class="input-tags">Starting Gold: </label><input th:field="${pc.gold}" type="number" min = "0" step = "1" class = "form-holder" placeholder = "gold" required>
@@ -42,6 +46,6 @@
 		</div>
 	</div>
 		
-
+<script type = "text/javascript" src="/js/character.js"></script>
 </body>
 </html>

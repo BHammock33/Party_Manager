@@ -86,9 +86,11 @@
 	</div>	
 -->
 	<div sec:authorize = "hasRole('ROLE_USER')">
+		<span th:if = "${inParty}" th:object = "${inParty}">
 		<form th:action = "@{/create-character/{partyName} (partyName = ${party.partyName})}" method = "get" th:object = "${partyToBeJoined}">
 			<span th:unless = "${characterInParty}" th:object = "${characterInParty}"> <button class = "ui-button" type="submit">Create Your Character</button></span>
 		</form>
+		</span>
 	</div>	
 	
 	<div>

@@ -32,6 +32,7 @@ public class PlayerCharacterService {
 	public PlayerCharacter findById(long characterId) {
 		return pcRepo.findById(characterId).orElse(new PlayerCharacter());
 	}
+
 	public void deleteById(Long characterId) {
 		pcRepo.deleteById(characterId);
 	}
@@ -55,12 +56,10 @@ public class PlayerCharacterService {
 		List<PlayerCharacter> charactersInParty = new ArrayList<>();
 		for (PlayerCharacter pc : userCharacters) {
 			if (pc.getParty() == partyById) {
-				System.out.println(pc);
 				charactersInParty.add(pc);
 			}
 		}
 		PlayerCharacter pcInParty = charactersInParty.get(0);
-		System.out.println(pcInParty);
 		return pcInParty;
 
 	}
@@ -72,7 +71,6 @@ public class PlayerCharacterService {
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
 		List<PlayerCharacter> partyCharacters = party.getCharacters();
 		Boolean characterInParty = partyCharacters.stream().anyMatch(userCharacters::contains);
-		System.out.println("characterInParty");
 		return characterInParty;
 	}
 
@@ -263,10 +261,13 @@ public class PlayerCharacterService {
 				add(355000);
 			}
 		};
-		Integer nextLevel = levelThresholds.stream().filter(x -> x.intValue() > pcXp).findFirst().orElseThrow();
-		Integer xpToLevelUp = (nextLevel - pcXp);
-		System.out.println(xpToLevelUp + "XP TO LEVEL UP");
-		return xpToLevelUp;
+		if (pcXp > 355000) {
+			Integer xpToLevelUp = 0;
+			return xpToLevelUp;
+		} else {
+			Integer nextLevel = levelThresholds.stream().filter(x -> x.intValue() > pcXp).findFirst().orElseThrow();
+			Integer xpToLevelUp = (nextLevel - pcXp);
+			return xpToLevelUp;
+		}
 	}
-
 }

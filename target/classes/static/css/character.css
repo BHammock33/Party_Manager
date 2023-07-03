@@ -65,3 +65,7 @@ a:visited{
 	color:white;
 	font-weight: bold;
 }
+
+select{
+	background: transparent;
+}

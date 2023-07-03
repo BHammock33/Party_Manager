@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -198,7 +197,6 @@ public class OnePartyPlayerService {
 			}
 		}
 		User dmUser = dm.get(0);
-		System.out.println(dmUser + "DM USER DETAILS" + dmUser.toString());
 		return dmUser;
 	}
 	

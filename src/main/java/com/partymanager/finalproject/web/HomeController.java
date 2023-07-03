@@ -47,7 +47,7 @@ public class HomeController {
 		// get a collection of all parties and put them on the page
 		// so they can be displayed and clicked into
 		List<Party> parties = partyService.findAll();
-		for(Party party : parties) {
+		for (Party party : parties) {
 			partyService.forceDmToFront(party);
 		}
 		model.put("partiesList", parties);
@@ -74,9 +74,9 @@ public class HomeController {
 	public String createParty(@AuthenticationPrincipal User user, ModelMap model, @ModelAttribute PartyDto partyDto) {
 		Long userId = user.getUserId();
 		User userById = userService.findById(userId);
-		//add party unique contraint
+		// add party unique contraint
 		boolean checkForPartyName = partyService.checkForPartyName(partyDto.getPartyName());
-		if(checkForPartyName) {
+		if (checkForPartyName) {
 			model.addAttribute("nameError", "Party name already Exists");
 			model.addAttribute("user", userById);
 			return "home";
@@ -84,7 +84,7 @@ public class HomeController {
 		// convert DTO to Party
 		partyService.createParty(partyDto, userById);
 		return "redirect:/home"; // change to parties later
-		
+
 	}
 
 	@PostMapping("/delete-party/{partyId}")
