@@ -146,6 +146,7 @@ public class PartyService {
 		return partyFundUser;
 	}
 	public void forceDmToFront(Party party) {
+		try {
 		List<User> players = party.getUsers();
 		List<User> dmUsers = new ArrayList<>();
 		for(User player : players) {
@@ -163,6 +164,10 @@ public class PartyService {
 		players.remove(dmPos);
 		players.add(0,dmUser);
 	}
+		catch (Exception e){
+			System.out.println("no members");
+		}
+	}	
 	public boolean checkForPartyName(String partyName) {
 		return partyRepo.existsPartyByPartyName(partyName);
 	}
