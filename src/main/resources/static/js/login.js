@@ -21,7 +21,7 @@ function getCurrentURL(){
 }
 var url = getCurrentURL
 function showError(){
-	if(url = "https://partymanager-production.up.railway.app/login?error"){
+	if(url == "https://partymanager-production.up.railway.app/login?error"){
 		alert("incorrect username or password")
 	}
 }
