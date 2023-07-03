@@ -8,9 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
-
+<script>
+	function alertUser(msg) {
+	alert(msg);
+	}
+</script>
 </head>
-<body>
+<body onLoad="alertUser('If you created an account before 7/3/23 please reregister')">
 
 <div class="container">
 		<div class = "form-container">
@@ -24,9 +28,6 @@
 			<div class = "buttons">
 				<button type ="submit">Login</button>
 				<a th:href = "@{/register}"><button type = "button">Register</button></a>
-			</div>
-		<h2>If you created an account before 7/3/23 please re-register</h2>
-			</form>
 		</div>
 	</div>
 	<div>
