@@ -19,7 +19,7 @@
 				<div th:if = "${nameError}">
 					<p class = "Error">[[${nameError}]]</p>
 				</div>
-				<label class="input-tags">Username</label><input th:field="${userDto.username}" type= "text" class= "form-holder" placeholder="Username" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9]+$/, '') >
+				<label class="input-tags">Username</label><input th:field="${userDto.username}" type= "text" class= "form-holder" placeholder="Username" required oninput="this.value = this.value.replace(/[^a-zA-Z0-9]+$/, '')" >
 				
 				<label class="input-tags">Password</label><input th:field="${userDto.password}" type= "password" id = "password" class= "form-holder" placeholder="Password" required><i id = "passwordEyeIcon" class ="fa-solid fa-eye"></i>
 				
