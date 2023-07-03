@@ -16,4 +16,12 @@ eyeIcons.forEach( (eyeIcon) => {
 	})
 })
 
-
+function getCurrentURL(){
+	return window.location.href
+}
+var url = getCurrentURL
+function showError(){
+	if(url = "https://partymanager-production.up.railway.app/login?error"){
+		alert("incorrect username or password")
+	}
+}
