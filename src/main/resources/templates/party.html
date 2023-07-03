@@ -79,11 +79,12 @@
 			<span th:unless = "${partyFund}" th:object = "${partyFund}"><button class = "ui-button" type="submit">Create Party Fund</button></span>
 		</form>
 	</div>	
-	<div sec:authorize = "hasRole('ROLE_DM')">
+<!--	<div sec:authorize = "hasRole('ROLE_DM')">
 		<form th:action = "@{/create-nonUser-player/{partyId} (partyId = ${party.partyId})}" method = "post" th:object = "${partyToBeJoined}">
 			<button class = "ui-button" type="submit">Create NonUser Player</button>
 		</form>
 	</div>	
+	-- >
 	<div sec:authorize = "hasRole('ROLE_USER')">
 		<form th:action = "@{/create-character/{partyName} (partyName = ${party.partyName})}" method = "get" th:object = "${partyToBeJoined}">
 			<span th:unless = "${characterInParty}" th:object = "${characterInParty}"> <button class = "ui-button" type="submit">Create Your Character</button></span>
@@ -100,6 +101,7 @@
 			<span th:if = "${inParty}" th:object = "${inParty}"><button id="leave-party" class = "ui-button" type = "submit" onclick = "hideButton()">Leave Party</button></span>
 			</form>
 	</div>
+<!--	
 	<div sec:authorize = "hasRole('ROLE_DM')">
 	<h3>Create Single Session Notes Here Not Persistent Yet</h3>
 	<form th:action = "@{/add-note/{partyId} (partyId = ${party.partyId})}" method = "post" >
@@ -107,6 +109,7 @@
 		<button id = "submit Text" type = "submit">Submit Text</button>
 	</form>
 	</div>
+-->	
 
 </body>
 <!--  -->
