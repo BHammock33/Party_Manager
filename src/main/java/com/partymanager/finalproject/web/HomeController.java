@@ -31,8 +31,6 @@ public class HomeController {
 
 	@GetMapping("/home")
 	public String getHome(@AuthenticationPrincipal User user, ModelMap model) {
-		System.out.println("line 20, home: " + user);
-
 		// insert PartyDto for conversion to a party
 		PartyDto partyDto = new PartyDto();
 		model.put("partyDto", partyDto);

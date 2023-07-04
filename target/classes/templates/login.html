@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
 <script type = "text/javascript" src ="/js/login.js"></script>
 </head>
-<body onLoad="alertUser('If you created an account before 7/3/23 please reregister')">
+<body onLoad="tempAlert('If you created an account before 07/03/23 please reregister', 3000)">
 
 <div class="container">
 		<div class = "form-container">
@@ -22,8 +22,16 @@
 				<label class = "label" for = "password">Password:</label><input class="ui-input" type = "password" id="password" name = "password" placeholder = "Password" required>
 			</div>	
 			<div class = "buttons">
-				<button type ="submit">Login</button>
+				<button type ="submit" id="login">Login</button>
 				<a th:href = "@{/register}"><button type = "button">Register</button></a>
+		</div>
+		<div>
+			<h3>Just want to explore the site without registering? Click the buttons below to explore as a DM or Player</h3>
+			
+		</div>
+		<div class = "buttons">
+			<button type = "button" id="demoPlayerLogin" onclick="demoPlayerLoginFunc()">Demo Player Login</button>
+			<button type = "button" id="demoDmLogin" onclick="demoDmLoginFunc()">Demo DM Login</button>
 		</div>
 	</div>
 	<div>
