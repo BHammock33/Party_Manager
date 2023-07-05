@@ -125,7 +125,7 @@
 	<h2>Create Notes Here</h2>
 	<form th:action = "@{/add-note/{partyId} (partyId = ${party.partyId})}" method = "post" modelAtrribute = "note">
 		<textarea path = "text" th:name = "noteText" rows = "10" cols = "50"  th:field = "${note.text}" oninput="this.value = this.value.replace(/;/g, '')"/></textarea>
-		<button class="ui-button" id = "submit Text" type = "submit">Submit Text</button>
+	<span th:unless="${userFirstName} == DemoDM"><button class="ui-button" id = "submit Text" type = "submit">Submit Text</button></span>
 	</form>
 	</div>
 
