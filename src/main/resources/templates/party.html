@@ -120,7 +120,7 @@
 	<div class="note-box" sec:authorize = "hasRole('ROLE_DM')">
 	<h3>Create Notes Here</h3>
 	<form th:action = "@{/add-note/{partyId} (partyId = ${party.partyId})}" method = "post" modelAtribute = "note">
-		<textarea path = "text" th:name = "noteText" rows = "10" cols = "50"  th:field = "${note.text}"/></textarea>
+		<textarea path = "text" th:name = "noteText" rows = "10" cols = "50"  th:field = "${note.text}" pattern = "[a-zA-Z0-9 .?!]"/></textarea>
 		<button class="ui-button" id = "submit Text" type = "submit">Submit Text</button>
 	</form>
 	</div>
