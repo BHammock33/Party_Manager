@@ -96,12 +96,13 @@
 			</p>
 		</div>
 	</span>
-
+	<span th:unless="${user.firstName} == DemoPlayer or ${user.firstName} == DemoDM">
 	<div>
 		<form th:action="@{/home/delete/{userId} (userId = ${user.userId})}" method="post">
 			<input type="submit" value="Delete your account" class="delete-button">
 		</form>
 	</div>
+	</span>
 	<div class="logout-button">
 		<form action="/logout" method="post">
 			<button id="zoom" type="submit" class="logout-button">Logout</button>
