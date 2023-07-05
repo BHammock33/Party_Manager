@@ -42,37 +42,7 @@ public class LoginController {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 
 	}
-	@PostMapping("/login/demoPlayer")
-	public ResponseEntity<HttpStatus> loginDemoPlayer(@RequestBody User user) throws Exception {
-		Authentication auth;
 
-		try {
-			auth = authManager
-					.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-			SecurityContextHolder.getContext().setAuthentication(auth);
-		} catch (BadCredentialsException e) {
-			throw new Exception("Authentication Failed");
-		}
-
-		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-
-	}
-	@PostMapping("/login/demoDM")
-	public ResponseEntity<HttpStatus> loginDemoDm(@RequestBody User user) throws Exception {
-		Authentication auth;
-
-		try {
-			auth = authManager
-					.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-			SecurityContextHolder.getContext().setAuthentication(auth);
-		} catch (BadCredentialsException e) {
-			throw new Exception("Authentication Failed");
-		}
-
-		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-
-	}
-	
 	@GetMapping("")
 	public String landingPage() {
 		return "redirect:/login";

@@ -47,14 +47,10 @@ public class HomeController {
 		}
 		// get a collection of all parties and put them on the page
 		// so they can be displayed and clicked into
-//		List<Party> realParties = partyService.findAll();
-//		for (Party party : realParties) {
-//			partyService.forceDmToFront(party);
-//		}
-//		model.put("partiesList", realParties);
+		// display different list for demo and users
 		List<Party> demoParties = demoServe.getDemoParties();
 		model.put("demoParties", demoParties);
-		
+
 		List<Party> realParties = demoServe.getRealParties();
 		model.put("realParties", realParties);
 
@@ -92,22 +88,6 @@ public class HomeController {
 		return "redirect:/home"; // change to parties later
 
 	}
-//	@PostMapping("/create-demo-party")
-//	public String createDemoParty(@AuthenticationPrincipal User user, ModelMap model, @ModelAttribute PartyDto partyDto) {
-//		Long userId = user.getUserId();
-//		User userById = userService.findById(userId);
-//		// add party unique contraint
-//		boolean checkForPartyName = partyService.checkForPartyName(partyDto.getPartyName());
-//		if (checkForPartyName) {
-//			model.addAttribute("nameError", "Party name already Exists");
-//			model.addAttribute("user", userById);
-//			return "home";
-//		}
-//		// convert DTO to Party
-//		demoServe.createDemoParty(partyDto, userById);
-//		return "redirect:/home"; 
-//
-//	}
 
 	@PostMapping("/delete-party/{partyId}")
 	public String deleteParty(@PathVariable Long partyId) {

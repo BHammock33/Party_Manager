@@ -2,6 +2,7 @@ package com.partymanager.finalproject.service;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -200,52 +201,54 @@ public class OnePartyPlayerService {
 		return dmUser;
 	}
 	
-	public void createNonUserPlayer(Long partyId) {
-		// get party and players and characters
+	public User createNonUserPlayer(Long partyId, String firstName, String characterName) {
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
-		List<User> players = party.getUsers();
-		List<PlayerCharacter> pcs = party.getCharacters();
-		List<Party> blankParties = new ArrayList<>();
-		// create a new user to assign to party fund
+
 		User newUser = new User();
-		Random rand = new Random();
-		Integer upperBound = 500;
-		Integer int_random = rand.nextInt(upperBound);
-		String firstName = "User"+ int_random;
-		newUser.setFirstName(firstName);
-		// generate username and password
+		
 		byte[] array = new byte[7]; // length is bounded by 7
 		new Random().nextBytes(array);
 		String generatedUserName = new String(array, Charset.forName("UTF-8"));
-		newUser.setUsername(generatedUserName);
+		
 		new Random().nextBytes(array);
 		String generatedPassword = new String(array, Charset.forName("UTF-8"));
+		
+		//fake register a new user
+		newUser.setFirstName(firstName);
+		newUser.setLastName("lastName");
 		newUser.setPassword(generatedPassword);
-		// create a new character for the new user to act as party fund
-		PlayerCharacter nonUserPC = new PlayerCharacter();
-		String pcName = "PcName" + int_random;
-		nonUserPC.setName(pcName);
-		nonUserPC.setCopper(0);
-		nonUserPC.setSilver(0);
-		nonUserPC.setGold(0);
-		nonUserPC.setLevel(0);
-		nonUserPC.setAlignment("");
-		nonUserPC.setParty(party);
-		nonUserPC.setUser(newUser);
-		nonUserPC.setXp(0);
-		nonUserPC.setXpToLevel(0);
-		// add party fund character to party
-		pcs.add(nonUserPC);
-		// add party fund user to party
-		players.add(newUser);
-		// add party to users parties
-		blankParties.add(party);
-		newUser.setParties(blankParties);
-		// save
+		newUser.setUsername(generatedUserName);
+		Set<Authorities> auths = new HashSet<>();
+		Authorities auth = new Authorities();
+		auth.setAuthority("ROLE_USER");
+		auths.add(auth);
+		newUser.setAuthorities(auths);
 		userService.save(newUser);
-		userService.saveAll(players);
-		pcService.save(nonUserPC);
-		partyService.save(party);
+		
+		//create empty list of parties to add this party to users party
+		List<Party> parties = new ArrayList<>();
+		parties.add(party);
+		newUser.setParties(parties);
+		//Empty list of player characters to add this users characters
+		List<PlayerCharacter> pcs = new ArrayList<>(); 
+		
+		PlayerCharacter pc = new PlayerCharacter();
+		pc.setName(characterName);
+		pc.setXp(0);
+		pc.setAlignment("");
+		pc.setUser(newUser);
+		pc.setParty(party);
+		pc.setCopper(0);
+		pc.setSilver(0);
+		pc.setGold(0);
+		pc.setLevel(1);
+		pc.setXpToLevel(300);
+		pcService.save(pc);
+		pcs.add(pc);
+		newUser.setCharacters(pcs);
+		userService.save(newUser);
+		
+		return newUser;
 
 	}
 	

@@ -109,16 +109,6 @@ public class PartyService {
 		partyRepo.save(foundParty);
 	}
 
-	// The Dm Creates the party so will always be the first in the list of party
-	// users
-	public User getPartyDm(Long partyId) {
-		Party party = partyRepo.findById(partyId).orElseThrow();
-		List<User> partyPlayers = party.getUsers();
-		User dm = partyPlayers.get(0);
-		return dm;
-
-	}
-
 	public void deleteParty(Long partyId) {
 		partyRepo.deleteById(partyId);
 	}

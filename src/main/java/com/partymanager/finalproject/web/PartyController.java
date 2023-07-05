@@ -1,7 +1,11 @@
 package com.partymanager.finalproject.web;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.PlayerCharacter;
@@ -21,6 +29,7 @@ import com.partymanager.finalproject.dto.CoinModifier;
 import com.partymanager.finalproject.dto.Note;
 import com.partymanager.finalproject.dto.OnePartyPlayer;
 import com.partymanager.finalproject.dto.XpModifier;
+import com.partymanager.finalproject.security.Authorities;
 import com.partymanager.finalproject.service.OnePartyPlayerService;
 import com.partymanager.finalproject.service.PartyService;
 import com.partymanager.finalproject.service.PlayerCharacterService;
@@ -50,11 +59,11 @@ public class PartyController {
 		if (party.getNote() == null) {
 			party.setNote(newNote);
 		}
+		//create or fetch note to add to page
 		Note note = party.getNote();
 		model.addAttribute("note", note);
 
-		// The Dm will create the party and will always be the first in the array of
-		// players
+		//The Dm will be the only one in the party with Role_DM
 		User dm = oPPservice.getDm(party);
 		Long dmId = dm.getUserId();
 		String dmName = dm.getFirstName();
@@ -62,8 +71,6 @@ public class PartyController {
 		model.put("dmFirstName", dmName);
 
 		// Get everyone but the Dm
-		// List<OnePartyPlayer> justPlayers =
-		// onePartyPlayers.stream().skip(1).collect(Collectors.toList());
 		List<OnePartyPlayer> justPlayers = onePartyPlayers.stream().filter(u -> u.getOnePartyUserId() != (dmId))
 				.collect(Collectors.toList());
 
@@ -174,13 +181,70 @@ public class PartyController {
 	}
 
 	@PostMapping("/create-nonUser-player/{partyId}")
-	public String createNonUserPlayer(@PathVariable Long partyId) {
-		oPPservice.createNonUserPlayer(partyId);
+	public String createNonUserPlayer(@PathVariable Long partyId,
+			@ModelAttribute("onePartyPlayer") OnePartyPlayer onePartyPlayer,
+			String firstName,  String characterName) {
+	//	Party party = partyService.findByPartyId(partyId).orElseThrow();
+		
+		
+////		model.addAttribute("onePartyPlayerFirstName", onePartyPlayer.getFirstName());
+////		String firstName = onePartyPlayer.getFirstName();
+////		model.addAttribute("onePartyPlayerCharacterName", onePartyPlayer.getCharacterName());
+////		String characterName = onePartyPlayer.getCharacterName();
+//		
+//		User newUser = new User();
+//	
+//		byte[] array = new byte[7]; // length is bounded by 7
+//		new Random().nextBytes(array);
+//		String generatedUserName = new String(array, Charset.forName("UTF-8"));
+//		
+//		new Random().nextBytes(array);
+//		String generatedPassword = new String(array, Charset.forName("UTF-8"));
+//		
+//		//fake register a new user
+//		newUser.setFirstName(firstName);
+//		newUser.setLastName("lastName");
+//		newUser.setPassword(generatedPassword);
+//		newUser.setUsername(generatedUserName);
+//		Set<Authorities> auths = new HashSet<>();
+//		Authorities auth = new Authorities();
+//		auth.setAuthority("ROLE_USER");
+//		auths.add(auth);
+//		newUser.setAuthorities(auths);
+//		userService.save(newUser);
+//		
+//		//create empty list of parties to add this party to users party
+//		List<Party> parties = new ArrayList<>();
+//		parties.add(party);
+//		newUser.setParties(parties);
+//		//Empty list of player characters to add this users characters
+//		List<PlayerCharacter> pcs = new ArrayList<>(); 
+//		
+//		PlayerCharacter pc = new PlayerCharacter();
+//		pc.setName(characterName);
+//		pc.setXp(0);
+//		pc.setAlignment("");
+//		pc.setUser(newUser);
+//		pc.setParty(party);
+//		pc.setCopper(0);
+//		pc.setSilver(0);
+//		pc.setGold(0);
+//		pc.setLevel(1);
+//		pc.setXpToLevel(300);
+//		pcService.save(pc);
+//		pcs.add(pc);
+//		newUser.setCharacters(pcs);
+//		userService.save(newUser);
+		User newUser = oPPservice.createNonUserPlayer(partyId, firstName, characterName);
+		
+		System.out.println(newUser);
+
 		return "redirect:/join-party/{partyId}";
 	}
 	
 	@PostMapping("/add-note/{partyId}")
-	public String updateNote(@PathVariable Long partyId, @ModelAttribute("note") Note note, BindingResult result, ModelMap model) {
+	public String updateNote(@PathVariable Long partyId, @ModelAttribute("note") Note note, 
+			BindingResult result, ModelMap model) {
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
 		if(party.getNote() == null) {
 			Note newNote = new Note();
@@ -196,4 +260,5 @@ public class PartyController {
 		System.out.println(partyNote.toString());
 		return "redirect:/join-party/{partyId}";
 	}
+	
 }
