@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.User;
 import com.partymanager.finalproject.dto.PartyDto;
+import com.partymanager.finalproject.service.DemoPartyService;
 import com.partymanager.finalproject.service.OnePartyPlayerService;
 import com.partymanager.finalproject.service.PartyService;
 import com.partymanager.finalproject.service.UserService;
@@ -28,6 +29,8 @@ public class HomeController {
 	private PartyService partyService;
 	@Autowired
 	private OnePartyPlayerService oPPservice;
+	@Autowired
+	private DemoPartyService demoServe;
 
 	@GetMapping("/home")
 	public String getHome(@AuthenticationPrincipal User user, ModelMap model) {
@@ -44,11 +47,16 @@ public class HomeController {
 		}
 		// get a collection of all parties and put them on the page
 		// so they can be displayed and clicked into
-		List<Party> parties = partyService.findAll();
-		for (Party party : parties) {
-			partyService.forceDmToFront(party);
-		}
-		model.put("partiesList", parties);
+//		List<Party> realParties = partyService.findAll();
+//		for (Party party : realParties) {
+//			partyService.forceDmToFront(party);
+//		}
+//		model.put("partiesList", realParties);
+		List<Party> demoParties = demoServe.getDemoParties();
+		model.put("demoParties", demoParties);
+		
+		List<Party> realParties = demoServe.getRealParties();
+		model.put("realParties", realParties);
 
 		return "home";
 	}
@@ -84,6 +92,22 @@ public class HomeController {
 		return "redirect:/home"; // change to parties later
 
 	}
+//	@PostMapping("/create-demo-party")
+//	public String createDemoParty(@AuthenticationPrincipal User user, ModelMap model, @ModelAttribute PartyDto partyDto) {
+//		Long userId = user.getUserId();
+//		User userById = userService.findById(userId);
+//		// add party unique contraint
+//		boolean checkForPartyName = partyService.checkForPartyName(partyDto.getPartyName());
+//		if (checkForPartyName) {
+//			model.addAttribute("nameError", "Party name already Exists");
+//			model.addAttribute("user", userById);
+//			return "home";
+//		}
+//		// convert DTO to Party
+//		demoServe.createDemoParty(partyDto, userById);
+//		return "redirect:/home"; 
+//
+//	}
 
 	@PostMapping("/delete-party/{partyId}")
 	public String deleteParty(@PathVariable Long partyId) {

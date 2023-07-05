@@ -1,5 +1,6 @@
 package com.partymanager.finalproject.dto;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class Note {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
-	@OneToOne(mappedBy = "note")
+	@OneToOne(mappedBy = "note", cascade = CascadeType.ALL)
 	private Party party;
 	
 	private String text;

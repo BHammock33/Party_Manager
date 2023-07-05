@@ -56,8 +56,9 @@
 				<td><form th:action = "@{/add-silver/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${silverModifier}"><input th:if = "${characterBoolean == True OR userFirstName == dmFirstName}" class="coin-submit" id= "coin-submit" type = "number" step = "1" th:field = "*{amount}" onfocus="this.value=''"><button th:if = "${pcInPartyName == onePartyPlayer.characterName OR userFirstName == dmFirstName}" type = "submit" class = "ui-button" th:object = "${pcInPartyName}">Earn/Spend Silver</button></form></td>
 				<td th:text = "${onePartyPlayer?.copper}"></td>
 				<td><form th:action = "@{/add-copper/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${copperModifier}"><input th:if = "${characterBoolean == True OR userFirstName == dmFirstName}"class="coin-submit" id= "coin-submit" type = "number" step = "1" th:field = "*{amount}" onfocus="this.value=''"><button th:if = "${pcInPartyName == onePartyPlayer.characterName OR userFirstName == dmFirstName}" type = "submit" class = "ui-button" th:object = "${pcInPartyName}">Earn/Spend Copper</button></form></td>
-				
+				<span th:unless = "${dmFirstName} == DemoDM">
 				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit" class = "delete-button">Remove From party</button></form></td>
+				</span>
 			</tr>
 		</tbody>			
 		</table>
@@ -98,20 +99,32 @@
 			<button class= "ui-button" type = "submit">Back To Home</button>
 		</form>
 	</div>
+	<span th:unless = "${userFirstName} == DemoPlayer">
 	<div sec:authorize = "hasRole('ROLE_USER')">
 		<form th:action = "@{/leave-party/{partyId}/ (partyId = ${party.partyId})}"  method = "post">
 			<span th:if = "${inParty}" th:object = "${inParty}"><button id="leave-party" class = "ui-button" type = "submit" onclick = "hideButton()">Leave Party</button></span>
 			</form>
 	</div>
-<!--	
-	<div sec:authorize = "hasRole('ROLE_DM')">
-	<h3>Create Single Session Notes Here Not Persistent Yet</h3>
-	<form th:action = "@{/add-note/{partyId} (partyId = ${party.partyId})}" method = "post" >
-		<textarea th:name = "noteText" rows = "5" cols = "30"  th:field = "${note.text}"/></textarea>
-		<button id = "submit Text" type = "submit">Submit Text</button>
+	</span>
+	<span th:if = "${userFirstName} == DemoPlayer">
+		<div class="text-container-player">
+					<p>Here you can adjust your characters coin and expereience. If you don't have a character in the party yet go ahead and create one! You can also see characters you have in other parties. In DND 10 copper
+						equals 1 silver and 10 silver equals 1 gold. So if your copper goes above 10 it will convert to one silver and leave the remainder in copper,
+						same for silver to gold. This conversion works in the opposite as well, if you spend 25 silver it will treat it as spending 2 gold and 5 silver.
+						Non demo players can leave the party but this has been restricted by thymeleaf. You will also notice that as a DM you can adjust
+						everyones stats but as a player you can only adjust your own.
+					</p>
+				</div>
+	</span>	
+	
+	<div class="note-box" sec:authorize = "hasRole('ROLE_DM')">
+	<h3>Create Notes Here</h3>
+	<form th:action = "@{/add-note/{partyId} (partyId = ${party.partyId})}" method = "post" modelAtribute = "note">
+		<textarea path = "text" th:name = "noteText" rows = "10" cols = "50"  th:field = "${note.text}"/></textarea>
+		<button class="ui-button" id = "submit Text" type = "submit">Submit Text</button>
 	</form>
 	</div>
--->	
+
 
 </body>
 <!--  -->

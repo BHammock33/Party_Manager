@@ -20,7 +20,9 @@
 				<td>
 					<a th:href = "@{/join-party/{partyId} (partyId = ${party.partyId})}"th:text = "${party.partyName}"></a>
 				</td>
+				<span th:unless = "${user.firstName} == DemoDM">
 				<td><form sec:authorize = "hasRole('ROLE_DM')" th:action = "@{/delete-party/{partyId} (partyId = ${party.partyId})}" method = "post"><button type = "submit" class = "delete-button">Delete Party</button></form></td>
+				</span>
 		</tbody>
 		</table>
 		<div>

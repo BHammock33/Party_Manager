@@ -32,7 +32,7 @@ public class Party {
 	@OneToMany(mappedBy = "party", cascade = CascadeType.REMOVE)
 	private List<PlayerCharacter> characters;
 	// one character can only be in one party, parties can have many characters
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "note_id", referencedColumnName = "id")
 	private Note note;
 

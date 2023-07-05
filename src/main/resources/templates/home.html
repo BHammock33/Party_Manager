@@ -1,79 +1,113 @@
 <!DOCTYPE html>
-<html xmlns:th = "https://thymeleaf.org"
-	  xmlns:sec = "https://ww.thymeleaf.org/extras/spring-security"	>
+<html xmlns:th="https://thymeleaf.org" xmlns:sec="https://ww.thymeleaf.org/extras/spring-security">
+
 <head>
-	<title th:text = "${user.firstName}"></title>
+	<title th:text="${user.firstName}"></title>
 	<link rel="stylesheet" th:href="@{/css/home.css}">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
-	
+
 </head>
 
 <body>
-	
-	<p class="welcome" th:inline = "text"> Hail and well met, [[${user.firstName}]]! Let's go on an adventure!</p>
-<!-- 	<div> -->
-		<div class = "see-party">
-			<form th:action = "@{/home/parties/{userId} (userId = ${user.userId})}" method = "get">
-				<input type = "submit" value = "See your parties" class = "user-button">
-			</form>
-		</div>
-	<div sec:authorize = "hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')" class = "container-form">		
-		
-			<table>
-				<tr>
-					<th>Join Your Party Below</th>
-				</tr>
-			<span th:unless = "${user.firstName} == DemoPlayer">	
-				<tr th:each = "party : ${partiesList}">
-					<td>
-						<a th:href = "@{/join-party/{partyId} (partyId = ${party.partyId})}" th:text = "${party.partyName}">Join Party</a>
-						<p class = "dm-name" th:inline = "text">DM: [[${party.users[0].firstName}]] </p> 
-					</td>
-					<td><form sec:authorize ="hasRole('ROLE_ADMIN')" th:action = "@{/delete-party/{partyId} (partyId = ${party.partyId})}" method = "post"><button type = "submit" class = "button">Delete party</button></form></td>
-				</tr>	
-			</span>	
-				<span th:unless = "${user.firstName} == DemoPlayer">	
-				<tr th:each = "party : ${partiesList}">
-					<td>
-						<a th:href = "@{/join-party/{partyId} (partyId = ${party.partyId})}" th:text = "${party.partyName}">Join Party</a>
-						<p class = "dm-name" th:inline = "text">DM: [[${party.users[0].firstName}]] </p> 
-					</td>
-					<td><form sec:authorize ="hasRole('ROLE_ADMIN')" th:action = "@{/delete-party/{partyId} (partyId = ${party.partyId})}" method = "post"><button type = "submit" class = "button">Delete party</button></form></td>
-				</tr>	
-			</span>	
 
-			</table>
-		</span>	
+	<p class="welcome" th:inline="text"> Hail and well met, [[${user.firstName}]]! Let's go on an adventure!</p>
+	<!-- 	<div> -->
+	<div class="see-party">
+		<form th:action="@{/home/parties/{userId} (userId = ${user.userId})}" method="get">
+			<input type="submit" value="See your parties" class="user-button">
+			<span th:if="${user.firstName} == DemoPlayer">
+				<div class="text-container-player">
+					<p>Here you can see the parties you have already joined with see parties button (just demo party so
+						far) or join other parties by clicking on them.
+					</p>
+				</div>
+			</span>
+		</form>
+
+
 	</div>
-			
+	<div sec:authorize="hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')" class="container-form">
+
+		<table>
+			<tr>
+				<th>Join Your Party Below</th>
+			</tr>
+			<span th:unless="${user.firstName} == DemoPlayer">
+				<tr th:each="party : ${realParties}">
+					<td>
+						<a th:href="@{/join-party/{partyId} (partyId = ${party.partyId})}"
+							th:text="${party.partyName}">Join Party</a>
+						<p class="dm-name" th:inline="text">DM: [[${party.users[0].firstName}]] </p>
+					</td>
+					<td>
+						<form sec:authorize="hasRole('ROLE_ADMIN')"
+							th:action="@{/delete-party/{partyId} (partyId = ${party.partyId})}" method="post"><button
+								type="submit" class="button">Delete party</button></form>
+					</td>
+				</tr>
+			</span>
+			<span th:if="${user.firstName} == DemoPlayer">
+				<tr th:each="party : ${demoParties}">
+					<td>
+						<a th:href="@{/join-party/{partyId} (partyId = ${party.partyId})}"
+							th:text="${party.partyName}">Join
+							Party</a>
+						<p class="dm-name" th:inline="text">DM: [[${party.users[0].firstName}]] </p>
+					</td>
+					<td>
+						<form sec:authorize="hasRole('ROLE_ADMIN')"
+							th:action="@{/delete-party/{partyId} (partyId = ${party.partyId})}" method="post"><button
+								type="submit" class="button">Delete party</button></form>
+					</td>
+				</tr>
+
+
+		</table>
+		</span>
+
+	</div>
+
 	<div sec:authorize="hasRole('ROLE_DM')">
-		<form action = "create-party" method = "post" th:object = "${partyDto}">
-		<div th:if = "${nameError}">
-				<p class = "Error">[[${nameError}]]</p>
-		</div>
-			<label class = "input-tags">Enter New Party Name: </label><input th:field="${partyDto.partyName}" type="text" class="form-holder" placeholder= "Party Name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]*$/, '')">
+		<form action="create-party" method="post" th:object="${partyDto}">
+			<div th:if="${nameError}">
+				<p class="Error">[[${nameError}]]</p>
+			</div>
+			<label class="input-tags">Enter New Party Name: </label><input th:field="${partyDto.partyName}" type="text"
+				class="form-holder" placeholder="Party Name"
+				oninput="this.value = this.value.replace(/[^a-zA-Z\s]*$/, '')">
 			<button class="button" type="submit">Create Party</button>
 		</form>
 		<div>
-			<label class = "input-tags">Randomly generate your Party Name:</label><a href = "https://codexnomina.com/party-names/" target="_blank" id= "generator">Party Generator</a>
-			
+			<label class="input-tags">Randomly generate your Party Name:</label><a
+				href="https://codexnomina.com/party-names/" target="_blank" id="generator">Party Generator</a>
+
 		</div>
-		
+
 	</div>
-	
+	<span th:if="${user.firstName} == DemoDM">
+		<div class="text-container">
+			<p>Here you can create a new party or you can click see your parties to view some
+				parties that have already been created and filled with players. Within the parties you can modify the
+				coins and experience of your players. Non-Demo DMs can remove players from parties and delete parties in
+				the your parties screen but that functionality
+				has been removed through thymeleaf for demo users.
+			</p>
+		</div>
+	</span>
+
 	<div>
-		<form th:action = "@{/home/delete/{userId} (userId = ${user.userId})}"
-		method = "post">
-			<input type = "submit" value = "Delete your account" class= "delete-button">
+		<form th:action="@{/home/delete/{userId} (userId = ${user.userId})}" method="post">
+			<input type="submit" value="Delete your account" class="delete-button">
 		</form>
 	</div>
-	<div class = "logout-button">
-		<form action = "/logout" method = "post">
-			<button id = "zoom" type = "submit" class = "logout-button">Logout</button>
+	<div class="logout-button">
+		<form action="/logout" method="post">
+			<button id="zoom" type="submit" class="logout-button">Logout</button>
 		</form>
 	</div>
-	<script type = "text/javascript" src = "/js/home.js"></script>
+	<script type="text/javascript" src="/js/home.js"></script>
 </body>
+
 </html>

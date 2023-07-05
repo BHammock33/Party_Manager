@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -176,14 +178,22 @@ public class PartyController {
 		oPPservice.createNonUserPlayer(partyId);
 		return "redirect:/join-party/{partyId}";
 	}
-//	@PostMapping("/add-note/{partyId}")
-//	public String updateNote(@PathVariable Long partyId, String noteText, ModelAttribute ) {
-//		Party party = partyService.findByPartyId(partyId).orElseThrow();
-//		Note partyNote = party.getNote();
-//		Note note = (Note) model.getAttribute(noteText);
-//		String text = note.getText();
-//		partyNote.setText(text);
-//		partyService.save(party);
-//		return "redirect:/join-party/{partyId}";
-//	}
+	
+	@PostMapping("/add-note/{partyId}")
+	public String updateNote(@PathVariable Long partyId, @ModelAttribute("note") Note note, BindingResult result, ModelMap model) {
+		Party party = partyService.findByPartyId(partyId).orElseThrow();
+		if(party.getNote() == null) {
+			Note newNote = new Note();
+			party.setNote(newNote);
+			partyService.save(party);
+		}
+		Note partyNote = party.getNote();
+		model.addAttribute("text", note.getText());
+		String textToAdd = note.getText();
+		System.out.println(textToAdd);
+		partyNote.setText(textToAdd);
+		partyService.save(party);
+		System.out.println(partyNote.toString());
+		return "redirect:/join-party/{partyId}";
+	}
 }

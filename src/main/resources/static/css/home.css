@@ -144,3 +144,22 @@ a:visited{
 	color: red;
 	font-weight: bold;
 }
+.text-container{
+	max-width : 500px;
+	word-wrap: break-word;
+	color:  floralwhite;
+	font-family:"Libre Baskerville", serif;
+	text-shadow: black 1px 1px 2px;
+	font-size: 20px;
+}
+.text-container-player{
+	max-width : 500px;
+	word-wrap: break-word;
+	color: aquamarine;
+	font-family:"Libre Baskerville", serif;
+	text-shadow: black 1px 1px 2px;
+	font-size: 30px;
+	position: absolute;
+	left: 20px;
+	top: 100px;
+}

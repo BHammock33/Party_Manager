@@ -61,14 +61,13 @@ form{
 	border-radius: 5px;
 	color:white
 }
-.buttons{
-	display:flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	gap: 8px;
-	margin-top: 8px;
-	color:black;
+.ui-button{
+	border-radius: 8px;
+	margin-top: 5px;
+}
+.ui-button:hover{
+	background-color:#62C6F2;
+	color: white;
 }
 button{
 	text-decoration:none;
@@ -76,7 +75,7 @@ button{
 	border: 1px solid black;
 	border-radius: 8px;
 	font-size: 20px;
-	width: 100%;
+	
 }
 
 input{
