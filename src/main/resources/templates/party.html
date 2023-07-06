@@ -115,8 +115,8 @@
 	<div sec:authorize = "hasRole('ROLE_DM')">
 		<h2>Create non-user players below</h2>
 		<form th:action = "@{/create-nonUser-player/{partyId} (partyId = ${party.partyId})}" method = "post"  modelAttribute = "onePartyPlayer">
-			<label class="input-tags">First Name: </label><input class= "coin-submit" path = "firstName"   type = "text" th:name = "firstName"/>
-			<label class="input-tags">Character Name: </label><input path = "characterName" class= "coin-submit"  type = "text" th:name = "characterName"/>
+			<label class="input-tags">First Name: </label><input class= "text-submit" path = "firstName"   type = "text" th:name = "firstName"/>
+			<label class="input-tags">Character Name: </label><input path = "characterName" class= "text-submit"  type = "text" th:name = "characterName"/>
 			<button class = "ui-button" type="submit">Create NonUser Player</button>
 		</form>
 	</div>	

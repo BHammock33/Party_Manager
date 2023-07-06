@@ -50,7 +50,7 @@ html{
 }
 .coin-submit{
 	background-color:transparent;
-	color: transparent;
+	color: white;
 }
 .coin-submit:focus{
 	color: white;
@@ -99,5 +99,9 @@ input[type=number] {
 .note-box{
 	position: absolute;
 	bottom: 10px;
+}
+.text-submit{
+	background-color: transparent;
+	color: white;
 }
 		
