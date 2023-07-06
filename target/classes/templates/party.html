@@ -95,7 +95,7 @@
 			<button class= "ui-button" type = "submit">Back To Home</button>
 		</form>
 	</div>
-	<span th:unless = "${userFirstName} == DemoPlayer">
+	<span th:unless = "${party.partyName} == 'Demo Party'">
 	<div sec:authorize = "hasRole('ROLE_USER')">
 		<form th:action = "@{/leave-party/{partyId}/ (partyId = ${party.partyId})}"  method = "post">
 			<span th:if = "${inParty}" th:object = "${inParty}"><button id="leave-party" class = "ui-button" type = "submit" onclick = "hideButton()">Leave Party</button></span>
@@ -104,10 +104,11 @@
 	</span>
 	<span th:if = "${userFirstName} == DemoPlayer">
 		<div class="text-container-player">
-					<p>Here you can adjust your characters coin and expereience. If you don't have a character in the party yet go ahead and create one! You can also see characters you have in other parties. In DND 10 copper
+					<p>Here you can adjust your characters coin and expereience. If you don't have a character in the party yet go ahead and create one! You can also see characters you have in other parties. If another demo player already made a character in this party you can delete it in <b>see your characters</b> 
+						and make a new one!  In DND 10 copper
 						equals 1 silver and 10 silver equals 1 gold. So if your copper goes above 10 it will convert to one silver and leave the remainder in copper,
 						same for silver to gold. This conversion works in the opposite as well, if you spend 25 silver it will treat it as spending 2 gold and 5 silver.
-						Non demo players can leave the party but this has been restricted by thymeleaf. You will also notice that as a DM you can adjust
+						Non demo players can leave the party but this has been restricted in Demo Party by thymeleaf. You will also notice that as a DM you can adjust
 						everyones stats but as a player you can only adjust your own.
 					</p>
 				</div>

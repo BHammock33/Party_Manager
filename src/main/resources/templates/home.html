@@ -19,8 +19,8 @@
 			<input type="submit" value="See your parties" class="user-button">
 			<span th:if="${user.firstName} == DemoPlayer">
 				<div class="text-container-player">
-					<p>Here you can see the parties you have already joined with see parties button (just demo party so
-						far) or join other parties by clicking on them.
+					<p>Here you can see the parties you have already joined with <b>see your parties button</b> (in demo party by default) 
+					or join other parties by clicking on them.
 					</p>
 				</div>
 			</span>
@@ -88,7 +88,7 @@
 	</div>
 	<span th:if="${user.firstName} == DemoDM">
 		<div class="text-container">
-			<p>Here you can create a new party or you can click see your parties to view some
+			<p>Here you can create a new party or you can click <b>see your parties</b> to view some
 				parties that have already been created and filled with players. Within the parties you can modify the
 				coins and experience of your players. Non-Demo DMs can remove players from parties and delete parties in
 				the your parties screen but that functionality
