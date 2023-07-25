@@ -56,8 +56,8 @@
 				<td><form th:action = "@{/add-silver/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${silverModifier}"><input th:if = "${characterBoolean == True OR userFirstName == dmFirstName}" class="coin-submit" id= "coin-submit" type = "number" step = "1" th:field = "*{amount}" onfocus="this.value=''"><span th:if = "${characterBoolean == true OR userFirstName == dmFirstName}"><button th:if = "${pcInPartyName == onePartyPlayer.characterName OR userFirstName == dmFirstName}" type = "submit" class = "ui-button" th:object = "${pcInPartyName}">Earn/Spend Silver</button></span></form></td>
 				<td th:text = "${onePartyPlayer?.copper}"></td>
 				<td><form th:action = "@{/add-copper/{characterName}/{partyId} (characterName = ${onePartyPlayer.characterName}, partyId = ${party.partyId})}" method="post" th:object = "${copperModifier}"><input th:if = "${characterBoolean == True OR userFirstName == dmFirstName}"class="coin-submit" id= "coin-submit" type = "number" step = "1" th:field = "*{amount}" onfocus="this.value=''"><span th:if = "${characterBoolean == true OR userFirstName == dmFirstName}"><button th:if = "${pcInPartyName == onePartyPlayer.characterName OR userFirstName == dmFirstName}" type = "submit" class = "ui-button" th:object = "${pcInPartyName}">Earn/Spend Copper</button></span></form></td>
-				<span th:unless = "${dmFirstName} == DemoDM or hasRole('ROLE_ADMIN')">
-				<td><form sec:authorize ="hasRole('ROLE_DM') or hasRole('ROLE_ADMIN')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit" class = "delete-button">Remove From party</button></form></td>
+				<span th:unless = "${dmFirstName} == DemoDM">
+				<td><form sec:authorize ="hasRole('ROLE_DM')" th:action = "@{/remove-from-party/{partyId}/{firstName} (partyId = ${party.partyId}, firstName = ${onePartyPlayer.firstName})}" method = "post"><button type = "submit" class = "delete-button">Remove From party</button></form></td>
 				</span>
 			</tr>
 		</tbody>			
