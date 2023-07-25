@@ -113,6 +113,16 @@
 					</p>
 				</div>
 	</span>	
+	<span th:if = "${userFirstName} == DemoDM">
+		<div class="text-container-dm">
+					<p>Here you can adjust your players coins and expereience.  In DND 10 copper
+						equals 1 silver and 10 silver equals 1 gold. So if your copper goes above 10 it will convert to one silver and leave the remainder in copper,
+						same for silver to gold. This conversion works in the opposite as well, if you spend 25 silver it will treat it as spending 2 gold and 5 silver.
+						Non demo DMs can remove players but this has been restricted through thymeleaf. You can also create non user players to track characters of players
+						that are not registerd for the app.
+					</p>
+				</div>
+	</span>	
 	<div sec:authorize = "hasRole('ROLE_DM')">
 		<h2>Create non-user players below</h2>
 		<form th:action = "@{/create-nonUser-player/{partyId} (partyId = ${party.partyId})}" method = "post"  modelAttribute = "onePartyPlayer">

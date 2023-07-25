@@ -1,6 +1,7 @@
 package com.partymanager.finalproject.web;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,11 +51,11 @@ public class PartyController {
 		if (party.getNote() == null) {
 			party.setNote(newNote);
 		}
-		//create or fetch note to add to page
+		// create or fetch note to add to page
 		Note note = party.getNote();
 		model.addAttribute("note", note);
 
-		//The Dm will be the only one in the party with Role_DM
+		// The Dm will be the only one in the party with Role_DM
 		User dm = oPPservice.getDm(party);
 		Long dmId = dm.getUserId();
 		String dmName = dm.getFirstName();
@@ -149,9 +150,20 @@ public class PartyController {
 			Long partyFundUId = partyFund.getUserId();
 			partyService.removeFromParty(partyFundUId, partyId);
 		} else {
-			User user = userService.findByFirstName(firstName);
-			Long userId = user.getUserId();
-			partyService.removeFromParty(userId, partyId);
+			try {
+				Party party = partyService.findByPartyId(partyId).orElseThrow();
+				List<User> partyUsers = party.getUsers();
+				for (User user : partyUsers) {
+					if (user.getFirstName().equalsIgnoreCase(firstName)) {
+						Long userId = user.getUserId();
+						partyService.removeFromParty(userId, partyId);
+						partyService.save(party);
+					}
+
+				}
+			} catch (ConcurrentModificationException e) {
+				return "redirect:/join-party/{partyId}";
+			}
 		}
 
 		return "redirect:/join-party/{partyId}";
@@ -173,11 +185,9 @@ public class PartyController {
 
 	@PostMapping("/create-nonUser-player/{partyId}")
 	public String createNonUserPlayer(@PathVariable Long partyId,
-			@ModelAttribute("onePartyPlayer") OnePartyPlayer onePartyPlayer,
-			String firstName,  String characterName) {
-	//	Party party = partyService.findByPartyId(partyId).orElseThrow();
-		
-		
+			@ModelAttribute("onePartyPlayer") OnePartyPlayer onePartyPlayer, String firstName, String characterName) {
+		// Party party = partyService.findByPartyId(partyId).orElseThrow();
+
 ////		model.addAttribute("onePartyPlayerFirstName", onePartyPlayer.getFirstName());
 ////		String firstName = onePartyPlayer.getFirstName();
 ////		model.addAttribute("onePartyPlayerCharacterName", onePartyPlayer.getCharacterName());
@@ -227,17 +237,17 @@ public class PartyController {
 //		newUser.setCharacters(pcs);
 //		userService.save(newUser);
 		User newUser = oPPservice.createNonUserPlayer(partyId, firstName, characterName);
-		
+
 		System.out.println(newUser);
 
 		return "redirect:/join-party/{partyId}";
 	}
-	
+
 	@PostMapping("/add-note/{partyId}")
-	public String updateNote(@PathVariable Long partyId, @ModelAttribute("note") Note note, 
-			BindingResult result, ModelMap model) {
+	public String updateNote(@PathVariable Long partyId, @ModelAttribute("note") Note note, BindingResult result,
+			ModelMap model) {
 		Party party = partyService.findByPartyId(partyId).orElseThrow();
-		if(party.getNote() == null) {
+		if (party.getNote() == null) {
 			Note newNote = new Note();
 			party.setNote(newNote);
 			partyService.save(party);
@@ -251,5 +261,5 @@ public class PartyController {
 		System.out.println(partyNote.toString());
 		return "redirect:/join-party/{partyId}";
 	}
-	
+
 }
