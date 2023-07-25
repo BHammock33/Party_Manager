@@ -17,8 +17,6 @@ public class DemoPartyService {
 	@Autowired
 	private PartyRepository partyRepo;
 	@Autowired
-	private OnePartyPlayerService oppServe;
-	@Autowired
 	private PartyService partyServe;
 
 //	public Party createDemoParty(PartyDto partyDto, User user) {

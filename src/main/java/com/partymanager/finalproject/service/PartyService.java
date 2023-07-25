@@ -163,5 +163,7 @@ public class PartyService {
 	public boolean checkForPartyName(String partyName) {
 		return partyRepo.existsPartyByPartyName(partyName);
 	}
+	
+	
 
 }

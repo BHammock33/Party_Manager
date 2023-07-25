@@ -27,7 +27,7 @@ var url = getCurrentURL.toString()
 if (window.location.toString().includes("error")){
 	alert("incorrect username or password")
 }
-
+/** 
 function alertUser(msg) {
 	alert(msg);
 	setTimeout(function(){
@@ -43,6 +43,7 @@ function tempAlert(msg, duration){
 	}, duration);
 	document.body.appendChild(el);
 }	
+*/
 
 function demoPlayerLoginFunc(){
 	let demoUserName = "DemoPlayer";

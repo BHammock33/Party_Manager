@@ -145,12 +145,14 @@ a:visited{
 	font-weight: bold;
 }
 .text-container{
-	max-width : 500px;
+	max-width : 900px;
 	word-wrap: break-word;
 	color:  floralwhite;
 	font-family:"Libre Baskerville", serif;
 	text-shadow: black 1px 1px 2px;
-	font-size: 20px;
+	font-size: 35px;
+	position: absolute;
+	bottom: 5px;
 }
 .text-container-player{
 	max-width : 500px;

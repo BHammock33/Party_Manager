@@ -55,6 +55,7 @@ public class PlayerCharacterController {
 		return "redirect:/join-party/{partyId}";
 	}
 
+	@SuppressWarnings("serial")
 	@GetMapping("/create-character/{partyName}")
 	public String createCharacterfromParty(ModelMap model, @PathVariable String partyName) {
 		PlayerCharacterDto playerCharacterDto = new PlayerCharacterDto();

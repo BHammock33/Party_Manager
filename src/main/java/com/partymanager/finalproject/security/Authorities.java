@@ -62,5 +62,11 @@ public class Authorities implements GrantedAuthority {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	public Boolean getDmAuth(Authorities authorities) {
+		if(authorities.getAuthority().equalsIgnoreCase("ROLE_DM")){
+			return true;
+		}
+		return false;
+	}
 
 }

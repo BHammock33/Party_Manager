@@ -1,11 +1,7 @@
 package com.partymanager.finalproject.web;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.partymanager.finalproject.domain.Party;
 import com.partymanager.finalproject.domain.PlayerCharacter;
@@ -29,7 +21,6 @@ import com.partymanager.finalproject.dto.CoinModifier;
 import com.partymanager.finalproject.dto.Note;
 import com.partymanager.finalproject.dto.OnePartyPlayer;
 import com.partymanager.finalproject.dto.XpModifier;
-import com.partymanager.finalproject.security.Authorities;
 import com.partymanager.finalproject.service.OnePartyPlayerService;
 import com.partymanager.finalproject.service.PartyService;
 import com.partymanager.finalproject.service.PlayerCharacterService;
