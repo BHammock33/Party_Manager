@@ -28,7 +28,7 @@
 
 
 	</div>
-	<div sec:authorize="hasRole('ROLE_USER')  OR hasRole('ROLE_ADMIN')" class="container-form">
+	<div sec:authorize="hasRole('ROLE_USER')  or hasRole('ROLE_ADMIN')" class="container-form">
 
 		<table>
 			<tr>
@@ -48,8 +48,7 @@
 					</td>
 				</tr>
 			</span>
-			<div sec:authorize="hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')">
-			<span th:if="${user.firstName} == DemoPlayer">
+			<span th:if="${user.firstName} == DemoPlayer OR ${user.firstName} == BennettAdmin">
 				<tr th:each="party : ${demoParties}">
 					<td>
 						<a th:href="@{/join-party/{partyId} (partyId = ${party.partyId})}"
@@ -63,7 +62,7 @@
 								type="submit" class="button">Delete party</button></form>
 					</td>
 				</tr>
-			</div>
+
 
 		</table>
 		</span>
