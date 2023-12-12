@@ -104,9 +104,18 @@ public class PartyService {
 	public void removeFromParty(Long userId, Long partyId) {
 		Party foundParty = partyRepo.findById(partyId).orElseThrow();
 		User foundUser = userService.findById(userId);
+		String userName = foundUser.getFirstName();
+		if(userName.equalsIgnoreCase("Party Fund")) {
+			//List<PlayerCharacter> pcs = foundParty.getCharacters();
+		
+			userService.delete(userId);
+			//partyRepo.save(foundParty);
+		}
 		foundUser.getParties().remove(foundParty);
-		userRepo.save(foundUser);
-		partyRepo.save(foundParty);
+		if(!userName.equalsIgnoreCase("Party Fund")) {
+			userRepo.save(foundUser);
+			partyRepo.save(foundParty);
+		}
 	}
 
 	public void deleteParty(Long partyId) {
