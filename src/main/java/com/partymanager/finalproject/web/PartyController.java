@@ -72,8 +72,7 @@ public class PartyController {
 		String userFirstName = user.getFirstName();
 		model.put("userFirstName", userFirstName);
 
-		Boolean characterBoolean = false;
-		Boolean characterInParty = pcService.checkIfInParty(partyId, user.getUserId());
+        Boolean characterInParty = pcService.checkIfInParty(partyId, user.getUserId());
 		// determine if player is in party
 		Boolean inParty = partyService.isInParty(partyName, user);
 
@@ -96,13 +95,16 @@ public class PartyController {
 				userPcInParty.add(pc);
 			}
 		}
-		try {
+        Boolean characterBoolean = false;
+        try {
 			PlayerCharacter pcInParty = userPcInParty.get(0);
 			String pcInPartyName = pcInParty.getName();
 			List<String> oPPpcNames = new ArrayList<>();
 			for (OnePartyPlayer player : justPlayers) {
 				String onePartyPcName = player.getCharacterName();
-				oPPpcNames.add(onePartyPcName);
+				if(onePartyPcName != null){
+					oPPpcNames.add(onePartyPcName);
+				}
 			}
 			for (String oPPpcName : oPPpcNames) {
 				if (oPPpcName.equalsIgnoreCase(pcInPartyName))
@@ -118,6 +120,7 @@ public class PartyController {
 		model.put("partyFund", partyFunded);
 		model.put("characterInParty", characterInParty);
 		model.put("characterBoolean", characterBoolean);
+		System.out.println(characterBoolean);
 		// users minus DM
 		model.put("players", justPlayers);
 		// The Party

@@ -84,7 +84,7 @@ public class PlayerCharacterController {
 	@PostMapping("/add-xp/{characterName}/{partyId}")
 	public String addCharacterXP(@PathVariable String characterName, @PathVariable Long partyId,
 			@ModelAttribute("xpModifier") XpModifier amount) {
-		PlayerCharacter playerCharacter = pcService.findByName(characterName);
+		PlayerCharacter playerCharacter = pcService.findByNameAndPartyId(characterName, partyId);
 		Integer xpToAdd = amount.getAmount();
 		if (playerCharacter.getXp() == null) {
 			playerCharacter.setXp(0);
@@ -106,9 +106,9 @@ public class PlayerCharacterController {
 	@PostMapping("/add-gold/{characterName}/{partyId}")
 	public String addGold(@PathVariable String characterName, @PathVariable Long partyId,
 			@ModelAttribute("goldModifier") CoinModifier amount) {
-		PlayerCharacter playerCharacter = pcService.findByName(characterName);
+		PlayerCharacter playerCharacter = pcService.findByNameAndPartyId(characterName, partyId);
 		// add/spend gold and do conversion
-		oPPservice.addGold(characterName, amount);
+		oPPservice.addGold(characterName, amount, partyId);
 		// revert to previous value if spend would put gold in negative
 		if (playerCharacter.getGold() < 0) {
 			playerCharacter.setGold((playerCharacter.getGold() + Math.abs(amount.getAmount())));
@@ -122,12 +122,12 @@ public class PlayerCharacterController {
 	@PostMapping("/add-silver/{characterName}/{partyId}")
 	public String addSilver(@PathVariable String characterName, @PathVariable Long partyId,
 			@ModelAttribute("silverModifier") CoinModifier amount) {
-		PlayerCharacter playerCharacter = pcService.findByName(characterName);
+		PlayerCharacter playerCharacter = pcService.findByNameAndPartyId(characterName, partyId);
 		// fallback values in case pulling silver causes gold to go negative
 		Integer previousGold = playerCharacter.getGold();
 		Integer previousSilver = playerCharacter.getSilver();
 		// add/spend the silver and do conversion
-		oPPservice.addSilver(characterName, amount);
+		oPPservice.addSilver(characterName, amount, partyId);
 		// deal with negative gold
 		if (playerCharacter.getGold() < 0) {
 			playerCharacter.setGold(previousGold);
@@ -141,13 +141,13 @@ public class PlayerCharacterController {
 	@PostMapping("/add-copper/{characterName}/{partyId}")
 	public String addCopper(@PathVariable String characterName, @PathVariable Long partyId,
 			@ModelAttribute("copperModifier") CoinModifier amount) {
-		PlayerCharacter playerCharacter = pcService.findByName(characterName);
+		PlayerCharacter playerCharacter = pcService.findByNameAndPartyId(characterName, partyId);
 		// fallback values in case pulling copper causes silver to put gold in negative
 		Integer previousGold = playerCharacter.getGold();
 		Integer previousSilver = playerCharacter.getSilver();
 		Integer previousCopper = playerCharacter.getCopper();
 		// add/spend copper and do conversion
-		oPPservice.addCopper(characterName, amount);
+		oPPservice.addCopper(characterName, amount, partyId);
 		// deal with negative gold
 		if (playerCharacter.getGold() < 0) {
 			playerCharacter.setGold(previousGold);

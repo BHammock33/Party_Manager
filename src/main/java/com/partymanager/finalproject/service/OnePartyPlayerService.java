@@ -68,8 +68,8 @@ public class OnePartyPlayerService {
 	}
 
 	// logic for adding/spending coins
-	public void addGold(String characterName, CoinModifier amount) {
-		PlayerCharacter pc = pcService.findByName(characterName);
+	public void addGold(String characterName, CoinModifier amount, Long partyId) {
+		PlayerCharacter pc = pcService.findByNameAndPartyId(characterName, partyId);
 		Integer goldAdd = amount.getAmount();
 		Integer newGold = goldAdd + (pc.getGold());
 		pc.setGold(newGold);
@@ -79,8 +79,8 @@ public class OnePartyPlayerService {
 		userService.save(user);
 	}
 
-	public void addSilver(String characterName, CoinModifier amount) {
-		PlayerCharacter pc = pcService.findByName(characterName);
+	public void addSilver(String characterName, CoinModifier amount, Long partyId) {
+		PlayerCharacter pc = pcService.findByNameAndPartyId(characterName, partyId);
 		Integer silverAdd = amount.getAmount();
 		Integer newSilver = silverAdd + (pc.getSilver());
 		pc.setSilver(newSilver);
@@ -90,8 +90,8 @@ public class OnePartyPlayerService {
 		userService.save(user);
 	}
 
-	public void addCopper(String characterName, CoinModifier amount) {
-		PlayerCharacter pc = pcService.findByName(characterName);
+	public void addCopper(String characterName, CoinModifier amount, Long partyId) {
+		PlayerCharacter pc = pcService.findByNameAndPartyId(characterName, partyId);
 		Integer copperAdd = amount.getAmount();
 		Integer newCopper = copperAdd + (pc.getCopper());
 		pc.setCopper(newCopper);
