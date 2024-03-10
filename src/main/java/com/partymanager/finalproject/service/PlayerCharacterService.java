@@ -45,6 +45,18 @@ public class PlayerCharacterService {
 		return pcRepo.findByName(name);
 	}
 
+	public PlayerCharacter findByNameAndPartyId(String name, Long partyId){
+		Party party = partyService.findByPartyId(partyId).orElseThrow();
+		List<PlayerCharacter> playerCharacters = party.getCharacters();
+		PlayerCharacter targetPc = null;
+		for(PlayerCharacter pc : playerCharacters){
+			if(pc.getName().equalsIgnoreCase(name)){
+				targetPc = pc;
+			}
+		}
+		return targetPc;
+	}
+
 	public List<PlayerCharacter> findByUsername(String username) {
 		return userRepo.findUserCharacters(username);
 	}
