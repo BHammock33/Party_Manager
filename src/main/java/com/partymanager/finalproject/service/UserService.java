@@ -29,20 +29,12 @@ public class UserService {
 	@Autowired
 	private PartyRepository partyRepo;
 
-	public User findByUsername(String username) {
-		return userRepo.findByUsername(username);
-	}
-
 	public User save(User user) {
 		return userRepo.save(user);
 	}
 
 	public User findById(Long userId) {
 		return userRepo.findById(userId).orElse(new User());
-	}
-
-	public List<User> findAll() {
-		return userRepo.findAll();
 	}
 
 	public void delete(Long userId) {
@@ -88,38 +80,11 @@ public class UserService {
 		userRepo.deleteById(userId);
 	}
 
-	public void addParty(Long userId, Party party) {
-		User user = userRepo.findById(userId).get();
-		user.getParties().add(party);
-		userRepo.save(user);
-
-	}
-
 	public List<String> createUserRoles() {
 		List<String> roles = new ArrayList<>();
 		roles.add("Player");
 		roles.add("DM");
 		return roles;
-	}
-
-	public User findByFirstName(String firstName) {
-		return userRepo.findByFirstName(firstName);
-	}
-
-	public OnePartyPlayer createOnePartyPlayer(Long userId, Long partyId, Long characterId) {
-		User user = userRepo.findById(userId).orElseThrow();
-		PlayerCharacter pc = pCRepo.findById(characterId).orElseThrow();
-
-		OnePartyPlayer onePartyPlayer = new OnePartyPlayer();
-		onePartyPlayer.setOnePartyUserId(user.getUserId());
-		onePartyPlayer.setFirstName(user.getFirstName());
-		onePartyPlayer.setCharacterName(pc.getName());
-		onePartyPlayer.setExperience(pc.getXp());
-		onePartyPlayer.setAlignment(pc.getAlignment());
-		onePartyPlayer.setOnePartyID(partyId);
-
-		return onePartyPlayer;
-
 	}
 
 	public User findLoggedIn() {
@@ -130,42 +95,8 @@ public class UserService {
 
 	}
 
-	public Boolean firstNameMatch(User user, Party party) {
-		String userFirstName = user.getFirstName();
-		List<User> players = party.getUsers();
-		List<String> firstNames = new ArrayList<>();
-		Boolean characterBoolean = false;
-		for (User player : players) {
-			String firstName = player.getFirstName();
-			firstNames.add(firstName);
-		}
-		for (String firstName : firstNames) {
-			if(firstName.equals(userFirstName)) {
-				characterBoolean = true;
-				return characterBoolean;
-			}
-		}
-		return characterBoolean;
-	}
 	public boolean checkForUsername(String username) {
 		return userRepo.existsUserByUsername(username);
 	}
-//	public User createFakeUser(String firstName) {
-//		User user = new User();
-//		Set<Authorities> auths = new HashSet();
-//		Authorities auth = new Authorities();
-//		List<PlayerCharacter> newPCs = new ArrayList<>();
-//		auth.setAuthority("");
-//		auth.setAuthority("player");
-//		user.setFirstName(firstName);
-//		user.setLastName("LastName");
-//		user.setAuthorities(auths);
-//		user.setCharacters(newPCs);
-//		user.s
-		//finish out tomorrow, may need to just replicate party fund
-		
-		
-		
-	//}
 
 }
