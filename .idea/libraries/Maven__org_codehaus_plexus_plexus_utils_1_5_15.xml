@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: org.codehaus.plexus:plexus-utils:1.5.15" type="java-imported" external-system-id="Maven">
+    <properties groupId="org.codehaus.plexus" artifactId="plexus-utils" version="1.5.15" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

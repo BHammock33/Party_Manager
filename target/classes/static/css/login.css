@@ -1,6 +1,6 @@
 html{
 	font-family:"Libre Baskerville", serif;
-	background: url("/images/giant.jpg") no-repeat center center fixed;
+	background: url("/images/mountains.jpg") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -43,18 +43,19 @@ body{
 .label {
 	font-size: 18px;
 	color: white;
-	margin-right: 20px;
+	margin-right: 10px;
 
 }
 form{
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	vertical-align: 50%;
 	flex-wrap: wrap;
-	align-content: center;
+	justify-content: center;
+	align-items: center;
 }
+form > div{
+	align-items: center;
+}
+
 
 .ui-input{
 	font-size: 20px;
@@ -84,13 +85,12 @@ input{
 	padding: 0.3em;
 	font-weight: bold;
 }
-.label{
-	font-size: 15px;
-	color: white;
+#password{
+	margin-left: 10px;
 }
 h3{
 	justify-content: center;
 	align-items: center;
-	margin-left: 100px;
+	margin-left: 80px;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
