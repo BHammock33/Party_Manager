@@ -19,29 +19,6 @@ public class DemoPartyService {
 	@Autowired
 	private PartyService partyServe;
 
-//	public Party createDemoParty(PartyDto partyDto, User user) {
-//		// create a new party, append an empty list of users and characters
-//		Party party = new Party();
-//		List<User> emptyUsers = new ArrayList<User>(7);
-//		List<PlayerCharacter> emptyCharacters = new ArrayList<PlayerCharacter>(7);
-//		List<Party> userParties = user.getParties();
-//
-//		// map DTO properties to Party
-//		party.setPartyName(partyDto.getPartyName());
-//		party.setPartyId(party.getPartyId());
-//		party.setUsers(emptyUsers);
-//		party.setCharacters(emptyCharacters);
-//
-//		// add current user to party
-//		userParties.add(party);
-//		party.getUsers().add(user);
-//
-//		// save new party in partyRepo
-//		// userRepo.save(user);
-//		partyRepo.save(party);
-//		return demoParty;
-//	}
-
 	public List<Party> getDemoParties() {
 		List<Party> allParties = partyServe.findAll();
 		List<Party> demoParties = new ArrayList<>();
@@ -80,8 +57,4 @@ public class DemoPartyService {
 		return distinctRealParties;
 	}
 
-	public Boolean containsDm() {
-		return null;
-
-	}
 }

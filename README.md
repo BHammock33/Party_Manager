@@ -2,6 +2,8 @@
 Final Project For Coders Campus
 A tool for GM's and Players of TTRPGS to manage their parties, gold, expierence, and alignment.
 A one stop shop for top level party management. 
+Uses Spring security for user authentication and assigning roles. SpringMVC and Thymeleaf allow for conditional view rendering based off user roles.  
+## Now with [DEMO MODE](https://partymanager-production.up.railway.app/login)  
 
 # The Tech
 
