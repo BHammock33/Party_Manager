@@ -38,6 +38,8 @@ table, th, td{
 }
 th, td{
 	padding: 10px;
+	color: antiquewhite;
+	
 	
 }
 td{
@@ -50,11 +52,11 @@ td:hover{
 	opacity: .9;
 }
 a:link{
-	color:black;
+	color:antiquewhite;
 	font-weight:bold;
 }
 a:visited{
-	color:black;
+	color:antiquewhite;
 	font-weight: bold;
 }
 .button{
@@ -118,7 +120,7 @@ a:visited{
 }
 .dm-name{
 	font-size: 12px;
-	color: black;
+	color: antiquewhite;
 	font-weight: bold;
 }
 .form-holder{
@@ -129,10 +131,12 @@ a:visited{
 	text-shadow: black 1px 1px 2px;
 }
 ::placeholder{
-	color: white;
+	color: antiquewhite;
+	text-shadow: black 1px 1px 2px;
 }
 .input-tags{
-	color: white;
+	color: antiquewhite;
+	text-shadow: black 1px 1px 2px;
 }
 #generator{
 	color: #62C6F2;
@@ -165,3 +169,4 @@ a:visited{
 	left: 20px;
 	bottom: 100px;
 }
+
