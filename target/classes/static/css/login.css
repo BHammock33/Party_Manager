@@ -1,6 +1,6 @@
 html{
 	font-family:"Libre Baskerville", serif;
-	background: url("/images/mountains.jpg") no-repeat center center fixed;
+	background: url("/images/paintMountains.jpg") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -13,7 +13,6 @@ html{
 	font-family: dndFont;
 	src: url
 }
-
 body{
 	display: flex;
 	align-items: center;
@@ -43,7 +42,7 @@ body{
 	align-items: center;
 }
 .label {
-	font-size: 18px;
+	font-size: 22px;
 	color: white;
 	margin-right: 10px;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -58,8 +57,16 @@ form{
 form > div{
 	align-items: center;
 }
-
-
+#usernameInput{
+	justify-content: center;
+	align-items: center;
+	display: grid;
+}
+#passwordInput{
+	display: grid;
+	align-items: center;
+	justify-content: center;
+}
 .ui-input{
 	font-size: 20px;
 	border-radius: 5px;
@@ -88,12 +95,10 @@ input{
 	padding: 0.3em;
 	font-weight: bold;
 }
-#password{
-	margin-left: 10px;
-}
+
 h3{
 	justify-content: center;
 	align-items: center;
-	margin-left: 80px;
+	margin-left: 15px;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }

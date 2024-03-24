@@ -11,14 +11,17 @@
 <script type = "text/javascript" src ="/js/login.js"></script>
 </head>
 <body>
+	
 
 <div class="container">
+	
 		<div class = "form-container">
+			
 			<form th:action = "@{/login}" method = "post">
-			<div>	
+			<div id="usernameInput">	
 				<label class = "label" for="username">Username:</label><input class="ui-input" type = "text" id="username" name ="username" placeholder = "Username" autofocus>
 			</div>
-			<div>
+			<div id="passwordInput">
 				<label class = "label" for = "password">Password:</label><input class="ui-input" type = "password" id="password" name = "password" placeholder = "Password" required>
 			</div>	
 			<div class = "buttons">
