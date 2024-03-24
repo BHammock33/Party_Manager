@@ -1,6 +1,6 @@
 html {
 	font-family:"Libre Baskerville", serif;
-	background: url("/images/gates.jpg") no-repeat center center fixed;
+	background: url("/images/landscape.jpg") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -34,6 +34,7 @@ table, th, td{
 	text-align: center;
 	color: black;
 	border-collapse: collapse;
+	height: auto;
 	
 }
 th, td{
@@ -107,6 +108,7 @@ a:visited{
 	align-items:center;
 	text-align:center;
 	display:grid;
+	padding: 5px;
 }
 .logout-button{
 	position: fixed;

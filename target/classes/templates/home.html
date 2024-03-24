@@ -14,6 +14,7 @@
 
 	<p class="welcome" th:inline="text"> Hail and well met, [[${user.firstName}]]! Let's go on an adventure!</p>
 	<!-- 	<div> -->
+	<div class="page-holder">	
 	<div class="see-party">
 		<form th:action="@{/home/parties/{userId} (userId = ${user.userId})}" method="get">
 			<input type="submit" value="See your parties" class="user-button">
@@ -68,7 +69,7 @@
 		</span>
 
 	</div>
-
+	
 	<div sec:authorize="hasRole('ROLE_DM')">
 		<form action="create-party" method="post" th:object="${partyDto}">
 			<div th:if="${nameError}">
@@ -96,6 +97,7 @@
 			</p>
 		</div>
 	</span>
+	</div>
 	<span th:unless="${user.firstName} == DemoPlayer or ${user.firstName} == DemoDM">
 	<div>
 		<form th:action="@{/home/delete/{userId} (userId = ${user.userId})}" method="post">
